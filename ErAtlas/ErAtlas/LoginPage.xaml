@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ErAtlas.LoginPage"
+             Title="Connexion"
+             BackgroundColor="#F5F5F5">
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="20" Spacing="15" VerticalOptions="Center">
+            
+            <!-- Champ Nom d'utilisateur -->
+            <VerticalStackLayout Spacing="5" Margin="400, 0">
+                <Label Text="Nom d'utilisateur" 
+                       FontSize="14" 
+                       TextColor="Black" />
+                <Entry x:Name="UsernameEntry" 
+                       Placeholder="Entrez votre nom d'utilisateur"
+                       PlaceholderColor="#AAAAAA"
+                       BackgroundColor="White" />
+            </VerticalStackLayout>
+            
+            <!-- Champ Mot de passe -->
+            <VerticalStackLayout Spacing="5" Margin="400, 0" >
+                <Label Text="Mot de passe" 
+                       FontSize="14" 
+                       TextColor="#666666" />
+                <Entry x:Name="PasswordEntry" 
+                       Placeholder="Entrez votre mot de passe"
+                       PlaceholderColor="#AAAAAA"
+                       IsPassword="True"
+                       BackgroundColor="White" />
+            </VerticalStackLayout>
+            
+            <!-- Bouton Connexion -->
+            <Button Text="Connexion"
+                    Clicked="OnLoginClicked"
+                    BackgroundColor="#0D47A1"
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Padding="10"
+                    CornerRadius="8"
+                    Margin="400,10,400,0" />
+            
+            <!-- Message d'erreur -->
+            <Label x:Name="ErrorLabel" 
+                   TextColor="Red" 
+                   FontSize="12"
+                   IsVisible="False"
+                   HorizontalTextAlignment="Center" />
+            
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>
