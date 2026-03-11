@@ -5,50 +5,36 @@
              x:Class="ErAtlas.LoginPage"
              Title="Connexion"
              BackgroundColor="#F5F5F5">
-    <ContentPage.Content>
-        <VerticalStackLayout Padding="20" Spacing="15" VerticalOptions="Center">
-            
-            <!-- Champ Nom d'utilisateur -->
-            <VerticalStackLayout Spacing="5" Margin="400, 0">
-                <Label Text="Nom d'utilisateur" 
-                       FontSize="14" 
-                       TextColor="Black" />
-                <Entry x:Name="UsernameEntry" 
-                       Placeholder="Entrez votre nom d'utilisateur"
-                       PlaceholderColor="#AAAAAA"
-                       BackgroundColor="White" />
-            </VerticalStackLayout>
-            
-            <!-- Champ Mot de passe -->
-            <VerticalStackLayout Spacing="5" Margin="400, 0" >
-                <Label Text="Mot de passe" 
-                       FontSize="14" 
-                       TextColor="#666666" />
-                <Entry x:Name="PasswordEntry" 
-                       Placeholder="Entrez votre mot de passe"
-                       PlaceholderColor="#AAAAAA"
-                       IsPassword="True"
-                       BackgroundColor="White" />
-            </VerticalStackLayout>
-            
-            <!-- Bouton Connexion -->
+
+    <Grid Padding="24">
+        <VerticalStackLayout Spacing="12" VerticalOptions="Center" MaximumWidthRequest="420">
+            <Label Text="Connexion"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center" />
+
+            <Entry x:Name="UsernameEntry"
+                   Placeholder="Nom d'utilisateur"
+                   BackgroundColor="White" />
+
+            <Entry x:Name="PasswordEntry"
+                   Placeholder="Mot de passe"
+                   IsPassword="True"
+                   BackgroundColor="White" />
+
             <Button Text="Connexion"
                     Clicked="OnLoginClicked"
                     BackgroundColor="#0D47A1"
                     TextColor="White"
-                    FontSize="16"
                     FontAttributes="Bold"
-                    Padding="10"
-                    CornerRadius="8"
-                    Margin="400,10,400,0" />
-            
-            <!-- Message d'erreur -->
-            <Label x:Name="ErrorLabel" 
-                   TextColor="Red" 
+                    CornerRadius="8" />
+
+
+            <Label x:Name="ErrorLabel"
+                   TextColor="Red"
                    FontSize="12"
                    IsVisible="False"
                    HorizontalTextAlignment="Center" />
-            
         </VerticalStackLayout>
-    </ContentPage.Content>
+    </Grid>
 </ContentPage>

@@ -9,8 +9,7 @@ public partial class LoginPage
 
     private async void OnLoginClicked(object sender, EventArgs e)
     {
-        // Recuperer les valeurs saisies.
-        string username = UsernameEntry.Text;
+        string username = UsernameEntry.Text.Trim();
         string password = PasswordEntry.Text;
 
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
@@ -20,7 +19,7 @@ public partial class LoginPage
             return;
         }
 
-        if (ValidateLogin(username, password))
+        if (User.ValidateCredentials(username, password))
         {
             ErrorLabel.IsVisible = false;
             await Shell.Current.GoToAsync("//main");
@@ -31,10 +30,5 @@ public partial class LoginPage
             ErrorLabel.IsVisible = true;
             PasswordEntry.Text = string.Empty;
         }
-    }
-
-    private bool ValidateLogin(string username, string password)
-    {
-        return !string.IsNullOrEmpty(username) && password == "password";
     }
 }
