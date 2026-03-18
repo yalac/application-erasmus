@@ -15,12 +15,14 @@ public class DatabaseService
 
     public User GetUser(string username)
     {
-        string query = "GetUsers";
+        string query = "PS_VerificationConnexion";
         SqlCommand command = new SqlCommand(query, _connection);
         command.CommandType = System.Data.CommandType.StoredProcedure;
         command.Parameters.AddWithValue("username", username);
         SqlDataReader reader = command.ExecuteReader();
         reader.Read();
+        if (!reader.HasRows)
+            return null;
         return new User
         {
             Id = (int)reader["ID"],
@@ -34,6 +36,8 @@ public class DatabaseService
         try
         {
             User user = GetUser(username);
+            if (user is null)
+                return false;
             return user.Password == password;
         }
         catch (Exception)

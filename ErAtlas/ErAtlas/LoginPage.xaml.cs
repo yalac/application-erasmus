@@ -32,6 +32,5 @@ public partial class LoginPage
             ErrorLabel.Text = "Nom d'utilisateur ou mot de passe incorrect.";
             ErrorLabel.IsVisible = true;
         }
-        
     }
 }
