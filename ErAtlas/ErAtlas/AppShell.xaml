@@ -4,12 +4,34 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ErAtlas"
+    xmlns:view="using:ErAtlas.View"
     Title="ErAtlas"
     FlyoutBehavior="Disabled">
     
-    <ShellContent
-        Title="Accueil"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="main"
-        IsVisible="True" />
+    <TabBar>
+        <!-- Première page -->
+        <Tab Title="Accueil">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
+        </Tab>
+        
+        <!-- Deuxième page -->
+        <Tab Title="Mes voyages">
+            <ShellContent ContentTemplate="{DataTemplate view:MyTravelPage}" Route="MyTravelPage" />
+        </Tab>
+        
+        <!-- Troisième page -->
+        <Tab Title="Gestion des trajets">
+            <ShellContent ContentTemplate="{DataTemplate view:TripManagementPage}" Route="TripManagementPage" />
+        </Tab>
+        
+        <!-- Quatrième page -->
+        <Tab Title="Gestion des utilisateurs">
+            <ShellContent ContentTemplate="{DataTemplate view:UsersManagementPage}" Route="UsersManagementPage" />
+        </Tab>
+        
+        <!-- Cinquième page -->
+        <Tab Title="Paramètres">
+            <ShellContent ContentTemplate="{DataTemplate view:SettingsPage}" Route="SettingsPage" />
+        </Tab>
+    </TabBar>
 </Shell>

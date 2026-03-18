@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using ErAtlas.Database;
+using ErAtlas.View;
 using ErAtlas.ViewModels;
 
 namespace ErAtlas;
@@ -22,8 +23,20 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddSingleton<DatabaseService>();
-        builder.Services.AddTransient<LoginViewModel>();
-        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddSingleton<AppShell>();
+        
+        builder.Services.AddSingleton<LoginViewModel>();
+        builder.Services.AddSingleton<SettingsViewModel>();
+        builder.Services.AddSingleton<TripManagementViewModel>();
+        builder.Services.AddSingleton<TravelViewModel>();
+        builder.Services.AddSingleton<UsersManagementViewModel>();
+        
+        builder.Services.AddSingleton<LoginPage>();
+        builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<SettingsPage>();
+        builder.Services.AddSingleton<TripManagementPage>();
+        builder.Services.AddSingleton<UsersManagementPage>();
+        builder.Services.AddSingleton<MyTravelPage>();
 
         return builder.Build();
     }
