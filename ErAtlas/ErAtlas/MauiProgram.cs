@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using ErAtlas.Database;
+using ErAtlas.ViewModels;
 
 namespace ErAtlas;
 
@@ -18,6 +20,10 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
+
+        builder.Services.AddSingleton<DatabaseService>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<LoginPage>();
 
         return builder.Build();
     }

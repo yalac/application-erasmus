@@ -1,16 +1,17 @@
-﻿using ErAtlas.Database;
-
-namespace ErAtlas;
+﻿namespace ErAtlas;
 
 public partial class App : Application
 {
-    public App()
+    private readonly LoginPage _loginPage;
+
+    public App(LoginPage loginPage)
     {
         InitializeComponent();
+        _loginPage = loginPage;
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        return new Window(new LoginPage(new DatabaseService()));
+        return new Window(_loginPage);
     }
 }

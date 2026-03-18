@@ -1,4 +1,4 @@
-﻿namespace ErAtlas;
+﻿namespace ErAtlas.Model;
 
 public class User
 {
