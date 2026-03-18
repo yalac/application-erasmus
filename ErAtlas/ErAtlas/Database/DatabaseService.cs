@@ -13,8 +13,32 @@ public class DatabaseService
         _connection.Open();
     }
 
+    public User GetUser(string username)
+    {
+        string query = "GetUsers";
+        SqlCommand command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("username", username);
+        SqlDataReader reader = command.ExecuteReader();
+        reader.Read();
+        return new User
+        {
+            Id = (int)reader["ID"],
+            Username = (string)reader["Username"],
+            Password = (string)reader["Password"]
+        };
+    }
+
     public bool checkUser(string username, string password)
     {
-        return true;
+        try
+        {
+            User user = GetUser(username);
+            return user.Password == password;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }
