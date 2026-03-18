@@ -8,19 +8,8 @@
     FlyoutBehavior="Disabled">
     
     <ShellContent
-        Title="Connexion"
-        ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="login" />
-    
-    <ShellContent
         Title="Accueil"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="main"
         IsVisible="True" />
-
-
-
-
-    
-    
 </Shell>

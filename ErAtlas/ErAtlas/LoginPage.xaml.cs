@@ -1,10 +1,12 @@
 ﻿namespace ErAtlas;
-
+using Database;
 public partial class LoginPage
 {
-    public LoginPage()
+    private readonly DatabaseService _databaseService;
+    public LoginPage(DatabaseService databaseService)
     {
         InitializeComponent();
+        _databaseService = databaseService;
     }
 
     private async void OnLoginClicked(object sender, EventArgs e)
@@ -18,17 +20,18 @@ public partial class LoginPage
             ErrorLabel.IsVisible = true;
             return;
         }
-
-        if (User.ValidateCredentials(username, password))
+        
+        bool isValidUser = _databaseService.checkUser(username, password);
+        
+        if (isValidUser)
         {
-            ErrorLabel.IsVisible = false;
-            await Shell.Current.GoToAsync("//main");
+            Application.Current.MainPage = new AppShell();
         }
         else
         {
             ErrorLabel.Text = "Nom d'utilisateur ou mot de passe incorrect.";
             ErrorLabel.IsVisible = true;
-            PasswordEntry.Text = string.Empty;
         }
+        
     }
 }
