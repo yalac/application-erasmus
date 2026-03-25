@@ -25,6 +25,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<DatabaseService>();
         builder.Services.AddSingleton<AppShell>();
         
+        builder.Services.AddSingleton<MyTravelViewModel>();
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
         builder.Services.AddSingleton<TripManagementViewModel>();

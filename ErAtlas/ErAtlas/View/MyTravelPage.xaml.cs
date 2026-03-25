@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ErAtlas.ViewModels;
 
 namespace ErAtlas.View;
 
-public partial class MyTravelPage : ContentPage
+public partial class MyTravelPage
 {
-    public MyTravelPage()
+    public MyTravelPage(MyTravelViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
 }
