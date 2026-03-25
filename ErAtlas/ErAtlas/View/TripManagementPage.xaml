@@ -2,8 +2,103 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ErAtlas.View.TripManagementPage">
+             xmlns:vm="using:ErAtlas.ViewModels"
+             x:Class="ErAtlas.View.TripManagementPage"
+             x:DataType="vm:TripManagementViewModel"
+             BackgroundColor="#1a1a2e">
     <ContentPage.Content>
-        <Label Text="Ici sera la gestion des trajets, pour créer, modifier, ... les voyages. Accesible que par le gestionnaire"></Label>
+        <VerticalStackLayout Spacing="0" Padding="0">
+           
+            <!-- Content Area -->
+            <VerticalStackLayout Spacing="15" Padding="20" VerticalOptions="FillAndExpand">
+                
+                <!-- Title and Button -->
+                <HorizontalStackLayout Spacing="0">
+                    <Label Text="Gestion des trajets" FontSize="28" FontAttributes="Bold" 
+                           TextColor="White" VerticalOptions="Center"/>
+                    <Button Text="＋ Créer un trajet" BackgroundColor="#a855f7" 
+                            TextColor="White" FontSize="16" CornerRadius="20" Padding="20,10"
+                            HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+
+                <!-- Search and Filters -->
+                <HorizontalStackLayout Spacing="15" Padding="15" BackgroundColor="#0f3460">
+                    <Entry Placeholder="Rechercher un trajet..." 
+                           PlaceholderColor="#666666" TextColor="White" 
+                           BackgroundColor="Transparent" HorizontalOptions="FillAndExpand"/>
+                    <Picker Title="Tous les transports" TextColor="White" 
+                            BackgroundColor="Transparent" TitleColor="#666666" 
+                            WidthRequest="150"/>
+                    <Picker Title="Tous les statuts" TextColor="White" 
+                            BackgroundColor="Transparent" TitleColor="#666666" 
+                            WidthRequest="150"/>
+                </HorizontalStackLayout>
+
+                <!-- CollectionView for Trips -->
+                <CollectionView SelectionMode="Single" BackgroundColor="Transparent">
+                    <CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>T001|🚌|Paris → Lyon|10/03/2026|14:30|Jean Dupont|Prévu|#0066cc</x:String>
+                            <x:String>T002|✈️🚌|Paris → Tartu|15/03/2026|09:15|Marie Martin|Prévu|#0066cc</x:String>
+                            <x:String>T003|✈️|Lyon → Marseille|05/03/2026|09:15|Pierre Bernard|Terminé|#16a34a</x:String>
+                            <x:String>T004|🚌|Marseille → Nice|08/03/2026|16:00|Sophie Dubois|En cours|#7c3aed</x:String>
+                        </x:Array>
+                    </CollectionView.ItemsSource>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="0,8" CornerRadius="12" BackgroundColor="#0f1419" 
+                                   Padding="20" HasShadow="False" BorderColor="#2a2f3f" >
+                                <Grid ColumnDefinitions="80,120,180,140,140,100,*" ColumnSpacing="20">
+                                    <!-- ID -->
+                                    <Label Text="T001" TextColor="#e0e7ff" FontSize="12" FontAttributes="Bold" VerticalOptions="Center"/>
+                                    
+                                    <!-- Type(s) -->
+                                    <Frame Grid.Column="1" CornerRadius="12" BackgroundColor="#a855f7" 
+                                           Padding="8" HasShadow="False" WidthRequest="45" HeightRequest="45"
+                                           VerticalOptions="Center">
+                                        <Label Text="🚌" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    </Frame>
+                                    
+                                    <!-- Trajet -->
+                                    <Label Text="Paris → Lyon" TextColor="#e0e7ff" FontSize="12" 
+                                           Grid.Column="2" VerticalOptions="Center"/>
+                                    
+                                    <!-- Date/Heure -->
+                                    <VerticalStackLayout Grid.Column="3" Spacing="3" VerticalOptions="Center">
+                                        <Label Text="10/03/2026" TextColor="#e0e7ff" FontSize="12" FontAttributes="Bold"/>
+                                        <Label Text="14:30" TextColor="#999999" FontSize="11"/>
+                                    </VerticalStackLayout>
+                                    
+                                    <!-- Voyageur -->
+                                    <Label Text="Jean Dupont" TextColor="#e0e7ff" FontSize="12" 
+                                           Grid.Column="4" VerticalOptions="Center"/>
+                                    
+                                    <!-- Statut -->
+                                    <Frame Grid.Column="5" CornerRadius="15" BackgroundColor="#0066cc" 
+                                           Padding="12,6" HasShadow="False" VerticalOptions="Center" 
+                                           HorizontalOptions="Center">
+                                        <Label Text="Prévu" TextColor="White" FontSize="11" FontAttributes="Bold" VerticalOptions="Center"/>
+                                    </Frame>
+                                    
+                                    <!-- Actions -->
+                                    <HorizontalStackLayout Grid.Column="6" Spacing="12" VerticalOptions="Center">
+                                        <Frame CornerRadius="8" BackgroundColor="#a855f7" 
+                                               Padding="10,6" HasShadow="False">
+                                            <Button Text="Éditer" TextColor="White" FontSize="11" FontAttributes="Bold"/>
+                                        </Frame>
+                                        <Frame CornerRadius="8" BackgroundColor="#dc2626" 
+                                               Padding="10,6" HasShadow="False">
+                                            <Button Text="Supprimer" TextColor="White" FontSize="11" FontAttributes="Bold"/>
+                                        </Frame>
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -14,7 +14,8 @@
             <Label Text="Connexion"
                    FontSize="26"
                    FontAttributes="Bold"
-                   HorizontalTextAlignment="Center" />
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black"/>
 
             <Entry Placeholder="Nom d'utilisateur"
                    Text="{Binding Username}"
