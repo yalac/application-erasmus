@@ -21,16 +21,15 @@ public class DatabaseService
         string query = "PS_VerificationConnexion";
         using var command = new SqlCommand(query, _connection);
         command.CommandType = System.Data.CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("username", username);
+        command.Parameters.AddWithValue("@username", username);
         using var reader = command.ExecuteReader();
-        reader.Read();
-        if (!reader.HasRows)
+        if (!reader.Read())
             return null;
         return new User
         {
-            Id = (int)reader["ID"],
-            Username = (string)reader["Username"],
-            Password = (string)reader["Password"]
+            Id = (int)reader["IDUtilisateur"],
+            Username = (string)reader["Login"],
+            Password = (string)reader["MotDePasse"]
         };
     }
 
@@ -49,7 +48,8 @@ public class DatabaseService
                 //string hashString = Encoding.UTF8.GetString(hashBytes);
                 string hashString = BitConverter.ToString(hashBytes).Replace("-", "");
                 Console.WriteLine($"The SHA256 hash is: {hashString}");
-                return user.Password == hashString;
+                string dbHash = user.Password.Trim().Replace("-", "");
+                return string.Equals(dbHash, hashString, StringComparison.OrdinalIgnoreCase);
             }
         }
         catch (Exception)
