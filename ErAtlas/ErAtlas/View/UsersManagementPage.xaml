@@ -2,8 +2,108 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ErAtlas.View.UsersManagementPage">
-    <ContentPage.Content>
-        <Label Text="Ici sera la gestion des utilisateur, pour créer, modifier, ... les utilisateurs. Accesible que par le gestionnaire"></Label>
-    </ContentPage.Content>
+             xmlns:vm="clr-namespace:ErAtlas.ViewModels"
+             x:Class="ErAtlas.View.UsersManagementPage"
+             x:DataType="vm:UsersManagementViewModel"
+             Title="Gestion des utilisateurs"
+             BackgroundColor="#F5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="600">
+            <Label Text="Gestion des utilisateurs"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   TextColor="Black" />
+
+            <Label Text="Creer, modifier et gerer les comptes utilisateurs (acces gestionnaire)."
+                   FontSize="13"
+                   TextColor="#555555" />
+
+            <Button Text="Nouveau utilisateur"
+                    Command="{Binding AffichageFormulaireDeCreationCommand}"
+                    BackgroundColor="#0D47A1"
+                    TextColor="White"
+                    CornerRadius="8" />
+
+            <VerticalStackLayout Spacing="10"
+                                 Padding="16"
+                                 BackgroundColor="White"
+                                 IsVisible="{Binding FormulaireVisible}">
+
+                <Label Text="Formulaire de creation"
+                       FontAttributes="Bold"
+                       FontSize="18" />
+
+                <HorizontalStackLayout>    
+                    <Label Text="Nom : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="Entrez votre nom" Text="{Binding Nom}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Prénom : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="Entrez votre prénom" Text="{Binding Prenom}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Email : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="jean.dujardin@sasuke.piece" Text="{Binding Email}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Login : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="Entrez votre nom d'utilisateur" Text="{Binding Login}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                        <Label Text="Mot de passe : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="Saisissez votre mot de passe" IsPassword="True" Text="{Binding MotDePasse}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Numéro de téléphone : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="ex. 0613941625" Text="{Binding NumeroTelephone}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                        <Label Text="Adresse : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="Entrez votre adresse" Text="{Binding Adresse}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                        <Label Text="Code postal : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="ex. 27910" Text="{Binding CodePostal}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                        <Label Text="Ville : " TextColor="#555555" VerticalOptions="Center" />
+                    <Entry Placeholder="Saisissez votre ville" Text="{Binding Ville}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="2" VerticalOptions="Center">
+                    <Label Text="Gestionnaire" TextColor="#555555" VerticalOptions="Center" />
+                    <Switch IsToggled="{Binding Gestionnaire}"
+                            VerticalOptions="Center" 
+                            OnColor="DarkOrange" 
+                            ThumbColor="Green" />
+                </HorizontalStackLayout>
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}" />
+
+                <Label Text="{Binding ErrorMessage}"
+                       TextColor="Red"
+                       IsVisible="{Binding IsErrorVisible}" />
+
+                <HorizontalStackLayout Spacing="8">
+                    <Button Text="Creer"
+                            Command="{Binding CreationUtilisateurCommand}"
+                            BackgroundColor="#2E7D32"
+                            TextColor="White"
+                            CornerRadius="8" />
+
+                    <Button Text="Annuler"
+                            Command="{Binding AnnulerCreationCommand}"
+                            BackgroundColor="#9E9E9E"
+                            TextColor="White"
+                            CornerRadius="8" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <Label Text="{Binding SuccessMessage}"
+                   TextColor="Green"
+                   IsVisible="{Binding IsSuccessVisible}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
+
