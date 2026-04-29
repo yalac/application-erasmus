@@ -1,259 +1,265 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:ErAtlas.ViewModels"
-             x:Name="PageRoot"
+             xmlns:vm="using:ErAtlas.ViewModels"
              x:Class="ErAtlas.View.MyTravelPage"
              x:DataType="vm:MyTravelViewModel"
-             BackgroundColor="#0A0014">
-    <ContentPage.Content>
+             BackgroundColor="#0F0A1A"
+             Title="Mes trajets">
 
-        <Grid Padding="24,18" RowDefinitions="Auto,*" BackgroundColor="#0A0014">
-            <!-- Header avec gradient -->
-            <VerticalStackLayout Spacing="4">
-                <Label Text="Mes Trajets"
+    <ContentPage.Resources>
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Padding" Value="20,12" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8B5CF6" Offset="0.0" />
+                        <GradientStop Color="#EC4899" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FilterEntry" TargetType="Entry">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="PlaceholderColor" Value="#9CA3AF" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HeightRequest" Value="46" />
+        </Style>
+
+        <Style x:Key="FilterPicker" TargetType="Picker">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="TitleColor" Value="#9CA3AF" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HeightRequest" Value="46" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+
+            <!-- Header -->
+            <Border BackgroundColor="#1A1625"
+                    Stroke="#2D2440"
+                    StrokeShape="RoundRectangle 28"
+                    Padding="22">
+                <Border.Shadow>
+                    <Shadow Brush="#8B5CF6" Offset="0,8" Radius="20" Opacity="0.18" />
+                </Border.Shadow>
+
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Mes trajets"
+                               TextColor="White"
+                               FontSize="28"
+                               FontAttributes="Bold" />
+                        <Label Text="Retrouvez et gérez tous vos déplacements en un seul endroit"
+                               TextColor="#B8A0E0"
+                               FontSize="13"
+                               Opacity="0.9" />
+                    </VerticalStackLayout>
+
+                    <Button Grid.Column="1"
+                            Text="+ Nouveau trajet"
+                            Style="{StaticResource RoundedButton}"
+                            VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Stats -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                <Border BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding Travels.Count}"
+                               TextColor="White"
+                               FontSize="24"
+                               FontAttributes="Bold" />
+                        <Label Text="Trajets" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1"
+                        BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="•"
+                               TextColor="#EC4899"
+                               FontSize="24"
+                               FontAttributes="Bold" />
+                        <Label Text="En cours" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="2"
+                        BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="•"
+                               TextColor="#10B981"
+                               FontSize="24"
+                               FontAttributes="Bold" />
+                        <Label Text="Terminés" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Filtres -->
+            <Border BackgroundColor="#1A1625"
+                    Stroke="#2D2440"
+                    StrokeShape="RoundRectangle 24"
+                    Padding="18">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Filtres"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+                        <Border BackgroundColor="#0F0A1A"
+                                Stroke="#2D2440"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10">
+                            <Entry Style="{StaticResource FilterEntry}"
+                                   Placeholder="Rechercher un trajet..." />
+                        </Border>
+
+                        <Border Grid.Column="2"
+                                BackgroundColor="#0F0A1A"
+                                Stroke="#2D2440"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10">
+                            <Picker Style="{StaticResource FilterPicker}"
+                                    Title="Tous les transports" />
+                        </Border>
+
+                        <Border Grid.Column="4"
+                                BackgroundColor="#0F0A1A"
+                                Stroke="#2D2440"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10">
+                            <Picker Style="{StaticResource FilterPicker}"
+                                    Title="Tous les statuts" />
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Liste -->
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Liste des trajets"
                        TextColor="White"
-                       FontSize="32"
+                       FontSize="18"
                        FontAttributes="Bold" />
-                <Label Text="Explorez vos destinations"
-                       TextColor="#B8A0E0"
-                       FontSize="14"
-                       Opacity="0.8" />
+
+                <CollectionView ItemsSource="{Binding Travels}"
+                                SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="14" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:TravelCardItem">
+                            <Border BackgroundColor="#1A1625"
+                                    Stroke="#2D2440"
+                                    StrokeShape="RoundRectangle 24"
+                                    Padding="18">
+                                <Border.Shadow>
+                                    <Shadow Brush="#8B5CF6" Offset="0,6" Radius="18" Opacity="0.15" />
+                                </Border.Shadow>
+
+                                <Grid RowDefinitions="Auto,Auto,Auto"
+                                      ColumnDefinitions="Auto,*,Auto"
+                                      RowSpacing="10"
+                                      ColumnSpacing="14">
+
+                                    <!-- Icône -->
+                                    <Border BackgroundColor="#8B5CF6"
+                                            StrokeShape="RoundRectangle 16"
+                                            Padding="14"
+                                            WidthRequest="58"
+                                            HeightRequest="58">
+                                        <Label Text="{Binding IconGlyph}"
+                                               FontSize="24"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
+                                    </Border>
+
+                                    <!-- Infos -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                        <Label Text="{Binding RouteText}"
+                                               TextColor="White"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation" />
+
+                                        <Label Text="{Binding DateText}"
+                                               TextColor="#B8A0E0"
+                                               FontSize="13" />
+
+                                        <Label Text="{Binding TimeText}"
+                                               TextColor="#D8CCFF"
+                                               FontSize="13" />
+                                    </VerticalStackLayout>
+
+                                    <!-- Statut -->
+                                    <Border Grid.Column="2"
+                                            BackgroundColor="{Binding StatusBackgroundColor}"
+                                            StrokeShape="RoundRectangle 14"
+                                            Padding="12,7"
+                                            VerticalOptions="Start">
+                                        <Label Text="{Binding StatusText}"
+                                               TextColor="{Binding StatusTextColor}"
+                                               FontSize="12"
+                                               FontAttributes="Bold" />
+                                    </Border>
+
+                                    <!-- Via -->
+                                    <Label Grid.Row="1"
+                                           Grid.ColumnSpan="3"
+                                           Text="{Binding ViaText}"
+                                           TextColor="#D8CCFF"
+                                           FontSize="13"
+                                           IsVisible="{Binding HasVia}" />
+
+                                    <!-- Tags -->
+                                    <HorizontalStackLayout Grid.Row="2"
+                                                           Grid.ColumnSpan="3"
+                                                           Spacing="8"
+                                                           IsVisible="{Binding HasTransportModes}"
+                                                           BindableLayout.ItemsSource="{Binding TransportModes}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Border BackgroundColor="#241149"
+                                                        StrokeShape="RoundRectangle 12"
+                                                        Padding="10,6">
+                                                    <Label Text="{Binding .}"
+                                                           TextColor="#E9D9FF"
+                                                           FontSize="12"
+                                                           FontAttributes="Bold" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
 
-            <!-- CollectionView avec cartes améliorées -->
-            <CollectionView Grid.Row="1"
-                            ItemsSource="{Binding Travels}"
-                            SelectionMode="None">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical"
-                                     Span="{OnIdiom Phone=1, Tablet=2, Desktop=3}"
-                                     VerticalItemSpacing="24"
-                                     HorizontalItemSpacing="24" />
-                </CollectionView.ItemsLayout>
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:TravelCardItem">
-                        <!-- Conteneur avec ombre -->
-                        <Border BackgroundColor="#1A0E3A"
-                                Stroke="#4A3A7F"
-                                StrokeThickness="1"
-                                StrokeShape="RoundRectangle 24"
-                                Padding="0"
-                                MinimumHeightRequest="280">
-                            <!-- Shadow Effect -->
-                            <Border.Shadow>
-                                <Shadow Brush="#A44AF7"
-                                        Offset="0,8"
-                                        Radius="20"
-                                        Opacity="0.3" />
-                            </Border.Shadow>
-
-                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto"
-                                  ColumnDefinitions="Auto,*,Auto"
-                                  Padding="20"
-                                  RowSpacing="12">
-
-                                <!-- Row 0: Icon + Status + Segments -->
-                                <!-- Icône avec glow effect -->
-                                <Border Grid.Row="0"
-                                        Grid.Column="0"
-                                        BackgroundColor="#C24CF5"
-                                        StrokeThickness="2"
-                                        Stroke="#E9A8FF"
-                                        StrokeShape="RoundRectangle 18"
-                                        Padding="0"
-                                        WidthRequest="80"
-                                        HeightRequest="80">
-                                    <Border.Shadow>
-                                        <Shadow Brush="#C24CF5"
-                                                Offset="0,4"
-                                                Radius="16"
-                                                Opacity="0.6" />
-                                    </Border.Shadow>
-                                    <Label Text="{Binding IconGlyph}"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center"
-                                           FontSize="40" />
-                                </Border>
-
-                                <!-- Status Badge avec animation -->
-                                <Border Grid.Row="0"
-                                        Grid.Column="2"
-                                        BackgroundColor="{Binding StatusBackgroundColor}"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 16"
-                                        Padding="16,8"
-                                        HorizontalOptions="End"
-                                        VerticalOptions="Start">
-                                    <Border.Shadow>
-                                        <Shadow Brush="{Binding StatusBackgroundColor}"
-                                                Offset="0,2"
-                                                Radius="8"
-                                                Opacity="0.4" />
-                                    </Border.Shadow>
-                                    <Label Text="{Binding StatusText}"
-                                           TextColor="{Binding StatusTextColor}"
-                                           FontSize="13"
-                                           FontAttributes="Bold"
-                                           VerticalTextAlignment="Center" />
-                                </Border>
-
-                                <!-- Segments Badge -->
-                                <Border Grid.Row="0"
-                                        Grid.Column="1"
-                                        BackgroundColor="#7B3FD1"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 14"
-                                        Padding="12,6"
-                                        HorizontalOptions="Start"
-                                        IsVisible="{Binding HasSegments}"
-                                        Margin="12,0,0,0">
-                                    <Label Text="{Binding SegmentsText}"
-                                           TextColor="#F0E0FF"
-                                           FontSize="12"
-                                           FontAttributes="Bold" />
-                                </Border>
-
-                                <!-- Row 1: Route Label -->
-                                <Label Grid.Row="1"
-                                       Grid.ColumnSpan="3"
-                                       Text="TRAJET"
-                                       TextColor="#D4BAFF"
-                                       FontSize="12"
-                                       FontAttributes="Bold"
-                                       Opacity="0.7"
-                                       CharacterSpacing="1.2" />
-
-                                <!-- Row 2: Route Text (grande) -->
-                                <Label Grid.Row="2"
-                                       Grid.ColumnSpan="3"
-                                       Text="{Binding RouteText}"
-                                       TextColor="White"
-                                       FontSize="28"
-                                       FontAttributes="Bold"
-                                       LineBreakMode="TailTruncation" />
-
-                                <!-- Row 3: Via Text -->
-                                <Label Grid.Row="3"
-                                       Grid.ColumnSpan="3"
-                                       Text="{Binding ViaText}"
-                                       TextColor="#D4BAFF"
-                                       FontSize="14"
-                                       IsVisible="{Binding HasVia}"
-                                       Opacity="0.8" />
-
-                                <!-- Row 4: Date et Heure -->
-                                <Grid Grid.Row="4"
-                                      Grid.ColumnSpan="3"
-                                      ColumnDefinitions="*,*"
-                                      ColumnSpacing="16">
-                                    <!-- Date -->
-                                    <Border Grid.Column="0"
-                                            BackgroundColor="#2A1450"
-                                            StrokeThickness="1"
-                                            Stroke="#5A3A90"
-                                            StrokeShape="RoundRectangle 14"
-                                            Padding="14,12">
-                                        <VerticalStackLayout Spacing="4">
-                                            <Label Text="📅 Date"
-                                                   TextColor="#B8A0E0"
-                                                   FontSize="12"
-                                                   FontAttributes="Bold" />
-                                            <Label Text="{Binding DateText}"
-                                                   TextColor="White"
-                                                   FontSize="18"
-                                                   FontAttributes="Bold" />
-                                        </VerticalStackLayout>
-                                    </Border>
-
-                                    <!-- Heure -->
-                                    <Border Grid.Column="1"
-                                            BackgroundColor="#2A1450"
-                                            StrokeThickness="1"
-                                            Stroke="#5A3A90"
-                                            StrokeShape="RoundRectangle 14"
-                                            Padding="14,12">
-                                        <VerticalStackLayout Spacing="4">
-                                            <Label Text="🕐 Heure"
-                                                   TextColor="#B8A0E0"
-                                                   FontSize="12"
-                                                   FontAttributes="Bold" />
-                                            <Label Text="{Binding TimeText}"
-                                                   TextColor="White"
-                                                   FontSize="18"
-                                                   FontAttributes="Bold" />
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </Grid>
-
-                                <!-- Row 5: Transport Modes avec icônes -->
-                                <HorizontalStackLayout Grid.Row="5"
-                                                       Grid.ColumnSpan="3"
-                                                       Spacing="10"
-                                                       BindableLayout.ItemsSource="{Binding TransportModes}"
-                                                       IsVisible="{Binding HasTransportModes}">
-                                    <BindableLayout.ItemTemplate>
-                                        <DataTemplate x:DataType="x:String">
-                                            <Border BackgroundColor="#3A2470"
-                                                    StrokeThickness="1"
-                                                    Stroke="#6A5A90"
-                                                    StrokeShape="RoundRectangle 14"
-                                                    Padding="12,7">
-                                                <Label Text="{Binding .}"
-                                                       TextColor="#E8D4FF"
-                                                       FontSize="13"
-                                                       FontAttributes="Bold" />
-                                            </Border>
-                                        </DataTemplate>
-                                    </BindableLayout.ItemTemplate>
-                                </HorizontalStackLayout>
-
-                                <!-- Row 6: Divider avec gradient -->
-                                <BoxView Grid.Row="6"
-                                         Grid.ColumnSpan="3"
-                                         HeightRequest="1"
-                                         BackgroundColor="#4A3A7F"
-                                         Margin="0,8" />
-
-                                <!-- Row 8: Action Buttons -->
-                                <Grid Grid.Row="8"
-                                      Grid.ColumnSpan="3"
-                                      ColumnDefinitions="*,*"
-                                      ColumnSpacing="12">
-
-                                    <!-- Bouton Détails -->
-                                    <Button Grid.Column="0"
-                                            Text="📍 Détails"
-                                            BackgroundColor="#A44AF7"
-                                            TextColor="White"
-                                            FontAttributes="Bold"
-                                            FontSize="14"
-                                            CornerRadius="16"
-                                            Padding="12,12"
-                                            Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.ShowDetailsCommand}"
-                                            CommandParameter="{Binding .}" />
-
-                                    <!-- Bouton Modifier -->
-                                    <Button Grid.Column="1"
-                                            Text="✏️ Modifier"
-                                            BackgroundColor="#6B3FA0"
-                                            TextColor="White"
-                                            FontAttributes="Bold"
-                                            FontSize="14"
-                                            CornerRadius="16"
-                                            Padding="12,12"
-                                            Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.EditTravelCommand}"
-                                            CommandParameter="{Binding .}" />
-                                </Grid>
-
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </Grid>
-
-    </ContentPage.Content>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

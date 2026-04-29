@@ -1,104 +1,363 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="using:ErAtlas.ViewModels"
              x:Class="ErAtlas.View.TripManagementPage"
              x:DataType="vm:TripManagementViewModel"
-             BackgroundColor="#1a1a2e">
-    <ContentPage.Content>
-        <VerticalStackLayout Spacing="0" Padding="0">
-           
-            <!-- Content Area -->
-            <VerticalStackLayout Spacing="15" Padding="20" VerticalOptions="FillAndExpand">
-                
-                <!-- Title and Button -->
-                <HorizontalStackLayout Spacing="0">
-                    <Label Text="Gestion des trajets" FontSize="28" FontAttributes="Bold" 
-                           TextColor="White" VerticalOptions="Center"/>
-                    <Button Text="＋ Créer un trajet" BackgroundColor="#a855f7" 
-                            TextColor="White" FontSize="16" CornerRadius="20" Padding="20,10"
-                            HorizontalOptions="End"/>
-                </HorizontalStackLayout>
+             BackgroundColor="#0F0A1A"
+             Title="Gestion des trajets">
 
-                <!-- Search and Filters -->
-                <HorizontalStackLayout Spacing="15" Padding="15" BackgroundColor="#0f3460">
-                    <Entry Placeholder="Rechercher un trajet..." 
-                           PlaceholderColor="#666666" TextColor="White" 
-                           BackgroundColor="Transparent" HorizontalOptions="FillAndExpand"/>
-                    <Picker Title="Tous les transports" TextColor="White" 
-                            BackgroundColor="Transparent" TitleColor="#666666" 
-                            WidthRequest="150"/>
-                    <Picker Title="Tous les statuts" TextColor="White" 
-                            BackgroundColor="Transparent" TitleColor="#666666" 
-                            WidthRequest="150"/>
-                </HorizontalStackLayout>
+    <ContentPage.Resources>
+        <Style x:Key="GradientButton" TargetType="Button">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Padding" Value="20,12" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8B5CF6" Offset="0.0" />
+                        <GradientStop Color="#EC4899" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <!-- CollectionView for Trips -->
-                <CollectionView SelectionMode="Single" BackgroundColor="Transparent">
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>T001|🚌|Paris → Lyon|10/03/2026|14:30|Jean Dupont|Prévu|#0066cc</x:String>
-                            <x:String>T002|✈️🚌|Paris → Tartu|15/03/2026|09:15|Marie Martin|Prévu|#0066cc</x:String>
-                            <x:String>T003|✈️|Lyon → Marseille|05/03/2026|09:15|Pierre Bernard|Terminé|#16a34a</x:String>
-                            <x:String>T004|🚌|Marseille → Nice|08/03/2026|16:00|Sophie Dubois|En cours|#7c3aed</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame Margin="0,8" CornerRadius="12" BackgroundColor="#0f1419" 
-                                   Padding="20" HasShadow="False" BorderColor="#2a2f3f" >
-                                <Grid ColumnDefinitions="80,120,180,140,140,100,*" ColumnSpacing="20">
-                                    <!-- ID -->
-                                    <Label Text="T001" TextColor="#e0e7ff" FontSize="12" FontAttributes="Bold" VerticalOptions="Center"/>
-                                    
-                                    <!-- Type(s) -->
-                                    <Frame Grid.Column="1" CornerRadius="12" BackgroundColor="#a855f7" 
-                                           Padding="8" HasShadow="False" WidthRequest="45" HeightRequest="45"
-                                           VerticalOptions="Center">
-                                        <Label Text="🚌" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                    </Frame>
-                                    
-                                    <!-- Trajet -->
-                                    <Label Text="Paris → Lyon" TextColor="#e0e7ff" FontSize="12" 
-                                           Grid.Column="2" VerticalOptions="Center"/>
-                                    
-                                    <!-- Date/Heure -->
-                                    <VerticalStackLayout Grid.Column="3" Spacing="3" VerticalOptions="Center">
-                                        <Label Text="10/03/2026" TextColor="#e0e7ff" FontSize="12" FontAttributes="Bold"/>
-                                        <Label Text="14:30" TextColor="#999999" FontSize="11"/>
-                                    </VerticalStackLayout>
-                                    
-                                    <!-- Voyageur -->
-                                    <Label Text="Jean Dupont" TextColor="#e0e7ff" FontSize="12" 
-                                           Grid.Column="4" VerticalOptions="Center"/>
-                                    
-                                    <!-- Statut -->
-                                    <Frame Grid.Column="5" CornerRadius="15" BackgroundColor="#0066cc" 
-                                           Padding="12,6" HasShadow="False" VerticalOptions="Center" 
-                                           HorizontalOptions="Center">
-                                        <Label Text="Prévu" TextColor="White" FontSize="11" FontAttributes="Bold" VerticalOptions="Center"/>
-                                    </Frame>
-                                    
-                                    <!-- Actions -->
-                                    <HorizontalStackLayout Grid.Column="6" Spacing="12" VerticalOptions="Center">
-                                        <Frame CornerRadius="8" BackgroundColor="#a855f7" 
-                                               Padding="10,6" HasShadow="False">
-                                            <Button Text="Éditer" TextColor="White" FontSize="11" FontAttributes="Bold"/>
-                                        </Frame>
-                                        <Frame CornerRadius="8" BackgroundColor="#dc2626" 
-                                               Padding="10,6" HasShadow="False">
-                                            <Button Text="Supprimer" TextColor="White" FontSize="11" FontAttributes="Bold"/>
-                                        </Frame>
-                                    </HorizontalStackLayout>
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+        <Style x:Key="DarkEntry" TargetType="Entry">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="PlaceholderColor" Value="#9CA3AF" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HeightRequest" Value="46" />
+        </Style>
+
+        <Style x:Key="DarkPicker" TargetType="Picker">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="TitleColor" Value="#9CA3AF" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HeightRequest" Value="46" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+
+            <!-- Header -->
+            <Border BackgroundColor="#1A1625"
+                    Stroke="#2D2440"
+                    StrokeShape="RoundRectangle 28"
+                    Padding="22">
+                <Border.Shadow>
+                    <Shadow Brush="#8B5CF6" Offset="0,8" Radius="20" Opacity="0.18" />
+                </Border.Shadow>
+
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Gestion des trajets"
+                               TextColor="White"
+                               FontSize="28"
+                               FontAttributes="Bold" />
+                        <Label Text="Pilotez vos trajets, filtrez-les et préparez les prochaines étapes"
+                               TextColor="#B8A0E0"
+                               FontSize="13"
+                               Opacity="0.9" />
+                    </VerticalStackLayout>
+
+                    <Button Grid.Column="1"
+                            Text="＋ Nouveau trajet"
+                            Style="{StaticResource GradientButton}"
+                            VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Stats -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                <Border BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="24" TextColor="White" FontSize="24" FontAttributes="Bold" />
+                        <Label Text="Trajets au total" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1"
+                        BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="6" TextColor="White" FontSize="24" FontAttributes="Bold" />
+                        <Label Text="En cours" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="2"
+                        BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="18" TextColor="White" FontSize="24" FontAttributes="Bold" />
+                        <Label Text="Terminés" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Filters -->
+            <Border BackgroundColor="#1A1625"
+                    Stroke="#2D2440"
+                    StrokeShape="RoundRectangle 24"
+                    Padding="18">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Filtres"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+
+                    <Grid ColumnDefinitions="*,16,*,16,*" RowDefinitions="Auto">
+                        <Border BackgroundColor="#0F0A1A"
+                                Stroke="#2D2440"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10">
+                            <Entry Style="{StaticResource DarkEntry}"
+                                   Placeholder="Rechercher un trajet..." />
+                        </Border>
+
+                        <Border Grid.Column="2"
+                                BackgroundColor="#0F0A1A"
+                                Stroke="#2D2440"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10">
+                            <Picker Style="{StaticResource DarkPicker}"
+                                    Title="Tous les transports" />
+                        </Border>
+
+                        <Border Grid.Column="4"
+                                BackgroundColor="#0F0A1A"
+                                Stroke="#2D2440"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10">
+                            <Picker Style="{StaticResource DarkPicker}"
+                                    Title="Tous les statuts" />
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Liste des trajets -->
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Trajets récents"
+                       TextColor="White"
+                       FontSize="18"
+                       FontAttributes="Bold" />
+
+                <!-- Carte 1 -->
+                <Border BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 24"
+                        Padding="18">
+                    <Border.Shadow>
+                        <Shadow Brush="#8B5CF6" Offset="0,6" Radius="18" Opacity="0.15" />
+                    </Border.Shadow>
+
+                    <Grid RowDefinitions="Auto,Auto,Auto"
+                          ColumnDefinitions="Auto,*,Auto"
+                          RowSpacing="10"
+                          ColumnSpacing="14">
+
+                        <Border BackgroundColor="#8B5CF6"
+                                StrokeShape="RoundRectangle 16"
+                                Padding="14"
+                                WidthRequest="58"
+                                HeightRequest="58">
+                            <Label Text="🚌"
+                                   FontSize="24"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="3">
+                            <Label Text="Paris → Lyon"
+                                   TextColor="White"
+                                   FontSize="18"
+                                   FontAttributes="Bold" />
+                            <Label Text="10/03/2026 • 14:30"
+                                   TextColor="#B8A0E0"
+                                   FontSize="13" />
+                            <Label Text="Jean Dupont"
+                                   TextColor="#D8CCFF"
+                                   FontSize="13" />
+                        </VerticalStackLayout>
+
+                        <Border Grid.Column="2"
+                                BackgroundColor="#173A8A"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="12,7"
+                                VerticalOptions="Start">
+                            <Label Text="Prévu"
+                                   TextColor="#7CC6FF"
+                                   FontSize="12"
+                                   FontAttributes="Bold" />
+                        </Border>
+
+                        <HorizontalStackLayout Grid.Row="2"
+                                               Grid.ColumnSpan="3"
+                                               Spacing="8">
+                            <Border BackgroundColor="#241149"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="10,6">
+                                <Label Text="Bus"
+                                       TextColor="#E9D9FF"
+                                       FontSize="12"
+                                       FontAttributes="Bold" />
+                            </Border>
+
+                            <Border BackgroundColor="#241149"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="10,6">
+                                <Label Text="France"
+                                       TextColor="#E9D9FF"
+                                       FontSize="12"
+                                       FontAttributes="Bold" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Carte 2 -->
+                <Border BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 24"
+                        Padding="18">
+                    <Grid RowDefinitions="Auto,Auto,Auto"
+                          ColumnDefinitions="Auto,*,Auto"
+                          RowSpacing="10"
+                          ColumnSpacing="14">
+
+                        <Border BackgroundColor="#EC4899"
+                                StrokeShape="RoundRectangle 16"
+                                Padding="14"
+                                WidthRequest="58"
+                                HeightRequest="58">
+                            <Label Text="✈️"
+                                   FontSize="24"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="3">
+                            <Label Text="Paris → Tartu"
+                                   TextColor="White"
+                                   FontSize="18"
+                                   FontAttributes="Bold" />
+                            <Label Text="15/03/2026 • 09:15"
+                                   TextColor="#B8A0E0"
+                                   FontSize="13" />
+                            <Label Text="Marie Martin"
+                                   TextColor="#D8CCFF"
+                                   FontSize="13" />
+                        </VerticalStackLayout>
+
+                        <Border Grid.Column="2"
+                                BackgroundColor="#173A8A"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="12,7"
+                                VerticalOptions="Start">
+                            <Label Text="Prévu"
+                                   TextColor="#7CC6FF"
+                                   FontSize="12"
+                                   FontAttributes="Bold" />
+                        </Border>
+
+                        <HorizontalStackLayout Grid.Row="2"
+                                               Grid.ColumnSpan="3"
+                                               Spacing="8">
+                            <Border BackgroundColor="#241149"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="10,6">
+                                <Label Text="Avion"
+                                       TextColor="#E9D9FF"
+                                       FontSize="12"
+                                       FontAttributes="Bold" />
+                            </Border>
+
+                            <Border BackgroundColor="#241149"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="10,6">
+                                <Label Text="Bus"
+                                       TextColor="#E9D9FF"
+                                       FontSize="12"
+                                       FontAttributes="Bold" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Carte 3 -->
+                <Border BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 24"
+                        Padding="18">
+                    <Grid RowDefinitions="Auto,Auto,Auto"
+                          ColumnDefinitions="Auto,*,Auto"
+                          RowSpacing="10"
+                          ColumnSpacing="14">
+
+                        <Border BackgroundColor="#10B981"
+                                StrokeShape="RoundRectangle 16"
+                                Padding="14"
+                                WidthRequest="58"
+                                HeightRequest="58">
+                            <Label Text="🛫"
+                                   FontSize="24"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="3">
+                            <Label Text="Lyon → Marseille"
+                                   TextColor="White"
+                                   FontSize="18"
+                                   FontAttributes="Bold" />
+                            <Label Text="05/03/2026 • 09:15"
+                                   TextColor="#B8A0E0"
+                                   FontSize="13" />
+                            <Label Text="Pierre Bernard"
+                                   TextColor="#D8CCFF"
+                                   FontSize="13" />
+                        </VerticalStackLayout>
+
+                        <Border Grid.Column="2"
+                                BackgroundColor="#105244"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="12,7"
+                                VerticalOptions="Start">
+                            <Label Text="Terminé"
+                                   TextColor="#2AF5AF"
+                                   FontSize="12"
+                                   FontAttributes="Bold" />
+                        </Border>
+
+                        <HorizontalStackLayout Grid.Row="2"
+                                               Grid.ColumnSpan="3"
+                                               Spacing="8">
+                            <Border BackgroundColor="#241149"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="10,6">
+                                <Label Text="Avion"
+                                       TextColor="#E9D9FF"
+                                       FontSize="12"
+                                       FontAttributes="Bold" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
 
             </VerticalStackLayout>
 
         </VerticalStackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>
