@@ -114,4 +114,50 @@ public class DatabaseService
             Gestionnaire = gestionnaire
         };
     }
+    
+    
+    // Permet de lire la PS et de récupérer tous les utilisateurs de la base de données
+    public List<Utilisateur> LireUtilisateurs()
+    {
+        var utilisateurs = new List<Utilisateur>();
+        string query = "PS_LireUtilisateurs";
+        using var command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        using var reader = command.ExecuteReader();
+        while (reader.Read())
+        {
+            utilisateurs.Add(new Utilisateur
+            {
+                Id = reader["IDUtilisateur"] is DBNull ? 0 : (int)reader["IDUtilisateur"],
+                Nom = reader["Nom"] is DBNull ? string.Empty : (string) reader["Nom"],
+                Prenom = reader["Prenom"] is DBNull ? string.Empty : (string) reader["Prenom"],
+                Email = reader["Email"] is DBNull ? string.Empty : (string) reader["Email"],
+                NumeroDeTelephone = reader["NumeroTelephone"] is DBNull ? 0 : (int) reader["NumeroTelephone"],
+                Adresse = reader["Adresse"] is DBNull ? string.Empty : (string) reader["Adresse"],
+                CodePostal = reader["CodePostal"] is DBNull ? 0 : (int) reader["CodePostal"],
+                Ville = reader["Ville"] is DBNull ? string.Empty : (string) reader["Ville"],
+                Gestionnaire = reader["Gestionnaire"] is DBNull ? false : (bool) reader["Gestionnaire"]
+            });
+        }
+
+        return utilisateurs;
+    }
+    
+    // Permet de lire la PS et de supprimer un utilisateurs de la base de données et de l'application
+    public bool SupprimerUtilisateur(int idUtilisateur)
+    {
+        string query = "PS_SupprimerUtilisateur";
+        using var command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@IDUtilisateur", idUtilisateur);
+        try
+        {
+            int rowsAffected = command.ExecuteNonQuery();
+            return rowsAffected > 0;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
 }
