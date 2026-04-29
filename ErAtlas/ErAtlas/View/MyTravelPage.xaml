@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ErAtlas.ViewModels"
+             xmlns:m="clr-namespace:ErAtlas.Model"
              x:Name="PageRoot"
              x:Class="ErAtlas.View.MyTravelPage"
              x:DataType="vm:MyTravelViewModel">
@@ -26,7 +27,7 @@
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:TravelCardItem">
+                    <DataTemplate x:DataType="m:Trajet">
                         <Border BackgroundColor="#1A0E3A"
                                 Stroke="#3D2B66"
                                 StrokeShape="RoundRectangle 20"
@@ -43,37 +44,25 @@
                                         Padding="0"
                                         WidthRequest="70"
                                         HeightRequest="70">
-                                    <Label Text="{Binding IconGlyph}"
+                                    <Image Source="{Binding IconSource}"
                                            HorizontalOptions="Center"
                                            VerticalOptions="Center"
-                                           FontSize="34" />
+                                           WidthRequest="34"
+                                           HeightRequest="34"
+                                           Aspect="AspectFit" />
                                 </Border>
 
                                 <Border Grid.Row="0"
                                         Grid.Column="2"
-                                        BackgroundColor="{Binding StatusBackgroundColor}"
+                                        BackgroundColor="#173A8A"
                                         StrokeThickness="0"
                                         StrokeShape="RoundRectangle 14"
                                         Padding="14,6"
                                         HorizontalOptions="End">
-                                    <Label Text="{Binding StatusText}"
-                                           TextColor="{Binding StatusTextColor}"
+                                    <Label Text="{Binding Statut}"
+                                           TextColor="#7CC6FF"
                                            FontSize="14"
                                            VerticalTextAlignment="Center" />
-                                </Border>
-
-                                <Border Grid.Row="0"
-                                        Grid.Column="1"
-                                        BackgroundColor="#6B2BC0"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 12"
-                                        Padding="10,4"
-                                        HorizontalOptions="Start"
-                                        IsVisible="{Binding HasSegments}"
-                                        Margin="8,8,0,0">
-                                    <Label Text="{Binding SegmentsText}"
-                                           TextColor="#E9C8FF"
-                                           FontSize="13" />
                                 </Border>
 
                                 <Label Grid.Row="1"
@@ -85,18 +74,11 @@
 
                                 <Label Grid.Row="2"
                                        Grid.ColumnSpan="3"
-                                       Text="{Binding RouteText}"
+                                       Text="{Binding Route}"
                                        TextColor="White"
                                        FontSize="34"
                                        FontAttributes="Bold"
                                        LineBreakMode="TailTruncation" />
-
-                                <Label Grid.Row="3"
-                                       Grid.ColumnSpan="3"
-                                       Text="{Binding ViaText}"
-                                       TextColor="#C9BAEE"
-                                       FontSize="16"
-                                       IsVisible="{Binding HasVia}" />
 
                                 <Grid Grid.Row="4"
                                       Grid.ColumnSpan="3"
@@ -106,42 +88,23 @@
                                         <Label Text="Date"
                                                TextColor="#BDA6E9"
                                                FontSize="16" />
-                                        <Label Text="{Binding DateText}"
+                                        <Label Text="{Binding DateDepart}"
                                                TextColor="White"
                                                FontSize="30"
                                                FontAttributes="Bold" />
                                     </VerticalStackLayout>
 
                                     <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                        <Label Text="Heure"
+                                        <Label Text="Date"
                                                TextColor="#BDA6E9"
                                                FontSize="16" />
-                                        <Label Text="{Binding TimeText}"
+                                        <Label Text="{Binding DateArrivee}"
                                                TextColor="White"
                                                FontSize="30"
                                                FontAttributes="Bold" />
                                     </VerticalStackLayout>
                                 </Grid>
-
-                                <HorizontalStackLayout Grid.Row="5"
-                                                       Grid.ColumnSpan="3"
-                                                       Spacing="8"
-                                                       Margin="0,2,0,0"
-                                                       BindableLayout.ItemsSource="{Binding TransportModes}"
-                                                       IsVisible="{Binding HasTransportModes}">
-                                    <BindableLayout.ItemTemplate>
-                                        <DataTemplate x:DataType="x:String">
-                                            <Border BackgroundColor="#241149"
-                                                    StrokeThickness="0"
-                                                    StrokeShape="RoundRectangle 12"
-                                                    Padding="10,5">
-                                                <Label Text="{Binding .}"
-                                                       TextColor="#E4D8FF"
-                                                       FontSize="13" />
-                                            </Border>
-                                        </DataTemplate>
-                                    </BindableLayout.ItemTemplate>
-                                </HorizontalStackLayout>
+                                
 
                                 <BoxView Grid.Row="6"
                                          Grid.ColumnSpan="3"
