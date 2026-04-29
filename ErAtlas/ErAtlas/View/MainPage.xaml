@@ -1,21 +1,203 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ErAtlas.MainPage"
-             Title="Accueil">
+<ContentPage
+    x:Class="ErAtlas.View.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#0F0A1A"
+    Title="Accueil">
 
-    <Grid Padding="24">
-        <VerticalStackLayout Spacing="12" VerticalOptions="Center">
-            <Label Text="Bienvenue sur ErAtlas"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   HorizontalTextAlignment="Center" />
+    <ContentPage.Resources>
+        <!-- Bouton arrondi avec gradient -->
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Padding" Value="20,12" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8B5CF6" Offset="0.0" />
+                        <GradientStop Color="#EC4899" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <Label Text="Connexion reussie."
-                   FontSize="16"
-                   TextColor="#666666"
-                   HorizontalTextAlignment="Center" />
+        <!-- Entry arrondi -->
+        <Style x:Key="RoundedEntry" TargetType="Entry">
+            <Setter Property="BackgroundColor" Value="#1A1625" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="PlaceholderColor" Value="#9CA3AF" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HeightRequest" Value="48" />
+            <Setter Property="Margin" Value="0" />
+            <!-- Utilisé dans une Border pour l'arrondi -->
+        </Style>
+
+        <!-- Carte transport -->
+        <Style x:Key="TransportCard" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#1A1625" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="HasShadow" Value="True" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="BorderColor" Value="#2D2440" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="32" Padding="24">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Planifiez votre trajet"
+                       TextColor="White"
+                       FontSize="22"
+                       FontAttributes="Bold" />
+                <Label Text="Trouvez rapidement les meilleures options"
+                       TextColor="#B8A0E0"
+                       FontSize="13"
+                       Opacity="0.9" />
+            </VerticalStackLayout>
+
+            <!-- Card recherche -->
+            <Frame CornerRadius="24"
+                   BackgroundColor="#1A1625"
+                   BorderColor="#2D2440"
+                   HasShadow="True"
+                   Padding="20">
+                <VerticalStackLayout Spacing="16">
+
+                    <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,Auto,Auto">
+                        <!-- DÉPART -->
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                            <Label Text="D'où partez-vous ?" TextColor="#9CA3AF" FontSize="12" />
+                            <Border BackgroundColor="#1A1625" Stroke="#2D2440" StrokeShape="RoundRectangle 12" Padding="8">
+                                <Entry Style="{StaticResource RoundedEntry}"
+                                       x:Name="DepartureEntry"
+                                       Placeholder="Ville de départ" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- ARRIVÉE -->
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="2" Spacing="6">
+                            <Label Text="Où allez-vous ?" TextColor="#9CA3AF" FontSize="12" />
+                            <Border BackgroundColor="#1A1625" Stroke="#2D2440" StrokeShape="RoundRectangle 12" Padding="8">
+                                <Entry Style="{StaticResource RoundedEntry}"
+                                       x:Name="ArrivalEntry"
+                                       Placeholder="Ville d'arrivée" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- DATE -->
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6" Margin="0,8,0,0">
+                            <Label Text="Date" TextColor="#9CA3AF" FontSize="12" />
+                            <Border BackgroundColor="#1A1625" Stroke="#2D2440" StrokeShape="RoundRectangle 12" Padding="8">
+                                <DatePicker x:Name="TravelDate" TextColor="White" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- HEURE -->
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="6" Margin="0,8,0,0">
+                            <Label Text="Heure" TextColor="#9CA3AF" FontSize="12" />
+                            <Border BackgroundColor="#1A1625" Stroke="#2D2440" StrokeShape="RoundRectangle 12" Padding="8">
+                                <Entry Style="{StaticResource RoundedEntry}" x:Name="TravelTime" Placeholder="14:30" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- BOUTON RECHERCHER -->
+                        <Button Grid.Row="2" Grid.Column="0"
+                                Style="{StaticResource RoundedButton}"
+                                Text="Rechercher"
+                                 />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Moyens de transport -->
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Moyens de transport" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                <Grid ColumnDefinitions="*,16,*,16,*,16,*">
+                    <!-- Avion -->
+                    <Frame Grid.Column="0" Style="{StaticResource TransportCard}">
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 16" Background="#3B82F6">
+                                <Image Source="plane.svg" Aspect="AspectFit" WidthRequest="32" HeightRequest="32" />
+                            </Border>
+                            <Label Text="Avion" TextColor="White" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer  NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Train -->
+                    <Frame Grid.Column="2" Style="{StaticResource TransportCard}">
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 16" Background="#8B5CF6">
+                                <Image Source="train.svg" Aspect="AspectFit" WidthRequest="32" HeightRequest="32" />
+                            </Border>
+                            <Label Text="Train" TextColor="White" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer  />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Bus -->
+                    <Frame Grid.Column="4" Style="{StaticResource TransportCard}">
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 16" Background="#EC4899">
+                                <Image Source="bus.svg" Aspect="AspectFit" WidthRequest="32" HeightRequest="32" />
+                            </Border>
+                            <Label Text="Bus" TextColor="White" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer  />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Metro -->
+                    <Frame Grid.Column="6" Style="{StaticResource TransportCard}">
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 16" Background="#7C3AED">
+                                <Image Source="train.svg" Aspect="AspectFit" WidthRequest="32" HeightRequest="32" />
+                            </Border>
+                            <Label Text="Métro" TextColor="White" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer  />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Trajets récents -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Trajets récents" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                <Frame CornerRadius="16" BackgroundColor="#1A1625" BorderColor="#2D2440" Padding="16">
+                    <!-- Ici on utilisera un CollectionView quand vous aurez la source -->
+                    <CollectionView x:Name="RecentTripsCollection"
+                                    ItemsLayout="VerticalList"
+                                    SelectionMode="None">
+                        <!-- Exemple de ItemTemplate -->
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame CornerRadius="12" BackgroundColor="#241149" Padding="12" Margin="0,8">
+                                    <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                                        <Image Source="train.svg" WidthRequest="36" HeightRequest="36" />
+                                        <VerticalStackLayout>
+                                            <Label Text="{Binding RouteText}" TextColor="White" FontAttributes="Bold" />
+                                            <Label Text="{Binding DateText}" TextColor="#B8A0E0" FontSize="12" />
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+            </VerticalStackLayout>
+
         </VerticalStackLayout>
-    </Grid>
-
+    </ScrollView>
 </ContentPage>

@@ -11,7 +11,7 @@
     <TabBar>
         <!-- Première page -->
         <Tab Title="Accueil">
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
+            <ShellContent ContentTemplate="{DataTemplate view:MainPage}" Route="MainPage" />
         </Tab>
         
         <!-- Deuxième page -->

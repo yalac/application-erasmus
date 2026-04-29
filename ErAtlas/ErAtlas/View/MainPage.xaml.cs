@@ -1,9 +1,12 @@
-﻿namespace ErAtlas;
+﻿using Microsoft.Maui.Controls;
 
-public partial class MainPage
+namespace ErAtlas.View
 {
-    public MainPage()
+    public partial class MainPage : ContentPage
     {
-        InitializeComponent();
+        public MainPage()
+        {
+            InitializeComponent();
+        }
     }
 }
