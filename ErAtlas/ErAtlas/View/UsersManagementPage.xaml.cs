@@ -3,7 +3,7 @@ using ErAtlas.Model;
 
 namespace ErAtlas.View;
 
-public partial class UsersManagementPage : ContentPage
+public partial class UsersManagementPage
 {
     public UsersManagementPage(UsersManagementViewModel viewModel)
     {
@@ -15,16 +15,22 @@ public partial class UsersManagementPage : ContentPage
     {
         var viewModel = (UsersManagementViewModel)BindingContext;
 
+        viewModel.AffichageFormulaireDeCreationCommand.Execute(null);
+
         await Navigation.PushModalAsync(new UsersManagementPopupPage(viewModel));
     }
 
-    private void OnSupprimerClicked(object sender, EventArgs e)
+    private async void OnModifierClicked(object sender, EventArgs e)
     {
         var button = sender as Button;
-        if (button?.BindingContext is Utilisateur utilisateur)
+        if (button?.BindingContext is not Utilisateur utilisateur)
         {
-            var viewModel = (UsersManagementViewModel)BindingContext;
-            viewModel.SupprimerUtilisateurCommand.Execute(utilisateur);
+            return;
         }
+
+        var viewModel = (UsersManagementViewModel)BindingContext;
+
+        viewModel.ModificationUtilisateurCommand.Execute(utilisateur);
+        await Navigation.PushModalAsync(new UsersManagementPopupPageEdit(viewModel));
     }
 }

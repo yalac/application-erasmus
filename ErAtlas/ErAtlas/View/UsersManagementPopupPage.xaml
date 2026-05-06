@@ -5,118 +5,67 @@
              xmlns:vm="clr-namespace:ErAtlas.ViewModels"
              x:Class="ErAtlas.View.UsersManagementPopupPage"
              x:DataType="vm:UsersManagementViewModel"
-             Title="Nouveau utilisateur"
-             BackgroundColor="#66000000"
-             Shell.NavBarIsVisible="False">
+             Title="Formulaire de création d'utilisateur"
+             BackgroundColor="#66000000">
 
     <Grid Padding="24">
-        <Border HorizontalOptions="Center"
-                VerticalOptions="Center"
-                WidthRequest="520"
-                MaximumHeightRequest="720"
+        <Border HorizontalOptions="Center" VerticalOptions="Center"
+                WidthRequest="520" MaximumHeightRequest="720"
                 BackgroundColor="White"
-                Padding="20"
-                StrokeShape="RoundRectangle 16">
+                Padding="20" StrokeShape="RoundRectangle 16">
 
             <ScrollView>
                 <VerticalStackLayout Spacing="12">
-                    <Label Text="Formulaire de création"
-                           FontSize="22"
-                           FontAttributes="Bold"
-                           TextColor="Black" />
+                    <Label Text="{Binding FormulaireTitre}" FontSize="22" FontAttributes="Bold" TextColor="Black" />
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Nom :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="Entrez votre nom"
-                               Text="{Binding Nom}" />
+                        <Label Text="Nom :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Entry Placeholder="Entrez votre nom" Text="{Binding Nom}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Prénom :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="Entrez votre prénom"
-                               Text="{Binding Prenom}" />
+                        <Label Text="Prénom :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Entry Placeholder="Entrez votre prénom" Text="{Binding Prenom}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Email :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="prenom.nom@domaine.fr"
-                               Keyboard="Email"
-                               Text="{Binding Email}" />
+                        <Label Text="Email :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Entry Placeholder="prenom.nom@domaine.fr" Text="{Binding Email}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Login :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="Entrez votre login"
-                               Text="{Binding Login}" />
+                        <Label Text="Login :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Entry Placeholder="Entrez votre login" Text="{Binding Login}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Mot de passe :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="Saisissez votre mot de passe"
-                               IsPassword="True"
-                               Text="{Binding MotDePasse}" />
+                        <Label Text="Mot de passe :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Entry Placeholder="Saisissez votre mot de passe" Text="{Binding MotDePasse}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Téléphone :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="0612345678"
-                               Keyboard="Telephone"
-                               Text="{Binding NumeroTelephone}" />
+                        <Label Text="Téléphone :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Entry Placeholder="0612345678" Text="{Binding NumeroTelephone}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Adresse :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="Entrez votre adresse"
-                               Text="{Binding Adresse}" />
+                        <Label Text="Adresse :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Entry Placeholder="Entrez votre adresse" Text="{Binding Adresse}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Code postal :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="27910"
-                               Keyboard="Numeric"
-                               Text="{Binding CodePostal}" />
+                        <Label Text="Code postal :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" /> 
+                        <Entry Placeholder="27910" Text="{Binding CodePostal}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Ville :"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Entry Placeholder="Entrez votre ville"
-                               Text="{Binding Ville}" />
+                        <Label Text="Ville :" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Entry Placeholder="Entrez votre ville" Text="{Binding Ville}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Gestionnaire"
-                               WidthRequest="120"
-                               VerticalOptions="Center"
-                               TextColor="#555555" />
-                        <Switch IsToggled="{Binding Gestionnaire}"
-                                VerticalOptions="Center" />
+                        <Label Text="Gestionnaire (off/on)" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
+                        <Switch IsToggled="{Binding Gestionnaire}" VerticalOptions="Center" />
                     </HorizontalStackLayout>
 
                     <ActivityIndicator IsRunning="{Binding IsBusy}"
@@ -126,18 +75,9 @@
                            TextColor="Red"
                            IsVisible="{Binding IsErrorVisible}" />
 
-                    <HorizontalStackLayout Spacing="10"
-                                           HorizontalOptions="End">
-                        <Button Text="Annuler"
-                                Clicked="OnAnnulerClicked"
-                                BackgroundColor="#9E9E9E"
-                                TextColor="White"
-                                CornerRadius="8" />
-                        <Button Text="Créer"
-                                Clicked="OnCreerClicked"
-                                BackgroundColor="#2E7D32"
-                                TextColor="White"
-                                CornerRadius="8" />
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
+                        <Button Text="Annuler" Clicked="OnAnnulerClicked" BackgroundColor="#9E9E9E" TextColor="White" CornerRadius="8" />
+                        <Button Text="Créer" Clicked="OnCreerClicked" BackgroundColor="#2E7D32" TextColor="White" CornerRadius="8" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </ScrollView>

@@ -9,6 +9,9 @@ namespace ErAtlas.ViewModels;
 public partial class UsersManagementViewModel : ObservableObject
 {
     private readonly DatabaseService _databaseService;
+    private int _utilisateurIdEnModification;
+    private bool _isModificationMode;
+    private string _motDePasseOriginal = string.Empty;
 
     [ObservableProperty]
     private ObservableCollection<Utilisateur> _utilisateurs = new();
@@ -45,6 +48,13 @@ public partial class UsersManagementViewModel : ObservableObject
     [ObservableProperty]
     private bool _isBusy;
 
+    public bool IsModificationMode
+    {
+        get => _isModificationMode;
+        set => _isModificationMode = value;
+    }
+
+
     public UsersManagementViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
@@ -71,28 +81,37 @@ public partial class UsersManagementViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SupprimerUtilisateur(Utilisateur utilisateur)
+    private async Task SupprimerUtilisateurAsync(Utilisateur? utilisateur)
     {
-        try
+        bool confirmation = false;
+
+        var page = Application.Current?.Windows.FirstOrDefault()?.Page;
+        if (page is null)
         {
-            bool supprimer = _databaseService.SupprimerUtilisateur(utilisateur.Id);
-            if (supprimer)
-            {
-                Utilisateurs.Remove(utilisateur);
-                SuccessMessage = $"Utilisateur {utilisateur.Prenom} {utilisateur.Nom} supprimé avec succès.";
-                IsSuccessVisible = true;
-                ErrorMessage = string.Empty;
-                IsErrorVisible = false;
-            }
-            else
-            {
-                ErrorMessage = "Impossible de supprimer l'utilisateur.";
-                IsErrorVisible = true;
-            }
+            ErrorMessage = "Impossible d'afficher la confirmation.";
+            IsErrorVisible = true;
+            return;
         }
-        catch (Exception)
+
+        confirmation = await page.DisplayAlert("Confirmer la suppression", $"Voulez-vous supprimer {utilisateur.Prenom} {utilisateur.Nom} ?", "Oui", "Non");
+
+        if (!confirmation)
         {
-            ErrorMessage = "Une erreur est survenue pendant la suppression de l'utilisateur.";
+            return;
+        }
+
+        bool supprimer = _databaseService.SupprimerUtilisateur(utilisateur.Id);
+        if (supprimer)
+        {
+            Utilisateurs.Remove(utilisateur);
+            SuccessMessage = $"Utilisateur {utilisateur.Prenom} {utilisateur.Nom} supprimé avec succès.";
+            IsSuccessVisible = true;
+            ErrorMessage = string.Empty;
+            IsErrorVisible = false;
+        }
+        else
+        {
+            ErrorMessage = "Impossible de supprimer l'utilisateur.";
             IsErrorVisible = true;
         }
     }
@@ -104,6 +123,8 @@ public partial class UsersManagementViewModel : ObservableObject
         IsErrorVisible = false;
         SuccessMessage = string.Empty;
         IsSuccessVisible = false;
+        IsModificationMode = false;
+        _utilisateurIdEnModification = 0;
         ReinitialiserFormulaire();
     }
 
@@ -114,10 +135,43 @@ public partial class UsersManagementViewModel : ObservableObject
         IsErrorVisible = false;
         SuccessMessage = string.Empty;
         IsSuccessVisible = false;
+        IsModificationMode = false;
+        _utilisateurIdEnModification = 0;
         ReinitialiserFormulaire();
         return Task.CompletedTask;
     }
 
+    [RelayCommand]
+    private void ModificationUtilisateur(Utilisateur? utilisateur)
+    {
+        ErrorMessage = string.Empty;
+        IsErrorVisible = false;
+        SuccessMessage = string.Empty;
+        IsSuccessVisible = false;
+
+        if (utilisateur is null)
+        {
+            ErrorMessage = "Aucun utilisateur sélectionné pour la modification.";
+            IsErrorVisible = true;
+            return;
+        }
+
+        IsModificationMode = true;
+        _utilisateurIdEnModification = utilisateur.Id;
+        _motDePasseOriginal = string.Empty; // On n'a pas accès au mot de passe original pour des raisons de sécurité
+
+        Nom = utilisateur.Nom;
+        Prenom = utilisateur.Prenom;
+        Email = utilisateur.Email;
+        Login = utilisateur.Login;
+        MotDePasse = string.Empty;
+        NumeroTelephone = utilisateur.NumeroDeTelephone.ToString();
+        Adresse = utilisateur.Adresse;
+        CodePostal = utilisateur.CodePostal.ToString();
+        Ville = utilisateur.Ville;
+        Gestionnaire = utilisateur.Gestionnaire;
+    }
+    
     [RelayCommand]
     private Task CreationUtilisateurAsync()
     {
@@ -135,11 +189,13 @@ public partial class UsersManagementViewModel : ObservableObject
         SuccessMessage = string.Empty;
         IsSuccessVisible = false;
 
+        // En création, tous les champs sont obligatoires
+        // En modification, le mot de passe est optionnel
         if (string.IsNullOrWhiteSpace(nom) ||
             string.IsNullOrWhiteSpace(prenom) ||
             string.IsNullOrWhiteSpace(email) ||
             string.IsNullOrWhiteSpace(login) ||
-            string.IsNullOrWhiteSpace(motDePasse) ||
+            (!IsModificationMode && string.IsNullOrWhiteSpace(motDePasse)) ||
             string.IsNullOrWhiteSpace(NumeroTelephone) ||
             string.IsNullOrWhiteSpace(adresse) ||
             string.IsNullOrWhiteSpace(codePostal) ||
@@ -175,20 +231,62 @@ public partial class UsersManagementViewModel : ObservableObject
         {
             IsBusy = true;
 
-            var hashMotDePasse = _databaseService.HashMotDePasse(motDePasse);
-            var utilisateurCree = _databaseService.CreationUtilisateur(
-                nom,
-                prenom,
-                email,
-                login,
-                hashMotDePasse,
-                numeroTelephone,
-                adresse,
-                codePostalNumerique.ToString(),
-                ville,
-                Gestionnaire);
+            Utilisateur utilisateurEnregistre;
 
-            SuccessMessage = $"Utilisateur {utilisateurCree.Login} crée avec succès.";
+            if (IsModificationMode)
+            {
+                // En modification : si le mot de passe est vide, ne pas le modifier
+                if (string.IsNullOrWhiteSpace(motDePasse))
+                {
+                    utilisateurEnregistre = _databaseService.ModifierUtilisateur(
+                        _utilisateurIdEnModification,
+                        nom,
+                        prenom,
+                        email,
+                        login,
+                        numeroTelephone,
+                        adresse,
+                        codePostalNumerique.ToString(),
+                        ville,
+                        Gestionnaire);
+                }
+                else
+                {
+                    var hashMotDePasse = _databaseService.HashMotDePasse(motDePasse);
+                    utilisateurEnregistre = _databaseService.ModifierUtilisateur(
+                        _utilisateurIdEnModification,
+                        nom,
+                        prenom,
+                        email,
+                        login,
+                        hashMotDePasse,
+                        numeroTelephone,
+                        adresse,
+                        codePostalNumerique.ToString(),
+                        ville,
+                        Gestionnaire);
+                }
+            }
+            else
+            {
+                // En création : hasher le mot de passe obligatoire
+                var hashMotDePasse = _databaseService.HashMotDePasse(motDePasse);
+                utilisateurEnregistre = _databaseService.CreationUtilisateur(
+                    nom,
+                    prenom,
+                    email,
+                    login,
+                    hashMotDePasse,
+                    numeroTelephone,
+                    adresse,
+                    codePostalNumerique.ToString(),
+                    ville,
+                    Gestionnaire);
+            }
+
+            SuccessMessage = IsModificationMode
+                ? $"Utilisateur {utilisateurEnregistre.Login} modifié avec succès."
+                : $"Utilisateur {utilisateurEnregistre.Login} crée avec succès.";
             IsSuccessVisible = true;
 
             ReinitialiserFormulaire();
@@ -209,6 +307,8 @@ public partial class UsersManagementViewModel : ObservableObject
 
     private void ReinitialiserFormulaire()
     {
+        IsModificationMode = false;
+        _utilisateurIdEnModification = 0;
         Nom = string.Empty;
         Prenom = string.Empty;
         Email = string.Empty;

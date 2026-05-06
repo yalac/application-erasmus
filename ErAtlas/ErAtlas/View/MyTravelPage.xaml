@@ -4,8 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ErAtlas.ViewModels"
              xmlns:m="clr-namespace:ErAtlas.Model"
-             x:Name="PageRoot"
              x:Class="ErAtlas.View.MyTravelPage"
+             x:Name="PageRoot"
              x:DataType="vm:MyTravelViewModel">
     <ContentPage.Content>
 
@@ -141,6 +141,5 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
-
     </ContentPage.Content>
 </ContentPage>

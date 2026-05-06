@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:ErAtlas.ViewModels"
              xmlns:model="clr-namespace:ErAtlas.Model"
              x:Class="ErAtlas.View.UsersManagementPage"
+             x:Name="UsersPage"
              x:DataType="vm:UsersManagementViewModel"
              Title="Gestion des utilisateurs"
              BackgroundColor="White">
@@ -37,40 +38,45 @@
                    TextColor="Black" />
 
             <Border>
-                <VerticalStackLayout Spacing="0">
-                    <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*">
-                        <Label Grid.Column="0" Text="Nom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="1" Text="Prénom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="2" Text="Email" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="3" Text="Téléphone" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="4" Text="Adresse" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="5" Text="Code postal" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="6" Text="Ville" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="7" Text="Gestionnaire" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        <Label Grid.Column="8" Text="Action" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                    </Grid>
+                <ScrollView Orientation="Horizontal">
+                    <VerticalStackLayout Spacing="0" MinimumWidthRequest="1250">
+                        <Grid ColumnDefinitions="120,120,240,130,260,120,120,120,240">
+                            <Label Grid.Column="0" Text="Nom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="1" Text="Prénom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="2" Text="Email" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="3" Text="Téléphone" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="4" Text="Adresse" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="5" Text="Code postal" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="6" Text="Ville" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="7" Text="Gestionnaire" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="8" Text="Action" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                        </Grid>
 
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Utilisateurs}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="model:Utilisateur">
-                                <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" MinimumHeightRequest="50" RowDefinitions="*">
-                                    <Label Grid.Column="0" Text="{Binding Nom}" TextColor="Gray" HorizontalTextAlignment="Center"/>
-                                    <Label Grid.Column="1" Text="{Binding Prenom}" TextColor="Gray" HorizontalTextAlignment="Center"/>
-                                    <Label Grid.Column="2" Text="{Binding Email}" TextColor="Gray" HorizontalTextAlignment="Center"/>
-                                    <Label Grid.Column="3" Text="{Binding NumeroDeTelephone}" TextColor="Gray" HorizontalTextAlignment="Center"/>
-                                    <Label Grid.Column="4" Text="{Binding Adresse}" TextColor="Gray" HorizontalTextAlignment="Center"/>
-                                    <Label Grid.Column="5" Text="{Binding CodePostal}" TextColor="Gray" HorizontalTextAlignment="Center"/>
-                                    <Label Grid.Column="6" Text="{Binding Ville}" TextColor="Gray" HorizontalTextAlignment="Center"/>
-                                    <Label Grid.Column="7" Text="{Binding Gestionnaire}" TextColor="Gray" HorizontalTextAlignment="Center"/>
-                                    <Grid ColumnDefinitions="*,*" Grid.Column="8" MinimumHeightRequest="45">
-                                        <Button Grid.Column="0" Text="Modifier" BackgroundColor="#1976D2" TextColor="White" Margin="2" />
-                                        <Button Grid.Column="1" Text="Supprimer" BackgroundColor="#D32F2F" TextColor="White" Margin="2" Clicked="OnSupprimerClicked" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Utilisateurs}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:Utilisateur">
+                                    <Grid ColumnDefinitions="120,120,240,130,260,120,120,120,240" MinimumHeightRequest="56">
+                                        <Label Grid.Column="0" Text="{Binding Nom}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                        <Label Grid.Column="1" Text="{Binding Prenom}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                        <Label Grid.Column="2" Text="{Binding Email}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                        <Label Grid.Column="3" Text="{Binding NumeroDeTelephone}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                        <Label Grid.Column="4" Text="{Binding Adresse}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                        <Label Grid.Column="5" Text="{Binding CodePostal}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                        <Label Grid.Column="6" Text="{Binding Ville}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                        <Label Grid.Column="7" Text="{Binding Gestionnaire}" TextColor="Gray" HorizontalTextAlignment="Center" />
+
+                                        <Grid Grid.Column="8" ColumnDefinitions="*,*" ColumnSpacing="8" HorizontalOptions="Center" VerticalOptions="Center">
+                                            <Button Grid.Column="0" Text="Modifier" BackgroundColor="#1976D2" TextColor="White" FontSize="11" Padding="12,6" MinimumWidthRequest="100" Clicked="OnModifierClicked" />
+                                            <Button Grid.Column="1" Text="Supprimer" BackgroundColor="#D32F2F" TextColor="White" FontSize="11" Padding="12,6" MinimumWidthRequest="100" 
+                                                    Command="{Binding BindingContext.SupprimerUtilisateurCommand, Source={x:Reference UsersPage}}" 
+                                                    CommandParameter="{Binding .}" />
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
-                </VerticalStackLayout>
+                </ScrollView>
             </Border>
         </VerticalStackLayout>
     </ScrollView>

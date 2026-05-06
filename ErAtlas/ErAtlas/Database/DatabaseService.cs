@@ -161,6 +161,109 @@ public class DatabaseService
         }
     }
     
+    // Permet de lire la PS et de modifier un utilisateurs de la base de données et de l'application
+    public Utilisateur ModifierUtilisateur(int idUtilisateur, string nom, string prenom, string email, string login, string motDePasse, int numeroDeTelephone, string adresse, string codePostal, string ville, bool gestionnaire)
+    {
+        string query = "PS_ModifierUtilisateur";
+        using var command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@IDUtilisateur", idUtilisateur);
+        command.Parameters.AddWithValue("@Nom", nom);
+        command.Parameters.AddWithValue("@Prenom", prenom);
+        command.Parameters.AddWithValue("@Email", email);
+        command.Parameters.AddWithValue("@Login", login);
+        command.Parameters.AddWithValue("@MotDePasse", motDePasse);
+        command.Parameters.AddWithValue("@NumeroTelephone", numeroDeTelephone);
+        command.Parameters.AddWithValue("@Adresse", adresse);
+        command.Parameters.AddWithValue("@CodePostal", codePostal);
+        command.Parameters.AddWithValue("@Ville", ville);
+        command.Parameters.AddWithValue("@Gestionnaire", gestionnaire);
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new Utilisateur
+            {
+                Id = (int)reader["IDUtilisateur"],
+                Nom = (string)reader["Nom"],
+                Prenom = (string)reader["Prenom"],
+                Email = (string)reader["Email"],
+                Login = (string)reader["Login"],
+                MotDePasse = (string)reader["MotDePasse"],
+                NumeroDeTelephone = (int)reader["NumeroTelephone"],
+                Adresse = (string)reader["Adresse"],
+                CodePostal = (int)reader["CodePostal"],
+                Ville = (string)reader["Ville"],
+                Gestionnaire = (bool)reader["Gestionnaire"]
+            };
+        }
+
+        return new Utilisateur
+        {
+            Id = idUtilisateur,
+            Nom = nom,
+            Prenom = prenom,
+            Email = email,
+            Login = login,
+            MotDePasse = motDePasse,
+            NumeroDeTelephone = numeroDeTelephone,
+            Adresse = adresse,
+            CodePostal = int.TryParse(codePostal, out var cp) ? cp : 0,
+            Ville = ville,
+            Gestionnaire = gestionnaire
+        };
+    }
+    
+    // Surcharge pour modifier un utilisateur sans changer le mot de passe
+    public Utilisateur ModifierUtilisateur(int idUtilisateur, string nom, string prenom, string email, string login, int numeroDeTelephone, string adresse, string codePostal, string ville, bool gestionnaire)
+    {
+        string query = "PS_ModifierUtilisateur";
+        using var command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@IDUtilisateur", idUtilisateur);
+        command.Parameters.AddWithValue("@Nom", nom);
+        command.Parameters.AddWithValue("@Prenom", prenom);
+        command.Parameters.AddWithValue("@Email", email);
+        command.Parameters.AddWithValue("@Login", login);
+        command.Parameters.AddWithValue("@MotDePasse", DBNull.Value);
+        command.Parameters.AddWithValue("@NumeroTelephone", numeroDeTelephone);
+        command.Parameters.AddWithValue("@Adresse", adresse);
+        command.Parameters.AddWithValue("@CodePostal", codePostal);
+        command.Parameters.AddWithValue("@Ville", ville);
+        command.Parameters.AddWithValue("@Gestionnaire", gestionnaire);
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new Utilisateur
+            {
+                Id = (int)reader["IDUtilisateur"],
+                Nom = (string)reader["Nom"],
+                Prenom = (string)reader["Prenom"],
+                Email = (string)reader["Email"],
+                Login = (string)reader["Login"],
+                MotDePasse = (string)reader["MotDePasse"],
+                NumeroDeTelephone = (int)reader["NumeroTelephone"],
+                Adresse = (string)reader["Adresse"],
+                CodePostal = (int)reader["CodePostal"],
+                Ville = (string)reader["Ville"],
+                Gestionnaire = (bool)reader["Gestionnaire"]
+            };
+        }
+
+        return new Utilisateur
+        {
+            Id = idUtilisateur,
+            Nom = nom,
+            Prenom = prenom,
+            Email = email,
+            Login = login,
+            NumeroDeTelephone = numeroDeTelephone,
+            Adresse = adresse,
+            CodePostal = int.TryParse(codePostal, out var cp) ? cp : 0,
+            Ville = ville,
+            Gestionnaire = gestionnaire
+        };
+    }
+    
     public string GetTransport(int IDTrajet) 
     {
         string query = "PS_LireTypeTransport";
