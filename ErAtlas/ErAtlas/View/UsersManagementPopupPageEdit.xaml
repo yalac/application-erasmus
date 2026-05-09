@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:ErAtlas.ViewModels"
              x:Class="ErAtlas.View.UsersManagementPopupPageEdit"
              x:DataType="vm:UsersManagementViewModel"
-             Title="{Binding FormulaireTitre}"
+             Title="Modifier l'utilisateur"
              BackgroundColor="#66000000">
 
     <Grid Padding="24">
@@ -19,7 +19,7 @@
 
             <ScrollView>
                 <VerticalStackLayout Spacing="12">
-                    <Label Text="{Binding FormulaireTitre}"
+                    <Label Text="Modifier l'utilisateur"
                            FontSize="22"
                            FontAttributes="Bold"
                            TextColor="Black" />
@@ -114,7 +114,7 @@
                                 BackgroundColor="#9E9E9E"
                                 TextColor="White"
                                 CornerRadius="8" />
-                        <Button Text="{Binding ActionValidationText}"
+                        <Button Text="Enregistrer"
                                 Clicked="OnCreerClicked"
                                 BackgroundColor="#2E7D32"
                                 TextColor="White"

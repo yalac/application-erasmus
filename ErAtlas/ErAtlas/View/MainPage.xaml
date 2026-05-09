@@ -59,61 +59,41 @@
                        Opacity="0.9" />
             </VerticalStackLayout>
 
-            <!-- Card recherche -->
-            <Frame CornerRadius="24"
-                   BackgroundColor="#1A1625"
-                   BorderColor="#2D2440"
-                   HasShadow="True"
-                   Padding="20">
-                <VerticalStackLayout Spacing="16">
+            <!-- Stats -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                <Border BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="24" TextColor="White" FontSize="24" FontAttributes="Bold" />
+                        <Label Text="Trajets au total" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
 
-                    <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,Auto,Auto">
-                        <!-- DÉPART -->
-                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
-                            <Label Text="D'où partez-vous ?" TextColor="#9CA3AF" FontSize="12" />
-                            <Border BackgroundColor="#1A1625" Stroke="#2D2440" StrokeShape="RoundRectangle 12" Padding="8">
-                                <Entry Style="{StaticResource RoundedEntry}"
-                                       x:Name="DepartureEntry"
-                                       Placeholder="Ville de départ" />
-                            </Border>
-                        </VerticalStackLayout>
+                <Border Grid.Column="1"
+                        BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="6" TextColor="White" FontSize="24" FontAttributes="Bold" />
+                        <Label Text="En cours" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
 
-                        <!-- ARRIVÉE -->
-                        <VerticalStackLayout Grid.Row="0" Grid.Column="2" Spacing="6">
-                            <Label Text="Où allez-vous ?" TextColor="#9CA3AF" FontSize="12" />
-                            <Border BackgroundColor="#1A1625" Stroke="#2D2440" StrokeShape="RoundRectangle 12" Padding="8">
-                                <Entry Style="{StaticResource RoundedEntry}"
-                                       x:Name="ArrivalEntry"
-                                       Placeholder="Ville d'arrivée" />
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <!-- DATE -->
-                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6" Margin="0,8,0,0">
-                            <Label Text="Date" TextColor="#9CA3AF" FontSize="12" />
-                            <Border BackgroundColor="#1A1625" Stroke="#2D2440" StrokeShape="RoundRectangle 12" Padding="8">
-                                <DatePicker x:Name="TravelDate" TextColor="White" />
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <!-- HEURE -->
-                        <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="6" Margin="0,8,0,0">
-                            <Label Text="Heure" TextColor="#9CA3AF" FontSize="12" />
-                            <Border BackgroundColor="#1A1625" Stroke="#2D2440" StrokeShape="RoundRectangle 12" Padding="8">
-                                <Entry Style="{StaticResource RoundedEntry}" x:Name="TravelTime" Placeholder="14:30" />
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <!-- BOUTON RECHERCHER -->
-                        <Button Grid.Row="2" Grid.Column="0"
-                                Style="{StaticResource RoundedButton}"
-                                Text="Rechercher"
-                                 />
-                    </Grid>
-
-                </VerticalStackLayout>
-            </Frame>
-
+                <Border Grid.Column="2"
+                        BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="18" TextColor="White" FontSize="24" FontAttributes="Bold" />
+                        <Label Text="Terminés" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+            
             <!-- Moyens de transport -->
             <VerticalStackLayout Spacing="12">
                 <Label Text="Moyens de transport" TextColor="White" FontSize="18" FontAttributes="Bold" />
