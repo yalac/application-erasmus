@@ -2,6 +2,7 @@
 using ErAtlas.Database;
 using ErAtlas.View;
 using ErAtlas.ViewModels;
+using ErAtlas.Views;
 
 namespace ErAtlas;
 
@@ -33,6 +34,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<TripManagementPage>();
         builder.Services.AddSingleton<UsersManagementPage>();
         
+        builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<MyTravelDescriptionViewModel>();
         builder.Services.AddSingleton<MyTravelViewModel>();

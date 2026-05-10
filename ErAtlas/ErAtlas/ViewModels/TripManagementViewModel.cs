@@ -12,7 +12,7 @@ public partial class TripManagementViewModel : ObservableObject
     private int _lieuIdEnModification;
     private int _transportIdEnModification;
     private int _trajetIdEnModification;
-    public List<string> StatutOptions { get; } = new List<string> { "À l'heure", "En retard", "Terminé" };
+    public List<string> StatutOptions { get; } = new List<string> { "A l'heure", "En retard", "Terminé" };
 
     [ObservableProperty]
     private ObservableCollection<Lieu> _lieux = new();

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ErAtlas"
     xmlns:view="using:ErAtlas.View"
+    xmlns:views="using:ErAtlas.Views"
     Title="ErAtlas"
     FlyoutBehavior="Disabled">
     
@@ -31,7 +32,7 @@
         
         <!-- Cinquième page -->
         <Tab Title="Paramètres">
-            <ShellContent ContentTemplate="{DataTemplate view:SettingsPage}" Route="SettingsPage" />
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="SettingsPage" />
         </Tab>
     </TabBar>
 </Shell>

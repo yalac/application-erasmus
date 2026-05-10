@@ -1,9 +1,103 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ErAtlas.View.SettingsPage">
-    <ContentPage.Content>
-        <Label Text="Ici sera les paramètres du compte accesible pour gestionnaire et voyageurs"></Label>
-    </ContentPage.Content>
+             x:Class="ErAtlas.Views.SettingsPage"
+             Title="Paramètres"
+             BackgroundColor="#1A1625">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <!-- Titre -->
+            <Label Text="Mon Compte"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <!-- Section Informations -->
+            <Border BackgroundColor="#2D2440"
+                    Stroke="#3A3250"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="20"
+                    HorizontalOptions="FillAndExpand">
+
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Informations personnelles"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+
+                    <!-- Nom -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Nom :"
+                               FontSize="14"
+                               TextColor="#B8A0E0" />
+                        <Label Text="{Binding Nom}"
+                               FontSize="16"
+                               TextColor="White" />
+                    </VerticalStackLayout>
+
+                    <!-- Prénom -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Prénom :"
+                               FontSize="14"
+                               TextColor="#B8A0E0" />
+                        <Label Text="{Binding Prenom}"
+                               FontSize="16"
+                               TextColor="White" />
+                    </VerticalStackLayout>
+
+                    <!-- Email -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Email :"
+                               FontSize="14"
+                               TextColor="#B8A0E0" />
+                        <Label Text="{Binding Email}"
+                               FontSize="16"
+                               TextColor="White" />
+                    </VerticalStackLayout>
+
+                    <!-- Adresse -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Adresse :"
+                               FontSize="14"
+                               TextColor="#B8A0E0" />
+                        <Label Text="{Binding Adresse}"
+                               FontSize="16"
+                               TextColor="White" />
+                    </VerticalStackLayout>
+
+                    <!-- Code Postal + Ville -->
+                    <HorizontalStackLayout Spacing="20">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Code Postal :"
+                                   FontSize="14"
+                                   TextColor="#B8A0E0" />
+                            <Label Text="{Binding CodePostal}"
+                                   FontSize="16"
+                                   TextColor="White" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Ville :"
+                                   FontSize="14"
+                                   TextColor="#B8A0E0" />
+                            <Label Text="{Binding Ville}"
+                                   FontSize="16"
+                                   TextColor="White" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Bouton de déconnexion -->
+            <Button Text="Se déconnecter"
+                    Command="{Binding LogoutCommand}"
+                    BackgroundColor="#8B5CF6"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    HorizontalOptions="FillAndExpand" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

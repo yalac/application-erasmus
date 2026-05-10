@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Input;
 using ErAtlas.Database;
-
+using ErAtlas.Model;
 namespace ErAtlas.ViewModels;
 
 public partial class LoginViewModel : ObservableObject
 {
     private readonly DatabaseService _databaseService;
+
     [ObservableProperty]
     private string _username;
     [ObservableProperty]
@@ -17,13 +17,15 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty]
     private bool _isErrorVisible;
 
-
-
+    // Propriétés statiques pour gérer la session
+    public static Utilisateur? CurrentUser { get; private set; }
+    public static bool IsLoggedIn { get; private set; }
+    
     public LoginViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
     }
-    
+
     [RelayCommand]
     private void Login()
     {
@@ -36,23 +38,40 @@ public partial class LoginViewModel : ObservableObject
             return;
         }
 
-        var isValidUser = _databaseService.CheckUser(trimmedUsername, Password);
-
-        if (isValidUser)
+        // Vérifie le mot de passe et récupère l'utilisateur
+        var user = _databaseService.VerifUser(trimmedUsername);
+        if (user != null)
         {
-            IsErrorVisible = false;
-
-            var app = Application.Current;
-            if (app?.Windows.Count > 0)
+            // Hash le mot de passe saisi pour comparaison
+            string hashedPassword = _databaseService.HashMotDePasse(Password);
+            if (user.MotDePasse == hashedPassword)
             {
-                app.Windows[0].Page = new AppShell();
-            }
+                // Récupère toutes les informations de l'utilisateur
+                var fullUser = _databaseService.LireUtilisateurs().FirstOrDefault(u => u.Id == user.Id);
+                if (fullUser != null)
+                {
+                    IsErrorVisible = false;
+                    CurrentUser = fullUser; // Stocke l'utilisateur connecté
+                    IsLoggedIn = true;  // Marque la session comme active
 
-            return;
+                    var app = Application.Current;
+                    if (app?.Windows.Count > 0)
+                    {
+                        app.Windows[0].Page = new AppShell();
+                    }
+                    return;
+                }
+            }
         }
 
         ErrorMessage = "Nom d'utilisateur ou mot de passe incorrect.";
         IsErrorVisible = true;
     }
-}
 
+    // Méthode pour se déconnecter
+    public static void Logout()
+    {
+        CurrentUser = null;
+        IsLoggedIn = false;
+    }
+}
