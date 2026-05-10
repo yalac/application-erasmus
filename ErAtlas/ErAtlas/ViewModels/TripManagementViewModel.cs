@@ -12,6 +12,7 @@ public partial class TripManagementViewModel : ObservableObject
     private int _lieuIdEnModification;
     private int _transportIdEnModification;
     private int _trajetIdEnModification;
+    public List<string> StatutOptions { get; } = new List<string> { "À l'heure", "En retard", "Terminé" };
 
     [ObservableProperty]
     private ObservableCollection<Lieu> _lieux = new();
@@ -62,7 +63,7 @@ public partial class TripManagementViewModel : ObservableObject
     private TimeSpan? _heureArrivee = null;
     
     [ObservableProperty]
-    private string _statut = string.Empty;
+    private int _statutSelectedIndex = -1;
 
     [ObservableProperty] 
     private int _idLieuArrivee = 0;
@@ -72,6 +73,15 @@ public partial class TripManagementViewModel : ObservableObject
     
     [ObservableProperty] 
     private int _idTransport = 0;
+    
+    [ObservableProperty]
+    private Lieu? _selectedLieuDepart;
+
+    [ObservableProperty]
+    private Lieu? _selectedLieuArrivee;
+
+    [ObservableProperty]
+    private Transport? _selectedTransport; 
 
     [ObservableProperty]
     private string _errorMessage = string.Empty;
@@ -134,6 +144,21 @@ public partial class TripManagementViewModel : ObservableObject
         OnPropertyChanged(nameof(TitreFormulaireTrajet));
         OnPropertyChanged(nameof(TexteBoutonTrajet));
     }
+    
+    partial void OnSelectedLieuDepartChanged(Lieu? value)
+    {
+        IdLieuDepart = value?.IdLieu ?? 0;
+    }
+
+    partial void OnSelectedLieuArriveeChanged(Lieu? value)
+    {
+        IdLieuArrivee = value?.IdLieu ?? 0;
+    }
+
+    partial void OnSelectedTransportChanged(Transport? value)
+    {
+        IdTransport = value?.IdTransport ?? 0;
+    }
 
     private void ChargerLieux()
     {
@@ -176,6 +201,10 @@ public partial class TripManagementViewModel : ObservableObject
             Trajets.Clear();
             foreach (var trajets in _databaseService.LireTrajets())
             {
+                trajets.LieuDepart = Lieux.FirstOrDefault(l => l.IdLieu == trajets.IDLieuDepart);
+                trajets.LieuArrivee = Lieux.FirstOrDefault(l => l.IdLieu == trajets.IDLieuArrivee);
+                trajets.Transport = Transports.FirstOrDefault(t => t.IdTransport == trajets.IDTransport);
+                
                 Trajets.Add(trajets);
             }
         }
@@ -304,7 +333,7 @@ public partial class TripManagementViewModel : ObservableObject
         }
     }
 
-    /* -------------------------------------------------------- */
+    
     [RelayCommand]
     private void AffichageFormulaireTrajetCreation()
     {
@@ -332,10 +361,10 @@ public partial class TripManagementViewModel : ObservableObject
         HeureDepart = trajet.HeureDepart;
         DateArrivee = trajet.DateArrivee;
         HeureArrivee = trajet.HeureArrivee;
-        Statut = trajet.Statut;
-        IdLieuDepart = trajet.IDLieuDepart;
-        IdLieuArrivee = trajet.IDLieuArrivee;
-        IdTransport = trajet.IDTransport;
+        StatutSelectedIndex = StatutOptions.IndexOf(trajet.Statut);
+        SelectedLieuDepart = Lieux.FirstOrDefault(l => l.IdLieu == trajet.IDLieuDepart);
+        SelectedLieuArrivee = Lieux.FirstOrDefault(l => l.IdLieu == trajet.IDLieuArrivee);
+        SelectedTransport = Transports.FirstOrDefault(t => t.IdTransport == trajet.IDTransport);
     }
 
     [RelayCommand]
@@ -346,14 +375,16 @@ public partial class TripManagementViewModel : ObservableObject
         // Vérification des champs obligatoires pour un trajet
         if (DateDepart == null || HeureDepart == null ||
             DateArrivee == null || HeureArrivee == null ||
-            string.IsNullOrWhiteSpace(Statut) ||
-            IdLieuDepart == 0 || IdLieuArrivee == 0 || IdTransport == 0)
+            StatutSelectedIndex == -1 ||
+            SelectedLieuDepart == null || SelectedLieuArrivee == null || SelectedTransport == null)
         {
             ErrorMessage = "Veuillez remplir tous les champs du trajet (les IDs de lieu et transport ne peuvent pas être à 0).";
             IsErrorVisible = true;
             return;
         }
 
+        string Statut = StatutOptions[StatutSelectedIndex];
+        
         try
         {
             IsBusy = true;
@@ -580,10 +611,10 @@ public partial class TripManagementViewModel : ObservableObject
         HeureDepart = null;
         DateArrivee = null;
         HeureArrivee = null;
-        Statut = string.Empty;
-        IdLieuArrivee = 0;
-        IdLieuDepart = 0;
-        IdTransport = 0;
+        StatutSelectedIndex = -1;
+        SelectedLieuDepart = null;
+        SelectedLieuArrivee = null;
+        SelectedTransport = null;
     }
 
     private void ResetMessages()

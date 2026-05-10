@@ -145,30 +145,56 @@
                                FontSize="20"
                                FontAttributes="Bold" />
 
-                        <Entry Placeholder="Date de départ"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding DateDepart, Mode=TwoWay}" />
-                        <Entry Placeholder="Heure de départ"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding HeureDepart, Mode=TwoWay}" />
-                        <Entry Placeholder="Date d'arrivée"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding DateArrivee, Mode=TwoWay}" />
-                        <Entry Placeholder="Heure d'arrivée"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding HeureArrivee, Mode=TwoWay}" />
-                        <Entry Placeholder="Statut du trajet"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding Statut, Mode=TwoWay}" />
-                        <Entry Placeholder="Id du lieu de départ"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding IdLieuDepart, Mode=TwoWay}" />
-                        <Entry Placeholder="Id du lieu d'arrivée"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding IdLieuArrivee, Mode=TwoWay}" />
-                        <Entry Placeholder="Id du transport utilisé"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding IdTransport, Mode=TwoWay}" />
+                        
+                        <VerticalStackLayout Spacing="10">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="Date de départ :" Style="{StaticResource DarkEntry}" VerticalTextAlignment="Center"/>
+                                <DatePicker Format="dd/MM/yyyy" MinimumDate="01/01/2000" MaximumDate="12/31/2026" Date="{Binding DateDepart, Mode=TwoWay}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="Heure de départ :" Style="{StaticResource DarkEntry}" />
+                                <TimePicker Format="H:mm" Time="{Binding HeureDepart, Mode=TwoWay}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="Date d'arrivée :" Style="{StaticResource DarkEntry}" VerticalTextAlignment="Center"/>
+                                <DatePicker Format="dd/MM/yyyy" MinimumDate="01/01/2000" MaximumDate="12/31/2026" Date="{Binding DateArrivee, Mode=TwoWay}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="Heure d'arrivée :" Style="{StaticResource DarkEntry}" />
+                                <TimePicker Format="H:mm" Time="{Binding HeureArrivee, Mode=TwoWay}" />
+                            </HorizontalStackLayout>
+
+                            <Picker Title="Statut du trajet"
+                                    Style="{StaticResource DarkEntry}"
+                                    ItemsSource="{Binding StatutOptions}"
+                                    SelectedIndex="{Binding StatutSelectedIndex, Mode=TwoWay}"
+                                    HeightRequest="75"/>
+
+                            <Picker Title="Lieu de départ"
+                                    Style="{StaticResource DarkEntry}"
+                                    ItemsSource="{Binding Lieux}"
+                                    ItemDisplayBinding="{Binding Nom}"
+                                    SelectedItem="{Binding SelectedLieuDepart, Mode=TwoWay}"
+                                    HeightRequest="75" />
+
+                            <Picker Title="Lieu d'arrivée"
+                                    Style="{StaticResource DarkEntry}"
+                                    ItemsSource="{Binding Lieux}"
+                                    ItemDisplayBinding="{Binding Nom}"
+                                    SelectedItem="{Binding SelectedLieuArrivee, Mode=TwoWay}"
+                                    HeightRequest="75"/>
+
+                            <Picker Title="Transport utilisé"
+                                    Style="{StaticResource DarkEntry}"
+                                    ItemsSource="{Binding Transports}"
+                                    ItemDisplayBinding="{Binding TypeTransport}"
+                                    SelectedItem="{Binding SelectedTransport, Mode=TwoWay}"
+                                    HeightRequest="75"/>
+                        </VerticalStackLayout>
+                        
 
                         <HorizontalStackLayout Spacing="10">
                             <Button Text="{Binding TexteBoutonTrajet}"
@@ -318,14 +344,14 @@
                                     <DataTemplate x:DataType="model:Trajet">
                                         <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*"
                                               Padding="6,10">
-                                            <Label Grid.Column="0" Text="{Binding DateDepart}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="1" Text="{Binding HeureDepart}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="2" Text="{Binding DateArrivee}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="3" Text="{Binding HeureArrivee}" TextColor="#D1D5DB" />
+                                            <Label Grid.Column="0" Text="{Binding DateDepart, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#D1D5DB" />
+                                            <Label Grid.Column="1" Text="{Binding HeureDepart, StringFormat='{0:HH\\:mm}'}" TextColor="#D1D5DB" />
+                                            <Label Grid.Column="2" Text="{Binding DateArrivee, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#D1D5DB" />
+                                            <Label Grid.Column="3" Text="{Binding HeureArrivee, StringFormat='{0:HH\\:mm}'}" TextColor="#D1D5DB" />
                                             <Label Grid.Column="4" Text="{Binding Statut}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="5" Text="{Binding IDLieuDepart}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="6" Text="{Binding IDLieuArrivee}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="7" Text="{Binding IDTransport}" TextColor="#D1D5DB" />
+                                            <Label Grid.Column="5" Text="{Binding LieuDepart.Nom}" TextColor="#D1D5DB" />
+                                            <Label Grid.Column="6" Text="{Binding LieuArrivee.Nom}" TextColor="#D1D5DB" />
+                                            <Label Grid.Column="7" Text="{Binding Transport.TypeTransport}" TextColor="#D1D5DB" />
 
                                             <HorizontalStackLayout Grid.Column="8" Spacing="8" HorizontalOptions="Center">
                                                 <Button Text="Modifier"

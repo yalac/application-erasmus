@@ -13,6 +13,9 @@ public class Trajet
     public int IDLieuArrivee { get; set; }
     public int IDLieuDepart { get; set; }
     public int IDTransport { get; set; }
+    public Lieu LieuDepart { get; set; }
+    public Lieu LieuArrivee { get; set; }
+    public Transport Transport { get; set; }
     public string VilleDepart{ get; set; }
     public string VilleArrivee { get; set; }
     public string TypeTransport { get; set; }
