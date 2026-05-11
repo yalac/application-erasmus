@@ -16,10 +16,14 @@ public partial class LoginViewModel : ObservableObject
     private string _errorMessage;
     [ObservableProperty]
     private bool _isErrorVisible;
+    
+    public static event Action OnUserLoggedOut;
+    public static event Action<Utilisateur> OnUserLoggedIn;
 
     // Propriétés statiques pour gérer la session
     public static Utilisateur? CurrentUser { get; private set; }
     public static bool IsLoggedIn { get; private set; }
+    public static bool IsGestionnaire { get; private set; }
     
     public LoginViewModel(DatabaseService databaseService)
     {
@@ -53,12 +57,14 @@ public partial class LoginViewModel : ObservableObject
                     IsErrorVisible = false;
                     CurrentUser = fullUser; // Stocke l'utilisateur connecté
                     IsLoggedIn = true;  // Marque la session comme active
+                    IsGestionnaire = fullUser.Gestionnaire; // Stocke le rôle de l'utilisateur
 
                     var app = Application.Current;
                     if (app?.Windows.Count > 0)
                     {
                         app.Windows[0].Page = new AppShell();
                     }
+                    OnUserLoggedIn?.Invoke(fullUser);
                     return;
                 }
             }
@@ -73,5 +79,7 @@ public partial class LoginViewModel : ObservableObject
     {
         CurrentUser = null;
         IsLoggedIn = false;
+        IsGestionnaire = false;
+        OnUserLoggedOut?.Invoke();
     }
 }

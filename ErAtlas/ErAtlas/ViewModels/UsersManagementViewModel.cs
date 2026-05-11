@@ -12,6 +12,10 @@ public partial class UsersManagementViewModel : ObservableObject
     private int _utilisateurIdEnModification;
     private bool _isModificationMode;
     private string _motDePasseOriginal = string.Empty;
+    
+    public bool HasAccess => LoginViewModel.IsLoggedIn && LoginViewModel.IsGestionnaire;
+    [ObservableProperty]
+    private bool _isAccessDenied = false;
 
     [ObservableProperty]
     private ObservableCollection<Utilisateur> _utilisateurs = new();
@@ -59,6 +63,8 @@ public partial class UsersManagementViewModel : ObservableObject
     {
         _databaseService = databaseService;
         ChargerUtilisateurs();
+        
+        IsAccessDenied = !HasAccess;
     }
 
     [RelayCommand]

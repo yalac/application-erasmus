@@ -42,338 +42,351 @@
         </Style>
     </ContentPage.Resources>
 
-    <ScrollView>
+    <ScrollView x:Name="MainScroll">
         <VerticalStackLayout Padding="24" Spacing="24">
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
-                               IsVisible="{Binding IsBusy}"
-                               Color="White" />
-
-            <Label Text="{Binding SuccessMessage}"
-                   TextColor="#6EE7B7"
-                   IsVisible="{Binding IsSuccessVisible}" />
-
-            <Label Text="{Binding ErrorMessage}"
+            <!-- Message d'erreur si accès refusé -->
+            <Label Text="Autorité insuffisante. Vous devez être gestionnaire pour accéder à cette page."
                    TextColor="#F87171"
-                   IsVisible="{Binding IsErrorVisible}" />
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding IsAccessDenied}" />
 
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16" RowSpacing="16">
-                <Border BackgroundColor="#1A1625"
-                        Stroke="#2D2440"
-                        StrokeShape="RoundRectangle 24"
-                        Padding="18">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="{Binding TitreFormulaireLieu}"
-                               TextColor="White"
-                               FontSize="20"
-                               FontAttributes="Bold" />
+            <!-- Contenu normal si accès autorisé -->
+            <VerticalStackLayout IsVisible="{Binding HasAccess}" Spacing="24">
 
-                        <Entry Placeholder="Nom du lieu"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding NomLieu, Mode=TwoWay}" />
-                        <Entry Placeholder="Adresse"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding AdresseLieu, Mode=TwoWay}" />
-                        <Entry Placeholder="Code postal"
-                               Keyboard="Numeric"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding CodePostalLieu, Mode=TwoWay}" />
-                        <Entry Placeholder="Ville"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding VilleLieu, Mode=TwoWay}" />
-                        <Entry Placeholder="Pays"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding PaysLieu, Mode=TwoWay}" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="White" />
 
-                        <HorizontalStackLayout Spacing="10">
-                            <Button Text="{Binding TexteBoutonLieu}"
-                                    Style="{StaticResource GradientButton}"
-                                    Command="{Binding EnregistrerLieuCommand}" />
-                            <Button Text="Réinitialiser"
-                                    Style="{StaticResource ActionButton}"
-                                    BackgroundColor="#6B7280"
-                                    Command="{Binding AffichageFormulaireLieuCreationCommand}" />
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </Border>
+                <Label Text="{Binding SuccessMessage}"
+                       TextColor="#6EE7B7"
+                       IsVisible="{Binding IsSuccessVisible}" />
 
-                <Border Grid.Column="1"
-                        BackgroundColor="#1A1625"
-                        Stroke="#2D2440"
-                        StrokeShape="RoundRectangle 24"
-                        Padding="18">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="{Binding TitreFormulaireTransport}"
-                               TextColor="White"
-                               FontSize="20"
-                               FontAttributes="Bold" />
+                <Label Text="{Binding ErrorMessage}"
+                       TextColor="#F87171"
+                       IsVisible="{Binding IsErrorVisible}" />
 
-                        <Entry Placeholder="Type de transport"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding TypeTransport, Mode=TwoWay}" />
-                        <Entry Placeholder="Capacité"
-                               Keyboard="Numeric"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding CapaciteTransport, Mode=TwoWay}" />
-                        <Entry Placeholder="Immatriculation"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding ImmatriculationTransport, Mode=TwoWay}" />
-                        <Entry Placeholder="Description"
-                               Style="{StaticResource DarkEntry}"
-                               Text="{Binding DescriptionTransport, Mode=TwoWay}" />
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16" RowSpacing="16">
+                    <!-- Section Lieux -->
+                    <Border BackgroundColor="#1A1625"
+                            Stroke="#2D2440"
+                            StrokeShape="RoundRectangle 24"
+                            Padding="18">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="{Binding TitreFormulaireLieu}"
+                                   TextColor="White"
+                                   FontSize="20"
+                                   FontAttributes="Bold" />
 
-                        <HorizontalStackLayout Spacing="10">
-                            <Button Text="{Binding TexteBoutonTransport}"
-                                    Style="{StaticResource GradientButton}"
-                                    Command="{Binding EnregistrerTransportCommand}" />
-                            <Button Text="Réinitialiser"
-                                    Style="{StaticResource ActionButton}"
-                                    BackgroundColor="#6B7280"
-                                    Command="{Binding AffichageFormulaireTransportCreationCommand}" />
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </Border>
-                
-                <Border Grid.Column="2"
-                        BackgroundColor="#1A1625"
-                        Stroke="#2D2440"
-                        StrokeShape="RoundRectangle 24"
-                        Padding="18">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="{Binding TitreFormulaireTrajet}"
-                               TextColor="White"
-                               FontSize="20"
-                               FontAttributes="Bold" />
-
-                        
-                        <VerticalStackLayout Spacing="10">
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="Date de départ :" Style="{StaticResource DarkEntry}" VerticalTextAlignment="Center"/>
-                                <DatePicker Format="dd/MM/yyyy" MinimumDate="01/01/2000" MaximumDate="12/31/2026" Date="{Binding DateDepart, Mode=TwoWay}" />
-                            </HorizontalStackLayout>
+                            <Entry Placeholder="Nom du lieu"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding NomLieu, Mode=TwoWay}" />
+                            <Entry Placeholder="Adresse"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding AdresseLieu, Mode=TwoWay}" />
+                            <Entry Placeholder="Code postal"
+                                   Keyboard="Numeric"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding CodePostalLieu, Mode=TwoWay}" />
+                            <Entry Placeholder="Ville"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding VilleLieu, Mode=TwoWay}" />
+                            <Entry Placeholder="Pays"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding PaysLieu, Mode=TwoWay}" />
 
                             <HorizontalStackLayout Spacing="10">
-                                <Label Text="Heure de départ :" Style="{StaticResource DarkEntry}" />
-                                <TimePicker Format="H:mm" Time="{Binding HeureDepart, Mode=TwoWay}" />
+                                <Button Text="{Binding TexteBoutonLieu}"
+                                        Style="{StaticResource GradientButton}"
+                                        Command="{Binding EnregistrerLieuCommand}" />
+                                <Button Text="Réinitialiser"
+                                        Style="{StaticResource ActionButton}"
+                                        BackgroundColor="#6B7280"
+                                        Command="{Binding AffichageFormulaireLieuCreationCommand}" />
                             </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="Date d'arrivée :" Style="{StaticResource DarkEntry}" VerticalTextAlignment="Center"/>
-                                <DatePicker Format="dd/MM/yyyy" MinimumDate="01/01/2000" MaximumDate="12/31/2026" Date="{Binding DateArrivee, Mode=TwoWay}" />
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="Heure d'arrivée :" Style="{StaticResource DarkEntry}" />
-                                <TimePicker Format="H:mm" Time="{Binding HeureArrivee, Mode=TwoWay}" />
-                            </HorizontalStackLayout>
-
-                            <Picker Title="Statut du trajet"
-                                    Style="{StaticResource DarkEntry}"
-                                    ItemsSource="{Binding StatutOptions}"
-                                    SelectedIndex="{Binding StatutSelectedIndex, Mode=TwoWay}"
-                                    HeightRequest="75"/>
-
-                            <Picker Title="Lieu de départ"
-                                    Style="{StaticResource DarkEntry}"
-                                    ItemsSource="{Binding Lieux}"
-                                    ItemDisplayBinding="{Binding Nom}"
-                                    SelectedItem="{Binding SelectedLieuDepart, Mode=TwoWay}"
-                                    HeightRequest="75" />
-
-                            <Picker Title="Lieu d'arrivée"
-                                    Style="{StaticResource DarkEntry}"
-                                    ItemsSource="{Binding Lieux}"
-                                    ItemDisplayBinding="{Binding Nom}"
-                                    SelectedItem="{Binding SelectedLieuArrivee, Mode=TwoWay}"
-                                    HeightRequest="75"/>
-
-                            <Picker Title="Transport utilisé"
-                                    Style="{StaticResource DarkEntry}"
-                                    ItemsSource="{Binding Transports}"
-                                    ItemDisplayBinding="{Binding TypeTransport}"
-                                    SelectedItem="{Binding SelectedTransport, Mode=TwoWay}"
-                                    HeightRequest="75"/>
                         </VerticalStackLayout>
-                        
+                    </Border>
 
-                        <HorizontalStackLayout Spacing="10">
-                            <Button Text="{Binding TexteBoutonTrajet}"
-                                    Style="{StaticResource GradientButton}"
-                                    Command="{Binding EnregistrerTrajetCommand}" />
-                            <Button Text="Réinitialiser"
-                                    Style="{StaticResource ActionButton}"
-                                    BackgroundColor="#6B7280"
-                                    Command="{Binding AffichageFormulaireTrajetCreationCommand}" />
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
+                    <!-- Section Transports -->
+                    <Border Grid.Column="1"
+                            BackgroundColor="#1A1625"
+                            Stroke="#2D2440"
+                            StrokeShape="RoundRectangle 24"
+                            Padding="18">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="{Binding TitreFormulaireTransport}"
+                                   TextColor="White"
+                                   FontSize="20"
+                                   FontAttributes="Bold" />
 
-            <VerticalStackLayout Spacing="12">
-                <Label Text="Lieux enregistrés"
-                       TextColor="White"
-                       FontSize="18"
-                       FontAttributes="Bold" />
+                            <Entry Placeholder="Type de transport"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding TypeTransport, Mode=TwoWay}" />
+                            <Entry Placeholder="Capacité"
+                                   Keyboard="Numeric"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding CapaciteTransport, Mode=TwoWay}" />
+                            <Entry Placeholder="Immatriculation"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding ImmatriculationTransport, Mode=TwoWay}" />
+                            <Entry Placeholder="Description"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding DescriptionTransport, Mode=TwoWay}" />
 
-                <Border BackgroundColor="#1A1625"
-                        Stroke="#2D2440"
-                        StrokeShape="RoundRectangle 22"
-                        Padding="12">
-                    <ScrollView Orientation="Horizontal">
-                        <VerticalStackLayout Spacing="0" MinimumWidthRequest="1080">
-                            <Grid ColumnDefinitions="160,280,110,140,120,220"
-                                  Padding="6,10">
-                                <Label Text="Nom" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="1" Text="Adresse" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="2" Text="CP" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="3" Text="Ville" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="4" Text="Pays" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="5" Text="Actions" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            </Grid>
+                            <HorizontalStackLayout Spacing="10">
+                                <Button Text="{Binding TexteBoutonTransport}"
+                                        Style="{StaticResource GradientButton}"
+                                        Command="{Binding EnregistrerTransportCommand}" />
+                                <Button Text="Réinitialiser"
+                                        Style="{StaticResource ActionButton}"
+                                        BackgroundColor="#6B7280"
+                                        Command="{Binding AffichageFormulaireTransportCreationCommand}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
 
-                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Lieux}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="model:Lieu">
-                                        <Grid ColumnDefinitions="160,280,110,140,120,220"
-                                              Padding="6,10">
-                                            <Label Text="{Binding Nom}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="1" Text="{Binding Adresse}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="2" Text="{Binding CodePostal}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="3" Text="{Binding Ville}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="4" Text="{Binding Pays}" TextColor="#D1D5DB" />
+                    <!-- Section Trajets -->
+                    <Border Grid.Column="2"
+                            BackgroundColor="#1A1625"
+                            Stroke="#2D2440"
+                            StrokeShape="RoundRectangle 24"
+                            Padding="18">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="{Binding TitreFormulaireTrajet}"
+                                   TextColor="White"
+                                   FontSize="20"
+                                   FontAttributes="Bold" />
 
-                                            <HorizontalStackLayout Grid.Column="5" Spacing="8" HorizontalOptions="Center">
-                                                <Button Text="Modifier"
-                                                        Style="{StaticResource ActionButton}"
-                                                        BackgroundColor="#1976D2"
-                                                        Command="{Binding BindingContext.ModifierLieuCommand, Source={x:Reference TripPage}}"
-                                                        CommandParameter="{Binding .}" />
-                                                <Button Text="Supprimer"
-                                                        Style="{StaticResource ActionButton}"
-                                                        BackgroundColor="#D32F2F"
-                                                        Command="{Binding BindingContext.SupprimerLieuCommand, Source={x:Reference TripPage}}"
-                                                        CommandParameter="{Binding .}" />
-                                            </HorizontalStackLayout>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
+                            <VerticalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="Date de départ :" Style="{StaticResource DarkEntry}" VerticalTextAlignment="Center"/>
+                                    <DatePicker Format="dd/MM/yyyy" MinimumDate="01/01/2000" MaximumDate="12/31/2026" Date="{Binding DateDepart, Mode=TwoWay}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="Heure de départ :" Style="{StaticResource DarkEntry}" />
+                                    <TimePicker Format="H:mm" Time="{Binding HeureDepart, Mode=TwoWay}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="Date d'arrivée :" Style="{StaticResource DarkEntry}" VerticalTextAlignment="Center"/>
+                                    <DatePicker Format="dd/MM/yyyy" MinimumDate="01/01/2000" MaximumDate="12/31/2026" Date="{Binding DateArrivee, Mode=TwoWay}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="Heure d'arrivée :" Style="{StaticResource DarkEntry}" />
+                                    <TimePicker Format="H:mm" Time="{Binding HeureArrivee, Mode=TwoWay}" />
+                                </HorizontalStackLayout>
+
+                                <Picker Title="Statut du trajet"
+                                        Style="{StaticResource DarkEntry}"
+                                        ItemsSource="{Binding StatutOptions}"
+                                        SelectedIndex="{Binding StatutSelectedIndex, Mode=TwoWay}"
+                                        HeightRequest="75"/>
+
+                                <Picker Title="Lieu de départ"
+                                        Style="{StaticResource DarkEntry}"
+                                        ItemsSource="{Binding Lieux}"
+                                        ItemDisplayBinding="{Binding Nom}"
+                                        SelectedItem="{Binding SelectedLieuDepart, Mode=TwoWay}"
+                                        HeightRequest="75" />
+
+                                <Picker Title="Lieu d'arrivée"
+                                        Style="{StaticResource DarkEntry}"
+                                        ItemsSource="{Binding Lieux}"
+                                        ItemDisplayBinding="{Binding Nom}"
+                                        SelectedItem="{Binding SelectedLieuArrivee, Mode=TwoWay}"
+                                        HeightRequest="75"/>
+
+                                <Picker Title="Transport utilisé"
+                                        Style="{StaticResource DarkEntry}"
+                                        ItemsSource="{Binding Transports}"
+                                        ItemDisplayBinding="{Binding TypeTransport}"
+                                        SelectedItem="{Binding SelectedTransport, Mode=TwoWay}"
+                                        HeightRequest="75"/>
                             </VerticalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Button Text="{Binding TexteBoutonTrajet}"
+                                        Style="{StaticResource GradientButton}"
+                                        Command="{Binding EnregistrerTrajetCommand}" />
+                                <Button Text="Réinitialiser"
+                                        Style="{StaticResource ActionButton}"
+                                        BackgroundColor="#6B7280"
+                                        Command="{Binding AffichageFormulaireTrajetCreationCommand}" />
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
-                    </ScrollView>
-                </Border>
-            </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
-            <VerticalStackLayout Spacing="12">
-                <Label Text="Transports enregistrés"
-                       TextColor="White"
-                       FontSize="18"
-                       FontAttributes="Bold" />
+                <!-- Liste des Lieux -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Lieux enregistrés"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold" />
 
-                <Border BackgroundColor="#1A1625"
-                        Stroke="#2D2440"
-                        StrokeShape="RoundRectangle 22"
-                        Padding="12">
-                    <ScrollView Orientation="Horizontal">
-                        <VerticalStackLayout Spacing="0" MinimumWidthRequest="1080">
-                            <Grid ColumnDefinitions="140,100,180,320,220"
-                                  Padding="6,10">
-                                <Label Text="Type" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="1" Text="Capacité" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="2" Text="Immatriculation" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="3" Text="Description" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="4" Text="Actions" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            </Grid>
+                    <Border BackgroundColor="#1A1625"
+                            Stroke="#2D2440"
+                            StrokeShape="RoundRectangle 22"
+                            Padding="12">
+                        <ScrollView Orientation="Horizontal">
+                            <VerticalStackLayout Spacing="0" MinimumWidthRequest="1080">
+                                <Grid ColumnDefinitions="160,280,110,140,120,220"
+                                      Padding="6,10">
+                                    <Label Text="Nom" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="1" Text="Adresse" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="2" Text="CP" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="3" Text="Ville" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="4" Text="Pays" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="5" Text="Actions" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                </Grid>
 
-                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Transports}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="model:Transport">
-                                        <Grid ColumnDefinitions="140,100,180,320,220"
-                                              Padding="6,10">
-                                            <Label Text="{Binding TypeTransport}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="1" Text="{Binding Capacite}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="2" Text="{Binding Immatriculation}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="3" Text="{Binding Description}" TextColor="#D1D5DB" LineBreakMode="TailTruncation" />
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Lieux}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="model:Lieu">
+                                            <Grid ColumnDefinitions="160,280,110,140,120,220"
+                                                  Padding="6,10">
+                                                <Label Text="{Binding Nom}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="1" Text="{Binding Adresse}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="2" Text="{Binding CodePostal}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="3" Text="{Binding Ville}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="4" Text="{Binding Pays}" TextColor="#D1D5DB" />
 
-                                            <HorizontalStackLayout Grid.Column="4" Spacing="8" HorizontalOptions="Center">
-                                                <Button Text="Modifier"
-                                                        Style="{StaticResource ActionButton}"
-                                                        BackgroundColor="#1976D2"
-                                                        Command="{Binding BindingContext.ModifierTransportCommand, Source={x:Reference TripPage}}"
-                                                        CommandParameter="{Binding .}" />
-                                                <Button Text="Supprimer"
-                                                        Style="{StaticResource ActionButton}"
-                                                        BackgroundColor="#D32F2F"
-                                                        Command="{Binding BindingContext.SupprimerTransportCommand, Source={x:Reference TripPage}}"
-                                                        CommandParameter="{Binding .}" />
-                                            </HorizontalStackLayout>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
+                                                <HorizontalStackLayout Grid.Column="5" Spacing="8" HorizontalOptions="Center">
+                                                     <Button Text="Modifier"
+                                                             Style="{StaticResource ActionButton}"
+                                                             BackgroundColor="#1976D2"
+                                                             Command="{Binding BindingContext.ModifierLieuCommand, Source={x:Reference TripPage}}"
+                                                             CommandParameter="{Binding .}" />
+                                                    <Button Text="Supprimer"
+                                                            Style="{StaticResource ActionButton}"
+                                                            BackgroundColor="#D32F2F"
+                                                            Command="{Binding BindingContext.SupprimerLieuCommand, Source={x:Reference TripPage}}"
+                                                            CommandParameter="{Binding .}" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </ScrollView>
-                </Border>
-            </VerticalStackLayout>
-            
-            <VerticalStackLayout Spacing="12">
-                <Label Text="Trajet enregistrés"
-                       TextColor="White"
-                       FontSize="18"
-                       FontAttributes="Bold" />
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
 
-                <Border BackgroundColor="#1A1625"
-                        Stroke="#2D2440"
-                        StrokeShape="RoundRectangle 22"
-                        Padding="12">
-                    <ScrollView Orientation="Horizontal">
-                        <VerticalStackLayout Spacing="0" MinimumWidthRequest="1080">
-                            <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*"
-                                  Padding="6,10">
-                                <Label Grid.Column="0" Text="Date de départ" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="1" Text="Heure de départ" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="2" Text="Date d'arrivée" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="3" Text="Heure d'arrivée" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="4" Text="Statut" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="5" Text="Id lieu départ" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="6" Text="Id lieu arrivée" TextColor="White" FontAttributes="Bold" />
-                                <Label Grid.Column="7" Text="Id transport" TextColor="White" FontAttributes="Bold" />
-                            </Grid>
+                <!-- Liste des Transports -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Transports enregistrés"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold" />
 
-                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Trajets}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="model:Trajet">
-                                        <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*"
-                                              Padding="6,10">
-                                            <Label Grid.Column="0" Text="{Binding DateDepart, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="1" Text="{Binding HeureDepart, StringFormat='{0:HH\\:mm}'}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="2" Text="{Binding DateArrivee, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="3" Text="{Binding HeureArrivee, StringFormat='{0:HH\\:mm}'}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="4" Text="{Binding Statut}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="5" Text="{Binding LieuDepart.Nom}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="6" Text="{Binding LieuArrivee.Nom}" TextColor="#D1D5DB" />
-                                            <Label Grid.Column="7" Text="{Binding Transport.TypeTransport}" TextColor="#D1D5DB" />
+                    <Border BackgroundColor="#1A1625"
+                            Stroke="#2D2440"
+                            StrokeShape="RoundRectangle 22"
+                            Padding="12">
+                        <ScrollView Orientation="Horizontal">
+                            <VerticalStackLayout Spacing="0" MinimumWidthRequest="1080">
+                                <Grid ColumnDefinitions="140,100,180,320,220"
+                                      Padding="6,10">
+                                    <Label Text="Type" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="1" Text="Capacité" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="2" Text="Immatriculation" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="3" Text="Description" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="4" Text="Actions" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                </Grid>
 
-                                            <HorizontalStackLayout Grid.Column="8" Spacing="8" HorizontalOptions="Center">
-                                                <Button Text="Modifier"
-                                                        Style="{StaticResource ActionButton}"
-                                                        BackgroundColor="#1976D2"
-                                                        Command="{Binding BindingContext.ModifierTrajetCommand, Source={x:Reference TripPage}}"
-                                                        CommandParameter="{Binding .}" />
-                                                <Button Text="Supprimer"
-                                                        Style="{StaticResource ActionButton}"
-                                                        BackgroundColor="#D32F2F"
-                                                        Command="{Binding BindingContext.SupprimerTrajetCommand, Source={x:Reference TripPage}}"
-                                                        CommandParameter="{Binding .}" />
-                                            </HorizontalStackLayout>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Transports}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="model:Transport">
+                                            <Grid ColumnDefinitions="140,100,180,320,220"
+                                                  Padding="6,10">
+                                                <Label Text="{Binding TypeTransport}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="1" Text="{Binding Capacite}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="2" Text="{Binding Immatriculation}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="3" Text="{Binding Description}" TextColor="#D1D5DB" LineBreakMode="TailTruncation" />
+
+                                                <HorizontalStackLayout Grid.Column="4" Spacing="8" HorizontalOptions="Center">
+                                                     <Button Text="Modifier"
+                                                             Style="{StaticResource ActionButton}"
+                                                             BackgroundColor="#1976D2"
+                                                             Command="{Binding BindingContext.ModifierTransportCommand, Source={x:Reference TripPage}}"
+                                                             CommandParameter="{Binding .}" />
+                                                    <Button Text="Supprimer"
+                                                            Style="{StaticResource ActionButton}"
+                                                            BackgroundColor="#D32F2F"
+                                                            Command="{Binding BindingContext.SupprimerTransportCommand, Source={x:Reference TripPage}}"
+                                                            CommandParameter="{Binding .}" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </ScrollView>
-                </Border>
-            </VerticalStackLayout>
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
 
+                <!-- Liste des Trajets -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Trajet enregistrés"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+
+                    <Border BackgroundColor="#1A1625"
+                            Stroke="#2D2440"
+                            StrokeShape="RoundRectangle 22"
+                            Padding="12">
+                        <ScrollView Orientation="Horizontal">
+                            <VerticalStackLayout Spacing="0" MinimumWidthRequest="1080">
+                                <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" Padding="6,10">
+                                    <Label Grid.Column="0" Text="Date de départ" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="1" Text="Heure de départ" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="2" Text="Date d'arrivée" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="3" Text="Heure d'arrivée" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="4" Text="Statut" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="5" Text="Lieu de départ" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="6" Text="Lieu d'arrivée" TextColor="White" FontAttributes="Bold" />
+                                    <Label Grid.Column="7" Text="Transport" TextColor="White" FontAttributes="Bold" />
+                                </Grid>
+
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Trajets}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="model:Trajet">
+                                            <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" Padding="6,10">
+                                                <Label Grid.Column="0" Text="{Binding DateDepart, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="1" Text="{Binding HeureDepart, StringFormat='{0:HH\\:mm}'}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="2" Text="{Binding DateArrivee, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="3" Text="{Binding HeureArrivee, StringFormat='{0:HH\\:mm}'}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="4" Text="{Binding Statut}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="5" Text="{Binding LieuDepart.Nom}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="6" Text="{Binding LieuArrivee.Nom}" TextColor="#D1D5DB" />
+                                                <Label Grid.Column="7" Text="{Binding Transport.TypeTransport}" TextColor="#D1D5DB" />
+
+                                                <HorizontalStackLayout Grid.Column="8" Spacing="8" HorizontalOptions="Center">
+                                                     <Button Text="Modifier"
+                                                             Style="{StaticResource ActionButton}"
+                                                             BackgroundColor="#1976D2"
+                                                             Command="{Binding BindingContext.ModifierTrajetCommand, Source={x:Reference TripPage}}"
+                                                             CommandParameter="{Binding .}" />
+                                                    <Button Text="Supprimer"
+                                                            Style="{StaticResource ActionButton}"
+                                                            BackgroundColor="#D32F2F"
+                                                            Command="{Binding BindingContext.SupprimerTrajetCommand, Source={x:Reference TripPage}}"
+                                                            CommandParameter="{Binding .}" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

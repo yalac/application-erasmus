@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ErAtlas.Database;
@@ -13,118 +14,97 @@ public partial class TripManagementViewModel : ObservableObject
     private int _transportIdEnModification;
     private int _trajetIdEnModification;
     public List<string> StatutOptions { get; } = new List<string> { "A l'heure", "En retard", "Terminé" };
+    
+    public bool HasAccess => LoginViewModel.IsLoggedIn && LoginViewModel.IsGestionnaire;
+    [ObservableProperty]
+    private bool _isAccessDenied = false;
 
     [ObservableProperty]
     private ObservableCollection<Lieu> _lieux = new();
-
     [ObservableProperty]
     private ObservableCollection<Transport> _transports = new();
-    
     [ObservableProperty]
     private ObservableCollection<Trajet> _trajets = new();
 
     [ObservableProperty]
     private string _nomLieu = string.Empty;
-
     [ObservableProperty]
     private string _adresseLieu = string.Empty;
-
     [ObservableProperty]
     private string _codePostalLieu = string.Empty;
-
     [ObservableProperty]
     private string _villeLieu = string.Empty;
-
     [ObservableProperty]
     private string _paysLieu = string.Empty;
 
     [ObservableProperty]
     private string _typeTransport = string.Empty;
-
     [ObservableProperty]
     private string _capaciteTransport = string.Empty;
-
     [ObservableProperty]
     private string _immatriculationTransport = string.Empty;
-
     [ObservableProperty]
     private string _descriptionTransport = string.Empty;
     
     [ObservableProperty]
     private DateTime? _dateDepart = null;
-    
     [ObservableProperty]
     private TimeSpan? _heureDepart = null;
-    
     [ObservableProperty]
     private DateTime? _dateArrivee = null;
-    
     [ObservableProperty]
     private TimeSpan? _heureArrivee = null;
-    
     [ObservableProperty]
     private int _statutSelectedIndex = -1;
-
     [ObservableProperty] 
     private int _idLieuArrivee = 0;
-
     [ObservableProperty] 
     private int _idLieuDepart = 0;
-    
     [ObservableProperty] 
     private int _idTransport = 0;
-    
     [ObservableProperty]
     private Lieu? _selectedLieuDepart;
-
     [ObservableProperty]
     private Lieu? _selectedLieuArrivee;
-
     [ObservableProperty]
     private Transport? _selectedTransport; 
 
     [ObservableProperty]
     private string _errorMessage = string.Empty;
-
     [ObservableProperty]
     private bool _isErrorVisible;
-
     [ObservableProperty]
     private string _successMessage = string.Empty;
-
     [ObservableProperty]
     private bool _isSuccessVisible;
-
     [ObservableProperty]
     private bool _isBusy;
 
     [ObservableProperty]
     private bool _isLieuModificationMode;
-
     [ObservableProperty]
     private bool _isTransportModificationMode;
-    
     [ObservableProperty]
     private bool _isTrajetsModificationMode;
 
     public string TitreFormulaireLieu => IsLieuModificationMode ? "Modifier le lieu" : "Créer un lieu";
-
     public string TexteBoutonLieu => IsLieuModificationMode ? "Enregistrer" : "Créer";
-
     public string TitreFormulaireTransport => IsTransportModificationMode ? "Modifier le transport" : "Créer un transport";
-
     public string TexteBoutonTransport => IsTransportModificationMode ? "Enregistrer" : "Créer";
-    
     public string TitreFormulaireTrajet => IsTrajetsModificationMode ? "Modifier le trajet" : "Créer un trajet";
-
     public string TexteBoutonTrajet => IsTrajetsModificationMode ? "Enregistrer" : "Créer";
 
     public TripManagementViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
-        ChargerLieux();
-        ChargerTransports();
-        ChargerTrajets();
+        IsAccessDenied = !HasAccess;
+        
+        if (HasAccess)
+        {
+            ChargerLieux();
+            ChargerTransports();
+            ChargerTrajets();
+        }
     }
 
     partial void OnIsLieuModificationModeChanged(bool value)

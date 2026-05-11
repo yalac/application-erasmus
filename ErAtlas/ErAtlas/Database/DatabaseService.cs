@@ -658,16 +658,22 @@ public class DatabaseService
         List<Trajet> data = new List<Trajet>();
         while (reader.Read())
         {
+            int idTrajet = (int)reader["IDTrajet"];
             DateTime dateDepart = (DateTime)reader["DateDepart"];
             TimeSpan heureDepart = (TimeSpan)reader["HeureDepart"];
             DateTime dateArrivee = (DateTime)reader["DateArrivee"];
             TimeSpan heureArrivee = (TimeSpan)reader["HeureArrivee"];
             
+            DateTime fullDateDepart = dateDepart.Date + heureDepart;
+            DateTime fullDateArrivee = dateArrivee.Date + heureArrivee;
+            
             Trajet trajet = new Trajet
             {
-                IDTrajet = (int)reader["IDTrajet"],
-                DateDepart = new DateTime(dateDepart.Year, dateDepart.Month, dateDepart.Day, heureDepart.Hours, heureDepart.Minutes, heureDepart.Seconds),
-                DateArrivee = new DateTime(dateArrivee.Year, dateArrivee.Month, dateArrivee.Day, heureArrivee.Hours, heureArrivee.Minutes, heureArrivee.Seconds),
+                IDTrajet = idTrajet,
+                DateDepart = fullDateDepart,
+                HeureDepart = heureDepart,    
+                DateArrivee = fullDateArrivee, 
+                HeureArrivee = heureArrivee,  
                 Statut = (string)reader["Statut"],
                 VilleArrivee = (string)reader["VilleArrivee"],
                 VilleDepart = (string)reader["VilleDepart"],

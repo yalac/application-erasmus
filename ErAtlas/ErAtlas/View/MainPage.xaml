@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="using:ErAtlas.ViewModels"
+    xmlns:model="using:ErAtlas.Model"
     x:Class="ErAtlas.View.MainPage"
     x:DataType="vm:MainPageViewModel"
     BackgroundColor="#0F0A1A"
@@ -163,18 +164,37 @@
                 <Label Text="Trajets récents" TextColor="White" FontSize="18" FontAttributes="Bold" />
                 <Frame CornerRadius="16" BackgroundColor="#1A1625" BorderColor="#2D2440" Padding="16">
                     <!-- Ici on utilisera un CollectionView quand vous aurez la source -->
-                    <CollectionView x:Name="RecentTripsCollection"
+                    <CollectionView ItemsSource="{Binding TrajetsRecent}"
                                     ItemsLayout="VerticalList"
                                     SelectionMode="None">
                         <!-- Exemple de ItemTemplate -->
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="model:Trajet">
                                 <Frame CornerRadius="12" BackgroundColor="#241149" Padding="12" Margin="0,8">
                                     <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                                        <Image Source="train.svg" WidthRequest="36" HeightRequest="36" />
-                                        <VerticalStackLayout>
-                                            <Label Text="{Binding RouteText}" TextColor="White" FontAttributes="Bold" />
-                                            <Label Text="{Binding DateText}" TextColor="#B8A0E0" FontSize="12" />
+                                        <!-- Icône du transport -->
+                                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 12" Background="#3B82F6">
+                                            <Image Source="train.svg" Aspect="AspectFit" WidthRequest="24" HeightRequest="24" />
+                                        </Border>
+
+                                        <!-- Informations du trajet -->
+                                        <VerticalStackLayout Spacing="4">
+                                            <!-- VilleDepart → VilleArrivee -->
+                                            <HorizontalStackLayout Spacing="4">
+                                                <Label Text="{Binding VilleDepart}" TextColor="White" FontAttributes="Bold" FontSize="14" />
+                                                <Label Text=" → " TextColor="White" FontAttributes="Bold" FontSize="14" />
+                                                <Label Text="{Binding VilleArrivee}" TextColor="White" FontAttributes="Bold" FontSize="14" />
+                                            </HorizontalStackLayout>
+
+                                            <!-- DateDepart + HeureDepart -->
+                                            <HorizontalStackLayout Spacing="4">
+                                                <Label Text="{Binding DateDepart, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#B8A0E0" FontSize="12" />
+                                                <Label Text=" à " TextColor="#B8A0E0" FontSize="12" />
+                                                <Label Text="{Binding HeureDepart, StringFormat='{0:HH\\:mm}'}" TextColor="#B8A0E0" FontSize="12" />
+                                            </HorizontalStackLayout>
+
+                                            <!-- Statut -->
+                                            <Label Text="{Binding Statut}" TextColor="#B8A0E0" FontSize="12" />
                                         </VerticalStackLayout>
                                     </HorizontalStackLayout>
                                 </Frame>

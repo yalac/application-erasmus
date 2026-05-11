@@ -11,73 +11,83 @@
              BackgroundColor="White">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="16">
-            <Label Text="Gestion des utilisateurs"
-                   FontSize="26"
+        <VerticalStackLayout Padding="24" Spacing="24">
+            <!-- Message d'erreur si accès refusé -->
+            <Label Text="Autorité insuffisante. Vous devez être gestionnaire pour accéder à cette page."
+                   TextColor="#F87171"
+                   FontSize="18"
                    FontAttributes="Bold"
-                   TextColor="Black" />
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding IsAccessDenied}" />
+            
+            <VerticalStackLayout IsVisible="{Binding HasAccess}" Padding="24" Spacing="16">
+                <Label Text="Gestion des utilisateurs"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="Black" />
 
-            <Label Text="Creer, modifier et gerer les comptes utilisateurs (acces gestionnaire)."
-                   FontSize="13"
-                   TextColor="#555555" />
+                <Label Text="Creer, modifier et gerer les comptes utilisateurs (acces gestionnaire)."
+                       FontSize="13"
+                       TextColor="#555555" />
 
-            <Button Text="Nouveau utilisateur"
-                    Clicked="OnNouveauUtilisateurClicked"
-                    BackgroundColor="#0D47A1"
-                    TextColor="White"
-                    CornerRadius="8"
-                    HorizontalOptions="Start" />
+                <Button Text="Nouveau utilisateur"
+                        Clicked="OnNouveauUtilisateurClicked"
+                        BackgroundColor="#0D47A1"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HorizontalOptions="Start" />
 
-            <Label Text="{Binding SuccessMessage}"
-                   TextColor="Green"
-                   IsVisible="{Binding IsSuccessVisible}" />
+                <Label Text="{Binding SuccessMessage}"
+                       TextColor="Green"
+                       IsVisible="{Binding IsSuccessVisible}" />
 
-            <Label Text="Liste des utilisateurs"
-                   FontSize="16"
-                   FontAttributes="Bold"
-                   TextColor="Black" />
+                <Label Text="Liste des utilisateurs"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="Black" />
 
-            <Border>
-                <ScrollView Orientation="Horizontal">
-                    <VerticalStackLayout Spacing="0" MinimumWidthRequest="1250">
-                        <Grid ColumnDefinitions="120,120,240,130,260,120,120,120,240">
-                            <Label Grid.Column="0" Text="Nom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="1" Text="Prénom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="2" Text="Email" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="3" Text="Téléphone" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="4" Text="Adresse" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="5" Text="Code postal" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="6" Text="Ville" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="7" Text="Gestionnaire" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="8" Text="Action" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                        </Grid>
+                <Border>
+                    <ScrollView Orientation="Horizontal">
+                        <VerticalStackLayout Spacing="0" MinimumWidthRequest="1250">
+                            <Grid ColumnDefinitions="120,120,240,130,260,120,120,120,240">
+                                <Label Grid.Column="0" Text="Nom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="1" Text="Prénom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="2" Text="Email" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="3" Text="Téléphone" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="4" Text="Adresse" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="5" Text="Code postal" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="6" Text="Ville" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="7" Text="Gestionnaire" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="8" Text="Action" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            </Grid>
 
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Utilisateurs}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="model:Utilisateur">
-                                    <Grid ColumnDefinitions="120,120,240,130,260,120,120,120,240" MinimumHeightRequest="56">
-                                        <Label Grid.Column="0" Text="{Binding Nom}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                        <Label Grid.Column="1" Text="{Binding Prenom}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                        <Label Grid.Column="2" Text="{Binding Email}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                        <Label Grid.Column="3" Text="{Binding NumeroDeTelephone}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                        <Label Grid.Column="4" Text="{Binding Adresse}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                        <Label Grid.Column="5" Text="{Binding CodePostal}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                        <Label Grid.Column="6" Text="{Binding Ville}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                        <Label Grid.Column="7" Text="{Binding Gestionnaire}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Utilisateurs}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="model:Utilisateur">
+                                        <Grid ColumnDefinitions="120,120,240,130,260,120,120,120,240" MinimumHeightRequest="56">
+                                            <Label Grid.Column="0" Text="{Binding Nom}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                            <Label Grid.Column="1" Text="{Binding Prenom}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                            <Label Grid.Column="2" Text="{Binding Email}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                            <Label Grid.Column="3" Text="{Binding NumeroDeTelephone}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                            <Label Grid.Column="4" Text="{Binding Adresse}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                            <Label Grid.Column="5" Text="{Binding CodePostal}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                            <Label Grid.Column="6" Text="{Binding Ville}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                            <Label Grid.Column="7" Text="{Binding Gestionnaire}" TextColor="Gray" HorizontalTextAlignment="Center" />
 
-                                        <Grid Grid.Column="8" ColumnDefinitions="*,*" ColumnSpacing="8" HorizontalOptions="Center" VerticalOptions="Center">
-                                            <Button Grid.Column="0" Text="Modifier" BackgroundColor="#1976D2" TextColor="White" FontSize="11" Padding="12,6" MinimumWidthRequest="100" Clicked="OnModifierClicked" />
-                                            <Button Grid.Column="1" Text="Supprimer" BackgroundColor="#D32F2F" TextColor="White" FontSize="11" Padding="12,6" MinimumWidthRequest="100" 
-                                                    Command="{Binding BindingContext.SupprimerUtilisateurCommand, Source={x:Reference UsersPage}}" 
-                                                    CommandParameter="{Binding .}" />
+                                            <Grid Grid.Column="8" ColumnDefinitions="*,*" ColumnSpacing="8" HorizontalOptions="Center" VerticalOptions="Center">
+                                                <Button Grid.Column="0" Text="Modifier" BackgroundColor="#1976D2" TextColor="White" FontSize="11" Padding="12,6" MinimumWidthRequest="100" Clicked="OnModifierClicked" />
+                                                <Button Grid.Column="1" Text="Supprimer" BackgroundColor="#D32F2F" TextColor="White" FontSize="11" Padding="12,6" MinimumWidthRequest="100" 
+                                                        Command="{Binding BindingContext.SupprimerUtilisateurCommand, Source={x:Reference UsersPage}}" 
+                                                        CommandParameter="{Binding .}" />
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </ScrollView>
-            </Border>
+                    </ScrollView>
+                </Border>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
