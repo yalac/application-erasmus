@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using ErAtlas.Database;
 using ErAtlas.Model;
 using System.Collections.ObjectModel;
+using ErAtlas.View;
 
 namespace ErAtlas.ViewModels;
 
@@ -131,8 +132,11 @@ public partial class MyTravelViewModel : ObservableObject
     [RelayCommand]
     private void ShowDetails(Trajet travel)
     {
-        SelectedTravel = travel;
         SelectedTravelMessage = $"Détails du trajet : {travel.Route}";
+        Shell.Current.GoToAsync(nameof(MyTravelDetailsPage), true, new Dictionary<string, object>
+        {
+            { "Travel", travel }
+        });
         // Ici, tu peux naviguer vers une page de détails si nécessaire
     }
 }

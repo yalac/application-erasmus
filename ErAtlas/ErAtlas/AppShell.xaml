@@ -34,4 +34,7 @@
             <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="SettingsPage" />
         </Tab>
     </TabBar>
+
+    <!-- Routes pour la navigation modale -->
+    <ShellContent Route="MyTravelDetailsPage" ContentTemplate="{DataTemplate view:MyTravelDetailsPage}" />
 </Shell>

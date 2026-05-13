@@ -14,7 +14,7 @@ public partial class MainPageViewModel : ObservableObject
     
     [ObservableProperty]
     private ObservableCollection<Trajet> _trajetsRecent = new();
-    
+
     public int TotalTrajets => Trajets.Count;
     public int TrajetsTerminesCount => Trajets.Count(t => t.Statut == "Terminé");
     public int TrajetsEnCoursCount => Trajets.Count(t => t.Statut == "A l'heure" || t.Statut == "En retard");
