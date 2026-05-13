@@ -1,5 +1,4 @@
 ﻿using ErAtlas.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace ErAtlas.View
 {
@@ -9,15 +8,6 @@ namespace ErAtlas.View
         {
             InitializeComponent();
             BindingContext = viewModel;
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            if (BindingContext is MainPageViewModel viewModel)
-            {
-                viewModel.RefreshTrajets();
-            }
         }
     }
 }

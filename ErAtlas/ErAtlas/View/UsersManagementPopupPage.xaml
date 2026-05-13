@@ -65,7 +65,11 @@
 
                     <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                         <Label Text="Gestionnaire (off/on)" WidthRequest="120" VerticalOptions="Center" TextColor="#555555" />
-                        <Switch IsToggled="{Binding Gestionnaire}" VerticalOptions="Center" OnColor="Green" />
+                        <Switch IsToggled="{Binding Gestionnaire}" VerticalOptions="Center" />
+                        <Label Text="{Binding GestionnaireStateText}"
+                               VerticalOptions="Center"
+                               FontAttributes="Bold"
+                               TextColor="{Binding GestionnaireStateColor}" />
                     </HorizontalStackLayout>
 
                     <ActivityIndicator IsRunning="{Binding IsBusy}"

@@ -14,8 +14,7 @@ public partial class UsersManagementViewModel : ObservableObject
     private string _motDePasseOriginal = string.Empty;
     
     public bool HasAccess => LoginViewModel.IsLoggedIn && LoginViewModel.IsGestionnaire;
-    [ObservableProperty]
-    private bool _isAccessDenied = false;
+    public bool IsAccessDenied => !HasAccess;
 
     [ObservableProperty]
     private ObservableCollection<Utilisateur> _utilisateurs = new();
@@ -64,7 +63,23 @@ public partial class UsersManagementViewModel : ObservableObject
         _databaseService = databaseService;
         ChargerUtilisateurs();
         
-        IsAccessDenied = !HasAccess;
+        // Écouter les changements de connexion/déconnexion pour mettre à jour l'accès
+        LoginViewModel.OnUserLoggedIn += OnUserLoggedIn;
+        LoginViewModel.OnUserLoggedOut += OnUserLoggedOut;
+    }
+
+    private void OnUserLoggedIn(Utilisateur? _)
+    {
+        OnPropertyChanged(nameof(HasAccess));
+        OnPropertyChanged(nameof(IsAccessDenied));
+        ChargerUtilisateurs();
+    }
+
+    private void OnUserLoggedOut()
+    {
+        OnPropertyChanged(nameof(HasAccess));
+        OnPropertyChanged(nameof(IsAccessDenied));
+        Utilisateurs.Clear();
     }
 
     [RelayCommand]

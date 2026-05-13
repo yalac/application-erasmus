@@ -8,4 +8,18 @@ public partial class TripManagementPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // La vérification d'accès se fera via les propriétés calculées du ViewModel
+    }
+
+    private async void OnModifierClicked(object sender, EventArgs e)
+    {
+        if (MainScroll is not null)
+        {
+            await MainScroll.ScrollToAsync(0, 0, true);
+        }
+    }
 }
