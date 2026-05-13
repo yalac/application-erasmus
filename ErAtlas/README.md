@@ -902,10 +902,3 @@ Vérifiez :
 - Ajouter un script SQL complet de création de la base.
 - Ajouter une page ou un journal d’erreur pour le diagnostic de démarrage.
 
----
-
-## 17. Licence
-
-Projet scolaire / personnel.  
-Ajoutez ici la licence de votre choix si besoin.
-
