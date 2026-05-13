@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using ABI.Windows.Globalization.DateTimeFormatting;
 using ErAtlas.Model;
 using Microsoft.Data.SqlClient;
 
@@ -158,8 +159,10 @@ public class DatabaseService
             Trajet trajet = new Trajet
             {
                 IDTrajet = (int)reader["IDTrajet"],
-                DateDepart = new DateTime(dateDepart.Year, dateDepart.Month, dateDepart.Day, heureDepart.Hours, heureDepart.Minutes, heureDepart.Seconds),
-                DateArrivee = new DateTime(dateArrivee.Year, dateArrivee.Month, dateArrivee.Day, heureArrivee.Hours, heureArrivee.Minutes, heureArrivee.Seconds),
+                DateDepart = new DateTime(dateDepart.Year, dateDepart.Month, dateDepart.Day),
+                HeureDepart = new TimeSpan( heureDepart.Hours, heureDepart.Minutes, heureDepart.Seconds),
+                DateArrivee = new DateTime(dateArrivee.Year, dateArrivee.Month, dateArrivee.Day),
+                HeureArrivee = new TimeSpan(heureArrivee.Hours, heureArrivee.Minutes, heureArrivee.Seconds),
                 Statut = (string)reader["Statut"],
                 VilleArrivee = (string)reader["VilleArrivee"],
                 VilleDepart = (string)reader["VilleDepart"],
