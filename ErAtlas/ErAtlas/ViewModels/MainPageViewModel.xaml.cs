@@ -14,7 +14,7 @@ public partial class MainPageViewModel : ObservableObject
     
     [ObservableProperty]
     private ObservableCollection<Trajet> _trajetsRecent = new();
-    
+
     public int TotalTrajets => Trajets.Count;
     public int TrajetsTerminesCount => Trajets.Count(t => t.Statut == "Terminé");
     public int TrajetsEnCoursCount => Trajets.Count(t => t.Statut == "A l'heure" || t.Statut == "En retard");
@@ -26,13 +26,15 @@ public partial class MainPageViewModel : ObservableObject
         ChargerTrajets();
         ChargerTrajetsRecents();
         
-        LoginViewModel.OnUserLoggedOut += () =>
-        {
-            TrajetsRecent.Clear();
-        };
+        // Écouter les changements de connexion/déconnexion pour recharger les trajets récents
         LoginViewModel.OnUserLoggedIn += (user) =>
         {
             ChargerTrajetsRecents();
+        };
+        
+        LoginViewModel.OnUserLoggedOut += () =>
+        {
+            TrajetsRecent.Clear();
         };
     }
 
@@ -117,6 +119,7 @@ public partial class MainPageViewModel : ObservableObject
     public void RefreshTrajets()
     {
         ChargerTrajets();
+        ChargerTrajetsRecents();
         OnPropertyChanged(nameof(TotalTrajets));
         OnPropertyChanged(nameof(TrajetsTerminesCount));
         OnPropertyChanged(nameof(TrajetsEnCoursCount));

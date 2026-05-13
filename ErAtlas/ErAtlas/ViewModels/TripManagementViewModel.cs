@@ -16,8 +16,8 @@ public partial class TripManagementViewModel : ObservableObject
     public List<string> StatutOptions { get; } = new List<string> { "A l'heure", "En retard", "Terminé" };
     
     public bool HasAccess => LoginViewModel.IsLoggedIn && LoginViewModel.IsGestionnaire;
-    [ObservableProperty]
-    private bool _isAccessDenied = false;
+
+    public bool IsAccessDenied => !HasAccess;
 
     [ObservableProperty]
     private ObservableCollection<Lieu> _lieux = new();
@@ -97,7 +97,6 @@ public partial class TripManagementViewModel : ObservableObject
     public TripManagementViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
-        IsAccessDenied = !HasAccess;
         
         if (HasAccess)
         {
@@ -105,6 +104,32 @@ public partial class TripManagementViewModel : ObservableObject
             ChargerTransports();
             ChargerTrajets();
         }
+
+        // Écouter les changements de connexion/déconnexion
+        LoginViewModel.OnUserLoggedIn += OnUserLoggedIn;
+        LoginViewModel.OnUserLoggedOut += OnUserLoggedOut;
+    }
+
+    private void OnUserLoggedIn(Utilisateur? _)
+    {
+        OnPropertyChanged(nameof(HasAccess));
+        OnPropertyChanged(nameof(IsAccessDenied));
+        
+        if (HasAccess)
+        {
+            ChargerLieux();
+            ChargerTransports();
+            ChargerTrajets();
+        }
+    }
+
+    private void OnUserLoggedOut()
+    {
+        OnPropertyChanged(nameof(HasAccess));
+        OnPropertyChanged(nameof(IsAccessDenied));
+        Lieux.Clear();
+        Transports.Clear();
+        Trajets.Clear();
     }
 
     partial void OnIsLieuModificationModeChanged(bool value)

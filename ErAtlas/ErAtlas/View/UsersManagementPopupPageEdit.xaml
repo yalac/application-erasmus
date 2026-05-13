@@ -91,12 +91,16 @@
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Gestionnaire (off/on)"
+                        <Label Text="Gestionnaire"
                                WidthRequest="120"
                                VerticalOptions="Center"
                                TextColor="#555555" />
                         <Switch IsToggled="{Binding Gestionnaire}"
-                                VerticalOptions="Center" OnColor="Green" />
+                                VerticalOptions="Center" />
+                        <Label Text="{Binding GestionnaireStateText}"
+                               VerticalOptions="Center"
+                               FontAttributes="Bold"
+                               TextColor="{Binding GestionnaireStateColor}" />
                     </HorizontalStackLayout>
 
                     <Label Text="(Le mot de passe et le login ne peuvent pas être modifiés après la création d'un utilisateur)" FontSize="10" TextColor="#999999" />

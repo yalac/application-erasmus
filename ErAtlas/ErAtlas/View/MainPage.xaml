@@ -11,40 +11,12 @@
     
     
     <ContentPage.Resources>
-        <!-- Bouton arrondi avec gradient -->
-        <Style x:Key="RoundedButton" TargetType="Button">
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="CornerRadius" Value="16" />
-            <Setter Property="Padding" Value="20,12" />
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#8B5CF6" Offset="0.0" />
-                        <GradientStop Color="#EC4899" Offset="1.0" />
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Entry arrondi -->
-        <Style x:Key="RoundedEntry" TargetType="Entry">
-            <Setter Property="BackgroundColor" Value="#1A1625" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="PlaceholderColor" Value="#9CA3AF" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="HeightRequest" Value="48" />
-            <Setter Property="Margin" Value="0" />
-            <!-- Utilisé dans une Border pour l'arrondi -->
-        </Style>
-
-        <!-- Carte transport -->
         <Style x:Key="TransportCard" TargetType="Frame">
             <Setter Property="BackgroundColor" Value="#1A1625" />
+            <Setter Property="BorderColor" Value="#2D2440" />
             <Setter Property="CornerRadius" Value="16" />
             <Setter Property="HasShadow" Value="True" />
             <Setter Property="Padding" Value="16" />
-            <Setter Property="BorderColor" Value="#2D2440" />
         </Style>
     </ContentPage.Resources>
 
@@ -53,14 +25,8 @@
 
             <!-- Header -->
             <VerticalStackLayout Spacing="4">
-                <Label Text="Planifiez votre trajet"
-                       TextColor="White"
-                       FontSize="22"
-                       FontAttributes="Bold" />
-                <Label Text="Trouvez rapidement les meilleures options"
-                       TextColor="#B8A0E0"
-                       FontSize="13"
-                       Opacity="0.9" />
+                <Label Text="Planifiez votre trajet" Style="{StaticResource DarkPageTitle}" />
+                <Label Text="Trouvez rapidement les meilleures options" Style="{StaticResource DarkPageSubtitle}" />
             </VerticalStackLayout>
 
             <!-- Stats -->
@@ -108,10 +74,23 @@
                     <!-- Avion -->
                     <Frame Grid.Column="0" Style="{StaticResource TransportCard}">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 16" Background="#3B82F6">
-                                <Image Source="plane.svg" Aspect="AspectFit" WidthRequest="32" HeightRequest="32" />
+                            <Border WidthRequest="64" 
+                                    HeightRequest="64" 
+                                    StrokeShape="RoundRectangle 16" >
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="#AF56EC" Offset="0.1" />
+                                        <GradientStop Color="#E34DA5" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Image Source="avion.png" 
+                                       Aspect="AspectFit" 
+                                       WidthRequest="32" 
+                                       HeightRequest="32" />
                             </Border>
-                            <Label Text="Avion" TextColor="White" HorizontalTextAlignment="Center" />
+                            <Label Text="Avion" 
+                                   TextColor="White" 
+                                   HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer  NumberOfTapsRequired="1" />
@@ -121,8 +100,19 @@
                     <!-- Train -->
                     <Frame Grid.Column="2" Style="{StaticResource TransportCard}">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 16" Background="#8B5CF6">
-                                <Image Source="train.svg" Aspect="AspectFit" WidthRequest="32" HeightRequest="32" />
+                            <Border WidthRequest="64" 
+                                    HeightRequest="64" 
+                                    StrokeShape="RoundRectangle 16" >
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="#AF56EC" Offset="0.1" />
+                                        <GradientStop Color="#E34DA5" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Image Source="train.png" 
+                                       Aspect="AspectFit" 
+                                       WidthRequest="32" 
+                                       HeightRequest="32" />
                             </Border>
                             <Label Text="Train" TextColor="White" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
@@ -134,8 +124,19 @@
                     <!-- Bus -->
                     <Frame Grid.Column="4" Style="{StaticResource TransportCard}">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 16" Background="#EC4899">
-                                <Image Source="bus.svg" Aspect="AspectFit" WidthRequest="32" HeightRequest="32" />
+                            <Border WidthRequest="64" 
+                                    HeightRequest="64" 
+                                    StrokeShape="RoundRectangle 16" >
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="#AF56EC" Offset="0.1" />
+                                        <GradientStop Color="#E34DA5" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Image Source="bus.png" 
+                                       Aspect="AspectFit" 
+                                       WidthRequest="32" 
+                                       HeightRequest="32" />
                             </Border>
                             <Label Text="Bus" TextColor="White" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
@@ -143,14 +144,25 @@
                             <TapGestureRecognizer  />
                         </Frame.GestureRecognizers>
                     </Frame>
-
-                    <!-- Metro -->
+                    
+                    <!-- Bateau -->
                     <Frame Grid.Column="6" Style="{StaticResource TransportCard}">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 16" Background="#7C3AED">
-                                <Image Source="train.svg" Aspect="AspectFit" WidthRequest="32" HeightRequest="32" />
+                            <Border WidthRequest="64" 
+                                    HeightRequest="64" 
+                                    StrokeShape="RoundRectangle 16" >
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#AF56EC" Offset="0.1" />
+                                    <GradientStop Color="#E34DA5" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                                <Image Source="bateau.png" 
+                                       Aspect="AspectFit" 
+                                       WidthRequest="32" 
+                                       HeightRequest="32" />
                             </Border>
-                            <Label Text="Métro" TextColor="White" HorizontalTextAlignment="Center" />
+                            <Label Text="Bateau" TextColor="White" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer  />
@@ -163,7 +175,6 @@
             <VerticalStackLayout Spacing="8">
                 <Label Text="Trajets récents" TextColor="White" FontSize="18" FontAttributes="Bold" />
                 <Frame CornerRadius="16" BackgroundColor="#1A1625" BorderColor="#2D2440" Padding="16">
-                    <!-- Ici on utilisera un CollectionView quand vous aurez la source -->
                     <CollectionView ItemsSource="{Binding TrajetsRecent}"
                                     ItemsLayout="VerticalList"
                                     SelectionMode="None">
@@ -172,9 +183,23 @@
                             <DataTemplate x:DataType="model:Trajet">
                                 <Frame CornerRadius="12" BackgroundColor="#241149" Padding="12" Margin="0,8">
                                     <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                                        
                                         <!-- Icône du transport -->
-                                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 12" Background="#3B82F6">
-                                            <Image Source="train.svg" Aspect="AspectFit" WidthRequest="24" HeightRequest="24" />
+                                        <Border Style="{StaticResource TransportTile}"
+                                                WidthRequest="46"
+                                                HeightRequest="46"
+                                                Padding="8">
+                                            <Border.Background>
+                                                <LinearGradientBrush>
+                                                    <GradientStop Color="#AF56EC" Offset="0.1" />
+                                                    <GradientStop Color="#E34DA5" Offset="1.0" />
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Image Source="{Binding IconSource}" 
+                                                   Style="{StaticResource 
+                                                   TransportTileIcon}" 
+                                                   WidthRequest="24" 
+                                                   HeightRequest="24" />
                                         </Border>
 
                                         <!-- Informations du trajet -->
@@ -188,9 +213,9 @@
 
                                             <!-- DateDepart + HeureDepart -->
                                             <HorizontalStackLayout Spacing="4">
-                                                <Label Text="{Binding DateDepart, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#B8A0E0" FontSize="12" />
+                                                <Label Text="{Binding DateArrivee, StringFormat='{0:Le dd MMMM yyyy}'}" TextColor="#B8A0E0" FontSize="12" />
                                                 <Label Text=" à " TextColor="#B8A0E0" FontSize="12" />
-                                                <Label Text="{Binding HeureDepart, StringFormat='{0:HH\\:mm}'}" TextColor="#B8A0E0" FontSize="12" />
+                                                <Label Text="{Binding HeureArrivee, StringFormat='{}{0:hh\\:mm}'}" TextColor="#B8A0E0" FontSize="12" />
                                             </HorizontalStackLayout>
 
                                             <!-- Statut -->

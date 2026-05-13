@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using System.Data;
 using ErAtlas.Model;
 using Microsoft.Data.SqlClient;
 
@@ -15,12 +16,20 @@ public class DatabaseService
     public DatabaseService()
     {
         _connection = new SqlConnection(ConnectionString);
-        _connection.Open();
+    }
+
+    private void EnsureConnectionOpen()
+    {
+        if (_connection.State != ConnectionState.Open)
+        {
+            _connection.Open();
+        }
     }
 
     // Permet de lire la PS de vérification de la connexion et de renvoyé l'id, le mdp et le login si elle est vrai
     public Utilisateur? VerifUser(string login)
     {
+        EnsureConnectionOpen();
         string query = "PS_VerificationConnexion";
         using var command = new SqlCommand(query, _connection);
         command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -119,6 +128,7 @@ public class DatabaseService
     // Permet de lire la PS et de récupérer tous les utilisateurs de la base de données
     public List<Utilisateur> LireUtilisateurs()
     {
+        EnsureConnectionOpen();
         var utilisateurs = new List<Utilisateur>();
         string query = "PS_LireUtilisateurs";
         using var command = new SqlCommand(query, _connection);
@@ -446,7 +456,7 @@ public class DatabaseService
     
     
     // =========================
-    // Trajets (en cours)
+    // Trajets
     // =========================
 
     public List<Trajet> LireTrajets()
@@ -650,6 +660,18 @@ public class DatabaseService
 
     public List<Trajet> GetVoyage(int IDUtilisateur)
     {
+        static bool HasColumn(SqlDataReader r, string columnName)
+        {
+            try
+            {
+                return r.GetOrdinal(columnName) >= 0;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+        }
+
         string query = "PS_LireVoyage";
         using var command = new SqlCommand(query, _connection);
         command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -658,11 +680,25 @@ public class DatabaseService
         List<Trajet> data = new List<Trajet>();
         while (reader.Read())
         {
-            int idTrajet = (int)reader["IDTrajet"];
-            DateTime dateDepart = (DateTime)reader["DateDepart"];
-            TimeSpan heureDepart = (TimeSpan)reader["HeureDepart"];
-            DateTime dateArrivee = (DateTime)reader["DateArrivee"];
-            TimeSpan heureArrivee = (TimeSpan)reader["HeureArrivee"];
+            int idTrajet = HasColumn(reader, "IDTrajet") && reader["IDTrajet"] != DBNull.Value
+                ? (int)reader["IDTrajet"]
+                : 0;
+
+            DateTime dateDepart = HasColumn(reader, "DateDepart") && reader["DateDepart"] != DBNull.Value
+                ? (DateTime)reader["DateDepart"]
+                : DateTime.MinValue;
+
+            TimeSpan heureDepart = HasColumn(reader, "HeureDepart") && reader["HeureDepart"] != DBNull.Value
+                ? (TimeSpan)reader["HeureDepart"]
+                : TimeSpan.Zero;
+
+            DateTime dateArrivee = HasColumn(reader, "DateArrivee") && reader["DateArrivee"] != DBNull.Value
+                ? (DateTime)reader["DateArrivee"]
+                : DateTime.MinValue;
+
+            TimeSpan heureArrivee = HasColumn(reader, "HeureArrivee") && reader["HeureArrivee"] != DBNull.Value
+                ? (TimeSpan)reader["HeureArrivee"]
+                : TimeSpan.Zero;
             
             DateTime fullDateDepart = dateDepart.Date + heureDepart;
             DateTime fullDateArrivee = dateArrivee.Date + heureArrivee;
@@ -674,11 +710,27 @@ public class DatabaseService
                 HeureDepart = heureDepart,    
                 DateArrivee = fullDateArrivee, 
                 HeureArrivee = heureArrivee,  
-                Statut = (string)reader["Statut"],
-                VilleArrivee = (string)reader["VilleArrivee"],
-                VilleDepart = (string)reader["VilleDepart"],
-                TypeTransport = (string)reader["TypeTransport"]
+                Statut = HasColumn(reader, "Statut") && reader["Statut"] != DBNull.Value
+                    ? (string)reader["Statut"]
+                    : string.Empty,
+                VilleArrivee = HasColumn(reader, "VilleArrivee") && reader["VilleArrivee"] != DBNull.Value
+                    ? (string)reader["VilleArrivee"]
+                    : string.Empty,
+                VilleDepart = HasColumn(reader, "VilleDepart") && reader["VilleDepart"] != DBNull.Value
+                    ? (string)reader["VilleDepart"]
+                    : string.Empty,
+                TypeTransport = HasColumn(reader, "TypeTransport") && reader["TypeTransport"] != DBNull.Value
+                    ? (string)reader["TypeTransport"]
+                    : string.Empty
             };
+            
+            // Récupérer les IDs uniquement si les colonnes existent dans le result set
+            if (HasColumn(reader, "IDLieuDepart") && reader["IDLieuDepart"] != DBNull.Value)
+                trajet.IDLieuDepart = (int)reader["IDLieuDepart"];
+            if (HasColumn(reader, "IDLieuArrivee") && reader["IDLieuArrivee"] != DBNull.Value)
+                trajet.IDLieuArrivee = (int)reader["IDLieuArrivee"];
+            if (HasColumn(reader, "IDTransport") && reader["IDTransport"] != DBNull.Value)
+                trajet.IDTransport = (int)reader["IDTransport"];
             
             data.Add(trajet);
         }

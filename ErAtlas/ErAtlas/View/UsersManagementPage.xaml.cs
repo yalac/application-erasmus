@@ -11,6 +11,12 @@ public partial class UsersManagementPage
         BindingContext = viewModel;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // La vérification d'accès se fera via les propriétés calculées du ViewModel
+    }
+
     private async void OnNouveauUtilisateurClicked(object sender, EventArgs e)
     {
         var viewModel = (UsersManagementViewModel)BindingContext;

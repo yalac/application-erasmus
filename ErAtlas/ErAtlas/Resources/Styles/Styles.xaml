@@ -361,6 +361,79 @@
         </Setter>
     </Style>
 
+    <Style x:Key="DarkPageTitle" TargetType="Label">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="DarkPageSubtitle" TargetType="Label">
+        <Setter Property="TextColor" Value="#B8A0E0" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <Style x:Key="SurfaceCard" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="#1A1625" />
+        <Setter Property="Stroke" Value="#2D2440" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 24" />
+        <Setter Property="Padding" Value="18" />
+    </Style>
+
+    <Style x:Key="ModalCard" TargetType="Border" BasedOn="{StaticResource SurfaceCard}">
+        <Setter Property="WidthRequest" Value="520" />
+        <Setter Property="MaximumHeightRequest" Value="720" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+    </Style>
+
+    <Style x:Key="FormLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="#E5E7EB" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="DarkEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="#241149" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="PlaceholderColor" Value="#9CA3AF" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
+    </Style>
+
+    <Style x:Key="DarkPicker" TargetType="Picker">
+        <Setter Property="BackgroundColor" Value="#241149" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="TitleColor" Value="#9CA3AF" />
+        <Setter Property="HeightRequest" Value="46" />
+    </Style>
+
+    <Style x:Key="TransportTile" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="#F8FAFC" />
+        <Setter Property="Stroke" Value="#CBD5E1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="WidthRequest" Value="68" />
+        <Setter Property="HeightRequest" Value="68" />
+    </Style>
+
+    <Style x:Key="TransportTileIcon" TargetType="Image">
+        <Setter Property="WidthRequest" Value="34" />
+        <Setter Property="HeightRequest" Value="34" />
+        <Setter Property="Aspect" Value="AspectFit" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="DataHeaderText" TargetType="Label">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="DataCellText" TargetType="Label">
+        <Setter Property="TextColor" Value="#D1D5DB" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
     <Style TargetType="TimePicker">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="Transparent"/>

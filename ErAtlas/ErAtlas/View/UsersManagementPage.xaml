@@ -8,7 +8,7 @@
              x:Name="UsersPage"
              x:DataType="vm:UsersManagementViewModel"
              Title="Gestion des utilisateurs"
-             BackgroundColor="White">
+             BackgroundColor="#0F0A1A">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24">
@@ -20,62 +20,56 @@
                    HorizontalOptions="Center"
                    IsVisible="{Binding IsAccessDenied}" />
             
-            <VerticalStackLayout IsVisible="{Binding HasAccess}" Padding="24" Spacing="16">
+            <VerticalStackLayout IsVisible="{Binding HasAccess}" Padding="0" Spacing="16">
                 <Label Text="Gestion des utilisateurs"
-                       FontSize="26"
-                       FontAttributes="Bold"
-                       TextColor="Black" />
+                       Style="{StaticResource DarkPageTitle}" />
 
                 <Label Text="Creer, modifier et gerer les comptes utilisateurs (acces gestionnaire)."
-                       FontSize="13"
-                       TextColor="#555555" />
+                       Style="{StaticResource DarkPageSubtitle}" />
 
                 <Button Text="Nouveau utilisateur"
                         Clicked="OnNouveauUtilisateurClicked"
-                        BackgroundColor="#0D47A1"
-                        TextColor="White"
-                        CornerRadius="8"
                         HorizontalOptions="Start" />
 
                 <Label Text="{Binding SuccessMessage}"
-                       TextColor="Green"
+                       TextColor="#6EE7B7"
                        IsVisible="{Binding IsSuccessVisible}" />
 
                 <Label Text="Liste des utilisateurs"
                        FontSize="16"
                        FontAttributes="Bold"
-                       TextColor="Black" />
+                       TextColor="White" />
 
-                <Border>
+                <Border Style="{StaticResource SurfaceCard}">
                     <ScrollView Orientation="Horizontal">
                         <VerticalStackLayout Spacing="0" MinimumWidthRequest="1250">
                             <Grid ColumnDefinitions="120,120,240,130,260,120,120,120,240">
-                                <Label Grid.Column="0" Text="Nom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="1" Text="Prénom" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="2" Text="Email" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="3" Text="Téléphone" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="4" Text="Adresse" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="5" Text="Code postal" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="6" Text="Ville" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="7" Text="Gestionnaire" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="8" Text="Action" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="0" Text="Nom" Style="{StaticResource DataHeaderText}" />
+                                <Label Grid.Column="1" Text="Prénom" Style="{StaticResource DataHeaderText}" />
+                                <Label Grid.Column="2" Text="Email" Style="{StaticResource DataHeaderText}" />
+                                <Label Grid.Column="3" Text="Téléphone" Style="{StaticResource DataHeaderText}" />
+                                <Label Grid.Column="4" Text="Adresse" Style="{StaticResource DataHeaderText}" />
+                                <Label Grid.Column="5" Text="Code postal" Style="{StaticResource DataHeaderText}" />
+                                <Label Grid.Column="6" Text="Ville" Style="{StaticResource DataHeaderText}" />
+                                <Label Grid.Column="7" Text="Gestionnaire" Style="{StaticResource DataHeaderText}" />
+                                <Label Grid.Column="8" Text="Action" Style="{StaticResource DataHeaderText}" />
                             </Grid>
 
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Utilisateurs}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="model:Utilisateur">
                                         <Grid ColumnDefinitions="120,120,240,130,260,120,120,120,240" MinimumHeightRequest="56">
-                                            <Label Grid.Column="0" Text="{Binding Nom}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                            <Label Grid.Column="1" Text="{Binding Prenom}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                            <Label Grid.Column="2" Text="{Binding Email}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                            <Label Grid.Column="3" Text="{Binding NumeroDeTelephone}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                            <Label Grid.Column="4" Text="{Binding Adresse}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                            <Label Grid.Column="5" Text="{Binding CodePostal}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                            <Label Grid.Column="6" Text="{Binding Ville}" TextColor="Gray" HorizontalTextAlignment="Center" />
-                                            <Label Grid.Column="7" Text="{Binding Gestionnaire}" TextColor="Gray" HorizontalTextAlignment="Center" />
+                                            <Label Grid.Column="0" Text="{Binding Nom}" Style="{StaticResource DataCellText}" />
+                                            <Label Grid.Column="1" Text="{Binding Prenom}" Style="{StaticResource DataCellText}" />
+                                            <Label Grid.Column="2" Text="{Binding Email}" Style="{StaticResource DataCellText}" />
+                                            <Label Grid.Column="3" Text="{Binding NumeroDeTelephone}" Style="{StaticResource DataCellText}" />
+                                            <Label Grid.Column="4" Text="{Binding Adresse}" Style="{StaticResource DataCellText}" />
+                                            <Label Grid.Column="5" Text="{Binding CodePostal}" Style="{StaticResource DataCellText}" />
+                                            <Label Grid.Column="6" Text="{Binding Ville}" Style="{StaticResource DataCellText}" />
+                                            <Label Grid.Column="7" Text="{Binding Gestionnaire}" Style="{StaticResource DataCellText}" />
 
                                             <Grid Grid.Column="8" ColumnDefinitions="*,*" ColumnSpacing="8" HorizontalOptions="Center" VerticalOptions="Center">
-                                                <Button Grid.Column="0" Text="Modifier" BackgroundColor="#1976D2" TextColor="White" FontSize="11" Padding="12,6" MinimumWidthRequest="100" Clicked="OnModifierClicked" />
+                                                <Button Grid.Column="0" Text="Modifier" FontSize="11" Padding="12,6" MinimumWidthRequest="100" Clicked="OnModifierClicked" />
                                                 <Button Grid.Column="1" Text="Supprimer" BackgroundColor="#D32F2F" TextColor="White" FontSize="11" Padding="12,6" MinimumWidthRequest="100" 
                                                         Command="{Binding BindingContext.SupprimerUtilisateurCommand, Source={x:Reference UsersPage}}" 
                                                         CommandParameter="{Binding .}" />

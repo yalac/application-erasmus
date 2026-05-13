@@ -22,6 +22,9 @@ public partial class SettingsViewModel : ObservableObject
     public SettingsViewModel()
     {
         LoadUserData();
+
+        LoginViewModel.OnUserLoggedIn += _ => LoadUserData();
+        LoginViewModel.OnUserLoggedOut += ClearUserData;
     }
 
     private void LoadUserData()
@@ -36,6 +39,16 @@ public partial class SettingsViewModel : ObservableObject
             CodePostal = user.CodePostal;
             Ville = user.Ville ?? "Non spécifiée";
         }
+    }
+
+    private void ClearUserData()
+    {
+        Nom = string.Empty;
+        Prenom = string.Empty;
+        Email = string.Empty;
+        Adresse = string.Empty;
+        CodePostal = 0;
+        Ville = string.Empty;
     }
 
     [RelayCommand]

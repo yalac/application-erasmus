@@ -3,7 +3,6 @@
     x:Class="ErAtlas.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ErAtlas"
     xmlns:view="using:ErAtlas.View"
     xmlns:views="using:ErAtlas.Views"
     Title="ErAtlas"
@@ -35,4 +34,7 @@
             <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="SettingsPage" />
         </Tab>
     </TabBar>
+
+    <!-- Routes pour la navigation modale -->
+    <ShellContent Route="MyTravelDetailsPage" ContentTemplate="{DataTemplate view:MyTravelDetailsPage}" />
 </Shell>

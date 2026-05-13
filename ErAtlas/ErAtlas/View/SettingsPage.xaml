@@ -9,16 +9,11 @@
         <VerticalStackLayout Padding="20" Spacing="20">
             <!-- Titre -->
             <Label Text="Mon Compte"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="White"
+                   Style="{StaticResource DarkPageTitle}"
                    HorizontalOptions="Center" />
 
             <!-- Section Informations -->
-            <Border BackgroundColor="#2D2440"
-                    Stroke="#3A3250"
-                    StrokeShape="RoundRectangle 10"
-                    Padding="20"
+            <Border Style="{StaticResource SurfaceCard}"
                     HorizontalOptions="FillAndExpand">
 
                 <VerticalStackLayout Spacing="15">
@@ -29,9 +24,7 @@
 
                     <!-- Nom -->
                     <VerticalStackLayout Spacing="5">
-                        <Label Text="Nom :"
-                               FontSize="14"
-                               TextColor="#B8A0E0" />
+                         <Label Text="Nom :" Style="{StaticResource DarkPageSubtitle}" />
                         <Label Text="{Binding Nom}"
                                FontSize="16"
                                TextColor="White" />
@@ -39,9 +32,7 @@
 
                     <!-- Prénom -->
                     <VerticalStackLayout Spacing="5">
-                        <Label Text="Prénom :"
-                               FontSize="14"
-                               TextColor="#B8A0E0" />
+                         <Label Text="Prénom :" Style="{StaticResource DarkPageSubtitle}" />
                         <Label Text="{Binding Prenom}"
                                FontSize="16"
                                TextColor="White" />
@@ -49,9 +40,7 @@
 
                     <!-- Email -->
                     <VerticalStackLayout Spacing="5">
-                        <Label Text="Email :"
-                               FontSize="14"
-                               TextColor="#B8A0E0" />
+                         <Label Text="Email :" Style="{StaticResource DarkPageSubtitle}" />
                         <Label Text="{Binding Email}"
                                FontSize="16"
                                TextColor="White" />
@@ -59,9 +48,7 @@
 
                     <!-- Adresse -->
                     <VerticalStackLayout Spacing="5">
-                        <Label Text="Adresse :"
-                               FontSize="14"
-                               TextColor="#B8A0E0" />
+                         <Label Text="Adresse :" Style="{StaticResource DarkPageSubtitle}" />
                         <Label Text="{Binding Adresse}"
                                FontSize="16"
                                TextColor="White" />
@@ -70,18 +57,14 @@
                     <!-- Code Postal + Ville -->
                     <HorizontalStackLayout Spacing="20">
                         <VerticalStackLayout Spacing="5">
-                            <Label Text="Code Postal :"
-                                   FontSize="14"
-                                   TextColor="#B8A0E0" />
+                            <Label Text="Code Postal :" Style="{StaticResource DarkPageSubtitle}" />
                             <Label Text="{Binding CodePostal}"
                                    FontSize="16"
                                    TextColor="White" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="5">
-                            <Label Text="Ville :"
-                                   FontSize="14"
-                                   TextColor="#B8A0E0" />
+                            <Label Text="Ville :" Style="{StaticResource DarkPageSubtitle}" />
                             <Label Text="{Binding Ville}"
                                    FontSize="16"
                                    TextColor="White" />
