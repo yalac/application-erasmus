@@ -32,7 +32,7 @@ public partial class UsersManagementViewModel : ObservableObject
     [ObservableProperty]
     private string _ville = string.Empty;
     [ObservableProperty]
-    private bool _gestionnaire;
+    private bool _gestionnaire; 
 
     [ObservableProperty]
     private string _errorMessage = string.Empty;
@@ -176,7 +176,7 @@ public partial class UsersManagementViewModel : ObservableObject
             IsBusy = true;
 
             var hashMotDePasse = _databaseService.HashMotDePasse(motDePasse);
-            var utilisateurCree = _databaseService.CreationUtilisateur(
+             _databaseService.CreationUtilisateur(
                 nom,
                 prenom,
                 email,
@@ -188,7 +188,7 @@ public partial class UsersManagementViewModel : ObservableObject
                 ville,
                 Gestionnaire);
 
-            SuccessMessage = $"Utilisateur {utilisateurCree.Login} crée avec succès.";
+            SuccessMessage = $"Utilisateur {login} crée avec succès.";
             IsSuccessVisible = true;
 
             ReinitialiserFormulaire();

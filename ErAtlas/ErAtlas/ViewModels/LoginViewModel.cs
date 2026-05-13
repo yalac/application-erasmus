@@ -42,10 +42,11 @@ public partial class LoginViewModel : ObservableObject
         {
             IsErrorVisible = false;
 
-            var app = Application.Current;
-            if (app?.Windows.Count > 0)
+            // Récupère AppShell du conteneur DI pour que les dépendances soient disponibles
+            var appShell = Application.Current.Handler.MauiContext?.Services.GetService<AppShell>();
+            if (appShell != null)
             {
-                app.Windows[0].Page = new AppShell();
+                Application.Current.MainPage = appShell;
             }
 
             return;

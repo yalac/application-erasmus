@@ -65,7 +65,7 @@ public class DatabaseService
     }
     
     // Permet de lire la PS de création d'un utilisateur et de renvoyer ses informations si vrai
-    public Utilisateur CreationUtilisateur(string nom, string prenom, string email, string login, string motDePasse, int numeroDeTelephone, string adresse, string codePostal, string ville, bool gestionnaire)
+    public void CreationUtilisateur(string nom, string prenom, string email, string login, string motDePasse, int numeroDeTelephone, string adresse, string codePostal, string ville, bool gestionnaire)
     {
         string query = "PS_CreationUtilisateur";
         using var command = new SqlCommand(query, _connection);
@@ -79,40 +79,8 @@ public class DatabaseService
         command.Parameters.AddWithValue("@Adresse", adresse);
         command.Parameters.AddWithValue("@CodePostal", codePostal);
         command.Parameters.AddWithValue("@Ville", ville);
-        command.Parameters.AddWithValue("@Gestionnaire", gestionnaire);
-        using var reader = command.ExecuteReader();
-        if (reader.Read())
-        {
-            return new Utilisateur
-            {
-                Id = (int)reader["IDUtilisateur"],
-                Nom = (string)reader["Nom"],
-                Prenom = (string)reader["Prenom"],
-                Email = (string)reader["Email"],
-                Login = (string)reader["Login"],
-                MotDePasse = (string)reader["MotDePasse"],
-                NumeroDeTelephone = (int)reader["NumeroTelephone"],
-                Adresse = (string)reader["Adresse"],
-                CodePostal = (int)reader["CodePostal"],
-                Ville = (string)reader["Ville"],
-                Gestionnaire = (bool)reader["Gestionnaire"]
-            };
-        }
-
-        return new Utilisateur
-        {
-            Id = 0,
-            Nom = nom,
-            Prenom = prenom,
-            Email = email,
-            Login = login,
-            MotDePasse = motDePasse,
-            NumeroDeTelephone = numeroDeTelephone,
-            Adresse = adresse,
-            CodePostal = int.TryParse(codePostal, out var cp) ? cp : 0,
-            Ville = ville,
-            Gestionnaire = gestionnaire
-        };
+        command.Parameters.AddWithValue("@Gestionnaire", gestionnaire); 
+        command.ExecuteNonQuery();
     }
     
     
