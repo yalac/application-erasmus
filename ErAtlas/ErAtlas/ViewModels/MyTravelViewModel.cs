@@ -117,7 +117,7 @@ public partial class MyTravelViewModel : ObservableObject
         }
 
         // Ajoute la route (ex: "Paris → Lyon")
-        travel.Route = $"{travel.VilleDepart ?? "Départ"} → {travel.VilleArrivee ?? "Arrivée"}";
+        //travel.Route = $"{travel.VilleDepart ?? "Départ"} → {travel.VilleArrivee ?? "Arrivée"}";
 
         return travel;
     }

@@ -18,18 +18,18 @@ public class Trajet
     public string VilleArrivee { get; set; } = string.Empty;
     public string TypeTransport { get; set; } = string.Empty;
 
-    private string _iconSource = string.Empty;
-    private string _route = string.Empty;
+    //private string _iconSource = string.Empty;
+    //private string _route = string.Empty;
 
     public string IconSource
     {
-        get => string.IsNullOrWhiteSpace(_iconSource) ? GetIconSourceFromTransport(TypeTransport) : _iconSource;
+        get => GetIconSourceFromTransport(TypeTransport);
     }
 
     public string Route
     {
-        get => string.IsNullOrWhiteSpace(_route) ? $"{VilleDepart} -> {VilleArrivee}" : _route;
-        set => _route = value ?? string.Empty;
+        get =>$"{VilleDepart} → {VilleArrivee}";
+        //set => _route = value ?? string.Empty;
     }
 
     // Méthode utilitaire pour joindre les types de transport à des icônes
