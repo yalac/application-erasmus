@@ -14,11 +14,9 @@ public partial class MyTravelViewModel : ObservableObject
 
     public ObservableCollection<Trajet> Travels { get; } = new();
 
-    [ObservableProperty]
-    private Trajet? _selectedTravel;
+    [ObservableProperty] private Trajet? _selectedTravel;
 
-    [ObservableProperty]
-    private string _selectedTravelMessage = string.Empty;
+    [ObservableProperty] private string _selectedTravelMessage = string.Empty;
 
     public MyTravelViewModel(DatabaseService databaseService)
     {
@@ -32,7 +30,7 @@ public partial class MyTravelViewModel : ObservableObject
             LoadReferences(); // Recharger les références au cas où
             LoadTravels();
         };
-        
+
         LoginViewModel.OnUserLoggedOut += () =>
         {
             Travels.Clear();
@@ -102,7 +100,7 @@ public partial class MyTravelViewModel : ObservableObject
                 var lieuDepart = _lieux.FirstOrDefault(l => l.IdLieu == travel.IDLieuDepart);
                 travel.VilleDepart = lieuDepart?.Ville ?? "Inconnu";
             }
-            
+
             if (travel.IDLieuArrivee > 0)
             {
                 var lieuArrivee = _lieux.FirstOrDefault(l => l.IdLieu == travel.IDLieuArrivee);
@@ -120,23 +118,7 @@ public partial class MyTravelViewModel : ObservableObject
         // Ajoute la route (ex: "Paris → Lyon")
         travel.Route = $"{travel.VilleDepart ?? "Départ"} → {travel.VilleArrivee ?? "Arrivée"}";
 
-        // Ajoute l'icône en fonction du type de transport
-        travel.IconSource = GetIconSource(travel.TypeTransport);
-
         return travel;
-    }
-
-    // Détermine l'icône en fonction du type de transport
-    private string GetIconSource(string? typeTransport)
-    {
-        return typeTransport?.ToLower() switch
-        {
-            "avion" => "avion.svg",
-            "train" => "train.svg",
-            "bus" => "bus.svg",
-            "bateau" => "bateau.svg",
-            _ => "train.svg" // Icône par défaut
-        };
     }
 
     // Rafraîchit la liste des trajets
@@ -152,17 +134,6 @@ public partial class MyTravelViewModel : ObservableObject
         SelectedTravel = travel;
         SelectedTravelMessage = $"Détails du trajet : {travel.Route}";
         // Ici, tu peux naviguer vers une page de détails si nécessaire
-    }
-
-    // Commande pour modifier un trajet
-    [RelayCommand]
-    private void EditTravel(Trajet travel)
-    {
-        SelectedTravel = travel;
-        SelectedTravelMessage = $"Modification du trajet : {travel.Route}";
-
-        // Après modification, rafraîchit la liste
-        RefreshTravels();
     }
 }
 

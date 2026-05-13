@@ -74,41 +74,99 @@
                     <!-- Avion -->
                     <Frame Grid.Column="0" Style="{StaticResource TransportCard}">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Border Style="{StaticResource TransportTile}">
-                                <Image Source="avion.svg" Style="{StaticResource TransportTileIcon}" />
+                            <Border WidthRequest="64" 
+                                    HeightRequest="64" 
+                                    StrokeShape="RoundRectangle 16" >
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="#AF56EC" Offset="0.1" />
+                                        <GradientStop Color="#E34DA5" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Image Source="avion.png" 
+                                       Aspect="AspectFit" 
+                                       WidthRequest="32" 
+                                       HeightRequest="32" />
                             </Border>
-                            <Label Text="Avion" TextColor="White" HorizontalTextAlignment="Center" />
+                            <Label Text="Avion" 
+                                   TextColor="White" 
+                                   HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer  NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
                     </Frame>
 
                     <!-- Train -->
                     <Frame Grid.Column="2" Style="{StaticResource TransportCard}">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Border Style="{StaticResource TransportTile}">
-                                <Image Source="train.svg" Style="{StaticResource TransportTileIcon}" />
+                            <Border WidthRequest="64" 
+                                    HeightRequest="64" 
+                                    StrokeShape="RoundRectangle 16" >
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="#AF56EC" Offset="0.1" />
+                                        <GradientStop Color="#E34DA5" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Image Source="train.png" 
+                                       Aspect="AspectFit" 
+                                       WidthRequest="32" 
+                                       HeightRequest="32" />
                             </Border>
                             <Label Text="Train" TextColor="White" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer  />
+                        </Frame.GestureRecognizers>
                     </Frame>
 
                     <!-- Bus -->
                     <Frame Grid.Column="4" Style="{StaticResource TransportCard}">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Border Style="{StaticResource TransportTile}">
-                                <Image Source="bus.svg" Style="{StaticResource TransportTileIcon}" />
+                            <Border WidthRequest="64" 
+                                    HeightRequest="64" 
+                                    StrokeShape="RoundRectangle 16" >
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="#AF56EC" Offset="0.1" />
+                                        <GradientStop Color="#E34DA5" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Image Source="bus.png" 
+                                       Aspect="AspectFit" 
+                                       WidthRequest="32" 
+                                       HeightRequest="32" />
                             </Border>
                             <Label Text="Bus" TextColor="White" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer  />
+                        </Frame.GestureRecognizers>
                     </Frame>
-
+                    
                     <!-- Bateau -->
                     <Frame Grid.Column="6" Style="{StaticResource TransportCard}">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Border Style="{StaticResource TransportTile}">
-                                <Image Source="bateau.svg" Style="{StaticResource TransportTileIcon}" />
+                            <Border WidthRequest="64" 
+                                    HeightRequest="64" 
+                                    StrokeShape="RoundRectangle 16" >
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#AF56EC" Offset="0.1" />
+                                    <GradientStop Color="#E34DA5" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                                <Image Source="bateau.png" 
+                                       Aspect="AspectFit" 
+                                       WidthRequest="32" 
+                                       HeightRequest="32" />
                             </Border>
                             <Label Text="Bateau" TextColor="White" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer  />
+                        </Frame.GestureRecognizers>
                     </Frame>
                 </Grid>
             </VerticalStackLayout>
@@ -125,12 +183,23 @@
                             <DataTemplate x:DataType="model:Trajet">
                                 <Frame CornerRadius="12" BackgroundColor="#241149" Padding="12" Margin="0,8">
                                     <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                                        
                                         <!-- Icône du transport -->
                                         <Border Style="{StaticResource TransportTile}"
                                                 WidthRequest="46"
                                                 HeightRequest="46"
                                                 Padding="8">
-                                            <Image Source="{Binding IconSource}" Style="{StaticResource TransportTileIcon}" WidthRequest="24" HeightRequest="24" />
+                                            <Border.Background>
+                                                <LinearGradientBrush>
+                                                    <GradientStop Color="#AF56EC" Offset="0.1" />
+                                                    <GradientStop Color="#E34DA5" Offset="1.0" />
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Image Source="{Binding IconSource}" 
+                                                   Style="{StaticResource 
+                                                   TransportTileIcon}" 
+                                                   WidthRequest="24" 
+                                                   HeightRequest="24" />
                                         </Border>
 
                                         <!-- Informations du trajet -->
@@ -144,9 +213,9 @@
 
                                             <!-- DateDepart + HeureDepart -->
                                             <HorizontalStackLayout Spacing="4">
-                                                <Label Text="{Binding DateDepart, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#B8A0E0" FontSize="12" />
+                                                <Label Text="{Binding DateArrivee, StringFormat='{0:Le dd MMMM yyyy}'}" TextColor="#B8A0E0" FontSize="12" />
                                                 <Label Text=" à " TextColor="#B8A0E0" FontSize="12" />
-                                                <Label Text="{Binding HeureDepart, StringFormat='{0:HH\\:mm}'}" TextColor="#B8A0E0" FontSize="12" />
+                                                <Label Text="{Binding HeureArrivee, StringFormat='{}{0:hh\\:mm}'}" TextColor="#B8A0E0" FontSize="12" />
                                             </HorizontalStackLayout>
 
                                             <!-- Statut -->

@@ -31,6 +31,7 @@ public static class MauiProgram
         
         builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<MyTravelDetailsPage>();
         builder.Services.AddSingleton<MyTravelPage>();
         builder.Services.AddSingleton<SettingsPage>();
         builder.Services.AddSingleton<TripManagementPage>();
@@ -38,6 +39,7 @@ public static class MauiProgram
         
         builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddSingleton<LoginViewModel>();
+        builder.Services.AddSingleton<MyTravelDetailsViewModel>();
         builder.Services.AddSingleton<MyTravelViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
         builder.Services.AddSingleton<TripManagementViewModel>();

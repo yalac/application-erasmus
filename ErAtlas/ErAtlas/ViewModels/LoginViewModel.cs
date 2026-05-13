@@ -80,7 +80,7 @@ public partial class LoginViewModel : ObservableObject
             ErrorMessage = "Nom d'utilisateur ou mot de passe incorrect.";
             IsErrorVisible = true;
         }
-        catch (Exception)
+        catch (Exception e)
         {
             ErrorMessage = "Connexion impossible. Verifiez que la base de donnees est disponible.";
             IsErrorVisible = true;

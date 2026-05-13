@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ErAtlas.ViewModels"
-             x:Class="ErAtlas.LoginPage"
+              x:Class="ErAtlas.View.LoginPage"
              Title="Connexion"
              x:DataType="vm:LoginViewModel"
              BackgroundColor="#0F0A1A">
@@ -22,15 +22,23 @@
                        Style="{StaticResource DarkPageSubtitle}"
                        HorizontalTextAlignment="Center" />
 
-                <Entry Placeholder="Nom d'utilisateur"
+                <!-- Login et Mot de passe, avec fonctionnalité pour la validation par la touche "entrée" -->
+                <Entry x:Name="UsernameEntry"
+                       Placeholder="Nom d'utilisateur"
+                       ReturnType="Next"
+                       Completed="OnUsernameCompleted"
                        Style="{StaticResource DarkEntry}"
                        Text="{Binding Username}" />
 
-                <Entry Placeholder="Mot de passe"
+                <Entry x:Name="PasswordEntry"
+                       Placeholder="Mot de passe"
+                       ReturnType="Go"
                        IsPassword="True"
+                       Completed="OnPasswordCompleted" 
                        Style="{StaticResource DarkEntry}"
                        Text="{Binding Password}" />
-
+                <!-- -->
+                
                 <Button Text="Connexion"
                         Command="{Binding LoginCommand}"
                         FontAttributes="Bold"

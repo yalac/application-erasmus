@@ -24,7 +24,6 @@ public class Trajet
     public string IconSource
     {
         get => string.IsNullOrWhiteSpace(_iconSource) ? GetIconSourceFromTransport(TypeTransport) : _iconSource;
-        set => _iconSource = value ?? string.Empty;
     }
 
     public string Route
@@ -34,16 +33,16 @@ public class Trajet
     }
 
     // Méthode utilitaire pour joindre les types de transport à des icônes
-    // Si c'est un bus → bus.png, si c'est un avion -> plane.png, etc.
+    // Si c'est un bus → bus.png, si c'est un avion -> avion.png, etc.
     private string GetIconSourceFromTransport(string transport)
     {
-        return transport.ToLowerInvariant() switch
+        return transport switch
         {
-            "bus" => "bus.svg",
-            "train" => "train.svg",
-            "avion" => "avion.svg",
-            "bateau" => "bateau.svg",
-            _ => "train.svg"
+            "Bus" => "bus.png",
+            "Train" => "train.png",
+            "Avion" => "avion.png",
+            "Bateau" => "bateau.png",
+            _ => "dotnet_bot.png"
         };
     }
 }

@@ -11,7 +11,9 @@
 
         <Grid Padding="24,18" RowDefinitions="Auto,*" BackgroundColor="#080017">
             <Label Text="Mes Trajets"
-                   Style="{StaticResource DarkPageTitle}"
+                   TextColor="White"
+                   FontSize="26"
+                   FontAttributes="Bold"
                    Margin="0,0,0,16" />
 
             <CollectionView Grid.Row="1"
@@ -26,7 +28,10 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:Trajet">
-                        <Border Style="{StaticResource SurfaceCard}"
+                        <Border BackgroundColor="#1a0f2e"
+                                Stroke="#3D2B66"
+                                StrokeShape="RoundRectangle 20"
+                                Padding="16"
                                 MinimumHeightRequest="230">
                             <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                                   ColumnDefinitions="Auto,*,Auto"
@@ -35,15 +40,29 @@
                                 <!-- Icon -->
                                 <Border Grid.Row="0"
                                         Grid.Column="0"
-                                        Style="{StaticResource TransportTile}">
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 16"
+                                        Padding="0"
+                                        WidthRequest="70"
+                                        HeightRequest="70">
+                                    <Border.Background>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="#AF56EC" Offset="0.1" />
+                                            <GradientStop Color="#E34DA5" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
                                     <Image Source="{Binding IconSource}"
-                                           Style="{StaticResource TransportTileIcon}" />
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           WidthRequest="34"
+                                           HeightRequest="34"
+                                           Aspect="AspectFit" />
                                 </Border>
                                 
                                 <!-- Status -->
                                 <Border Grid.Row="0"
                                         Grid.Column="2"
-                                        BackgroundColor="#241149"
+                                        BackgroundColor="#1e2559"
                                         StrokeThickness="0"
                                         StrokeShape="RoundRectangle 12"
                                         Padding="12,0"
@@ -52,7 +71,7 @@
                                         HorizontalOptions="End"
                                         VerticalOptions="Center">
                                     <Label Text="{Binding Statut}"
-                                           TextColor="#A78BFA"
+                                           TextColor="#50a2e4"
                                            FontSize="14"
                                            VerticalOptions="Center"
                                            VerticalTextAlignment="Center" />
@@ -61,15 +80,16 @@
                                 <Label Grid.Row="1"
                                        Grid.ColumnSpan="3"
                                        Text="Trajet"
-                                       Style="{StaticResource DarkPageSubtitle}"
+                                       TextColor="#BDA6E9"
+                                       FontSize="16"
                                        Margin="0,8,0,0" />
 
                                 <Label Grid.Row="2"
                                        Grid.ColumnSpan="3"
                                        Text="{Binding Route}"
-                                        TextColor="White"
-                                        FontSize="20"
-                                        FontAttributes="Bold"
+                                       TextColor="#e8e3f0"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
                                        LineBreakMode="TailTruncation" />
 
                                 <!-- Dates ~ Départ et Arrivée -->
@@ -79,26 +99,30 @@
                                       Margin="0,8,0,0">
                                     <!-- Départ -->
                                     <VerticalStackLayout Spacing="2">
-                                        <Label Text="Date de départ" Style="{StaticResource DarkPageSubtitle}" />
+                                        <Label Text="Date de départ"
+                                               TextColor="#BDA6E9"
+                                               FontSize="16" />
                                         <Label Text="{Binding DateDepart, StringFormat='{0:Le dd MMMM yyyy}'}"
-                                               TextColor="White"
+                                               TextColor="#e8e3f0"
                                                FontSize="20"
                                                FontAttributes="Bold" />
                                         <Label Text="{Binding HeureDepart, StringFormat='{}{0:hh\\:mm}'}"
-                                               TextColor="White"
+                                               TextColor="#e8e3f0"
                                                FontSize="20"
                                                FontAttributes="Bold" />
                                     </VerticalStackLayout>
 
                                     <!-- Arrivée -->
                                     <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                        <Label Text="Date d'arrivée" Style="{StaticResource DarkPageSubtitle}" />
+                                        <Label Text="Date d'arrivée"
+                                               TextColor="#BDA6E9"
+                                               FontSize="16" />
                                         <Label Text="{Binding DateArrivee, StringFormat='{0:Le dd MMMM yyyy}'}"
-                                               TextColor="White"
+                                               TextColor="#e8e3f0"
                                                FontSize="20"
                                                FontAttributes="Bold" />
                                         <Label Text="{Binding HeureArrivee, StringFormat='{}{0:hh\\:mm}'}"
-                                               TextColor="White"
+                                               TextColor="#e8e3f0"
                                                FontSize="20"
                                                FontAttributes="Bold" />
                                     </VerticalStackLayout>
@@ -108,7 +132,7 @@
                                 <BoxView Grid.Row="6"
                                          Grid.ColumnSpan="3"
                                          HeightRequest="1"
-                                         BackgroundColor="#2D2440"
+                                         BackgroundColor="#3A2A63"
                                          Margin="0,4,0,4" />
 
                                 <Grid Grid.Row="7"
@@ -123,16 +147,7 @@
                                             CornerRadius="16"
                                             Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.ShowDetailsCommand}"
                                             CommandParameter="{Binding .}" />
-
-                                    <Button Grid.Column="1"
-                                            Text="Modifier"
-                                            BackgroundColor="#3A246C"
-                                            TextColor="White"
-                                            FontAttributes="Bold"
-                                            CornerRadius="16"
-                                            Padding="22,0"
-                                            Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.EditTravelCommand}"
-                                            CommandParameter="{Binding .}" />
+                                    
                                 </Grid>
                             </Grid>
                         </Border>
@@ -140,5 +155,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
+
     </ContentPage.Content>
 </ContentPage>

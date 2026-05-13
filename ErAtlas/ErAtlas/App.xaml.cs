@@ -1,4 +1,6 @@
-﻿namespace ErAtlas;
+﻿using ErAtlas.View;
+
+namespace ErAtlas;
 
 public partial class App : Application
 {
