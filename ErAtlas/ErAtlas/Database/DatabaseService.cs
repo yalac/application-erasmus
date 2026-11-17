@@ -1,6 +1,5 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using ABI.Windows.Globalization.DateTimeFormatting;
 using ErAtlas.Model;
 using Microsoft.Data.SqlClient;
 
@@ -10,7 +9,7 @@ public class DatabaseService
 {
     // Connexion à la base de données
     private SqlConnection _connection;
-    private const string ConnectionString = "Server=localhost;Database=ErAtlas;User ID=sa;Password=Info76240#;TrustServerCertificate=True;";
+    private const string ConnectionString = "Server=localhost\\SQLEXPRESS;Database=ErAtlas;User ID=sa;Password=yalac;TrustServerCertificate=True;";
 
     // Création du constructeur
     public DatabaseService()
@@ -64,7 +63,7 @@ public class DatabaseService
             return false;
         }
     }
-    
+
     // Permet de lire la PS de création d'un utilisateur et de renvoyer ses informations si vrai
     public void CreationUtilisateur(string nom, string prenom, string email, string login, string motDePasse, int numeroDeTelephone, string adresse, string codePostal, string ville, bool gestionnaire)
     {
@@ -80,11 +79,11 @@ public class DatabaseService
         command.Parameters.AddWithValue("@Adresse", adresse);
         command.Parameters.AddWithValue("@CodePostal", codePostal);
         command.Parameters.AddWithValue("@Ville", ville);
-        command.Parameters.AddWithValue("@Gestionnaire", gestionnaire); 
+        command.Parameters.AddWithValue("@Gestionnaire", gestionnaire);
         command.ExecuteNonQuery();
     }
-    
-    
+
+
     // Permet de lire la PS et de récupérer tous les utilisateurs de la base de données
     public List<Utilisateur> LireUtilisateurs()
     {
@@ -111,7 +110,7 @@ public class DatabaseService
 
         return utilisateurs;
     }
-    
+
     // Permet de lire la PS et de supprimer un utilisateurs de la base de données et de l'application
     public bool SupprimerUtilisateur(int idUtilisateur)
     {
@@ -129,8 +128,8 @@ public class DatabaseService
             return false;
         }
     }
-    
-    public string GetTransport(int IDTrajet) 
+
+    public string GetTransport(int IDTrajet)
     {
         string query = "PS_LireTypeTransport";
         using var command = new SqlCommand(query, _connection);
@@ -155,7 +154,7 @@ public class DatabaseService
             TimeSpan heureDepart = (TimeSpan)reader["HeureDepart"];
             DateTime dateArrivee = (DateTime)reader["DateArrivee"];
             TimeSpan heureArrivee = (TimeSpan)reader["HeureArrivee"];
-            
+
             Trajet trajet = new Trajet
             {
                 IDTrajet = (int)reader["IDTrajet"],
@@ -168,7 +167,7 @@ public class DatabaseService
                 VilleDepart = (string)reader["VilleDepart"],
                 TypeTransport = (string)reader["TypeTransport"]
             };
-            
+
             data.Add(trajet);
         }
         return data;
