@@ -10,7 +10,7 @@ public class DatabaseService
 {
     // Connexion à la base de données
     private SqlConnection _connection;
-    private const string ConnectionString = "Server=localhost\\SQLEXPRESS;Database=ErAtlas;User ID=sa;Password=yalac;TrustServerCertificate=True;";
+    private const string ConnectionString = "Server=localhost\\SQLEXPRESS;Database=ErAtlas;User ID=sa;Password=<MOT_DE_PASSE_SA>;TrustServerCertificate=True;";
 
     // Création du constructeur
     public DatabaseService()
