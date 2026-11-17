@@ -30,7 +30,7 @@
             </VerticalStackLayout>
 
             <!-- Stats -->
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
                 <!-- Nombre total de trajets -->
                 <Border BackgroundColor="#1A1625"
                         Stroke="#2D2440"
@@ -63,6 +63,18 @@
                     <VerticalStackLayout Spacing="6">
                         <Label Text="{Binding TrajetsTerminesCount}" TextColor="White" FontSize="24" FontAttributes="Bold" />
                         <Label Text="Terminés" TextColor="#B8A0E0" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- Nombre total d'utilisateurs -->
+                <Border Grid.Column="3"
+                        BackgroundColor="#1A1625"
+                        Stroke="#2D2440"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding TotalUtilisateurs}" TextColor="White" FontSize="24" FontAttributes="Bold" />
+                        <Label Text="Nombre d'utilisateurs" TextColor="#B8A0E0" FontSize="12" />
                     </VerticalStackLayout>
                 </Border>
             </Grid>

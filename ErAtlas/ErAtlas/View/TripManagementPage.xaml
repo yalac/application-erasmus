@@ -68,7 +68,7 @@
                        TextColor="#F87171"
                        IsVisible="{Binding IsErrorVisible}" />
 
-                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16" RowSpacing="16">
+                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="16" RowSpacing="16">
                     <!-- Section Lieux -->
                     <Border BackgroundColor="#1A1625"
                             Stroke="#2D2440"
@@ -88,6 +88,7 @@
                                    Text="{Binding AdresseLieu, Mode=TwoWay}" />
                             <Entry Placeholder="Code postal"
                                    Keyboard="Numeric"
+                                   MaxLength="5"
                                    Style="{StaticResource DarkEntry}"
                                    Text="{Binding CodePostalLieu, Mode=TwoWay}" />
                             <Entry Placeholder="Ville"
@@ -108,9 +109,40 @@
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Border>
+                    
+                    <!-- Section Lieux -->
+                    <Border Grid.Column="1" 
+                            BackgroundColor="#1A1625"
+                            Stroke="#2D2440"
+                            StrokeShape="RoundRectangle 24"
+                            Padding="18">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="{Binding TitreFormulairePays}"
+                                   TextColor="White"
+                                   FontSize="20"
+                                   FontAttributes="Bold" />
+
+                            <Entry Placeholder="Nom du pays"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding NomPays, Mode=TwoWay}" />
+                            <Entry Placeholder="Continent"
+                                   Style="{StaticResource DarkEntry}"
+                                   Text="{Binding Continent, Mode=TwoWay}" />
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Button Text="{Binding TexteBoutonPays}"
+                                        Style="{StaticResource GradientButton}"
+                                        Command="{Binding EnregistrerLieuCommand}" />
+                                <Button Text="Réinitialiser"
+                                        Style="{StaticResource ActionButton}"
+                                        BackgroundColor="#6B7280"
+                                        Command="{Binding AffichageFormulairePaysCreationCommand}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
 
                     <!-- Section Transports -->
-                    <Border Grid.Column="1"
+                    <Border Grid.Column="2"
                             BackgroundColor="#1A1625"
                             Stroke="#2D2440"
                             StrokeShape="RoundRectangle 24"
@@ -148,7 +180,7 @@
                     </Border>
 
                     <!-- Section Trajets -->
-                    <Border Grid.Column="2"
+                    <Border Grid.Column="3"
                             BackgroundColor="#1A1625"
                             Stroke="#2D2440"
                             StrokeShape="RoundRectangle 24"

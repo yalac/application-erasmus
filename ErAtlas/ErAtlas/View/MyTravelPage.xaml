@@ -10,12 +10,12 @@
     <ContentPage.Content>
 
         <Grid Padding="24,18" RowDefinitions="Auto,*" BackgroundColor="#080017">
-            <Label Text="Mes Trajets"
+            <Label Text="{Binding Travels.Count, StringFormat='{}{0} Trajets'}"
                    TextColor="White"
                    FontSize="26"
                    FontAttributes="Bold"
                    Margin="0,0,0,16" />
-
+            
             <CollectionView Grid.Row="1"
                             ItemsSource="{Binding Travels}"
                             SelectionMode="None">

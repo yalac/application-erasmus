@@ -11,6 +11,7 @@ public partial class TripManagementViewModel : ObservableObject
 {
     private readonly DatabaseService _databaseService;
     private int _lieuIdEnModification;
+    private int _paysIdEnModification;
     private int _transportIdEnModification;
     private int _trajetIdEnModification;
     public List<string> StatutOptions { get; } = new List<string> { "A l'heure", "En retard", "Terminé" };
@@ -21,6 +22,8 @@ public partial class TripManagementViewModel : ObservableObject
 
     [ObservableProperty]
     private ObservableCollection<Lieu> _lieux = new();
+    [ObservableProperty]
+    private ObservableCollection<Lieu> _pays = new();
     [ObservableProperty]
     private ObservableCollection<Transport> _transports = new();
     [ObservableProperty]
@@ -36,6 +39,11 @@ public partial class TripManagementViewModel : ObservableObject
     private string _villeLieu = string.Empty;
     [ObservableProperty]
     private string _paysLieu = string.Empty;
+    
+    [ObservableProperty]
+    private string _nomPays = string.Empty;
+    [ObservableProperty]
+    private string _continent = string.Empty;
 
     [ObservableProperty]
     private string _typeTransport = string.Empty;
@@ -83,12 +91,16 @@ public partial class TripManagementViewModel : ObservableObject
     [ObservableProperty]
     private bool _isLieuModificationMode;
     [ObservableProperty]
+    private bool _isPaysModificationMode;
+    [ObservableProperty]
     private bool _isTransportModificationMode;
     [ObservableProperty]
     private bool _isTrajetsModificationMode;
 
     public string TitreFormulaireLieu => IsLieuModificationMode ? "Modifier le lieu" : "Créer un lieu";
+    public string TitreFormulairePays => IsPaysModificationMode ? "Modifier le pays" : "Créer un pays";
     public string TexteBoutonLieu => IsLieuModificationMode ? "Enregistrer" : "Créer";
+    public string TexteBoutonPays => IsPaysModificationMode ? "Enregistrer" : "Créer";
     public string TitreFormulaireTransport => IsTransportModificationMode ? "Modifier le transport" : "Créer un transport";
     public string TexteBoutonTransport => IsTransportModificationMode ? "Enregistrer" : "Créer";
     public string TitreFormulaireTrajet => IsTrajetsModificationMode ? "Modifier le trajet" : "Créer un trajet";
@@ -101,6 +113,7 @@ public partial class TripManagementViewModel : ObservableObject
         if (HasAccess)
         {
             ChargerLieux();
+            ChargerPays();
             ChargerTransports();
             ChargerTrajets();
         }
@@ -118,6 +131,7 @@ public partial class TripManagementViewModel : ObservableObject
         if (HasAccess)
         {
             ChargerLieux();
+            ChargerPays();
             ChargerTransports();
             ChargerTrajets();
         }
@@ -128,6 +142,7 @@ public partial class TripManagementViewModel : ObservableObject
         OnPropertyChanged(nameof(HasAccess));
         OnPropertyChanged(nameof(IsAccessDenied));
         Lieux.Clear();
+        Pays.Clear();
         Transports.Clear();
         Trajets.Clear();
     }
@@ -136,6 +151,12 @@ public partial class TripManagementViewModel : ObservableObject
     {
         OnPropertyChanged(nameof(TitreFormulaireLieu));
         OnPropertyChanged(nameof(TexteBoutonLieu));
+    }
+    
+    partial void OnIsPaysModificationModeChanged(bool value)
+    {
+        OnPropertyChanged(nameof(TitreFormulairePays));
+        OnPropertyChanged(nameof(TexteBoutonPays));
     }
 
     partial void OnIsTransportModificationModeChanged(bool value)
@@ -173,6 +194,23 @@ public partial class TripManagementViewModel : ObservableObject
             foreach (var lieu in _databaseService.LireLieux())
             {
                 Lieux.Add(lieu);
+            }
+        }
+        catch (Exception)
+        {
+            ErrorMessage = "Impossible de charger les lieux.";
+            IsErrorVisible = true;
+        }
+    }
+    
+    private void ChargerPays()
+    {
+        try
+        {
+            Pays.Clear();
+            foreach (Pays pays in _databaseService.LirePays())
+            {
+                // Pays.Add();
             }
         }
         catch (Exception)
@@ -228,6 +266,15 @@ public partial class TripManagementViewModel : ObservableObject
         _lieuIdEnModification = 0;
         ReinitialiserFormulaireLieu();
     }
+    
+    [RelayCommand]
+    private void AffichageFormulairePaysCreation()
+    {
+        ResetMessages();
+        IsPaysModificationMode = false;
+        _paysIdEnModification = 0;
+        ReinitialiserFormulairePays();
+    }
 
     [RelayCommand]
     private void ModifierLieu(Lieu? lieu)
@@ -248,6 +295,24 @@ public partial class TripManagementViewModel : ObservableObject
         CodePostalLieu = lieu.CodePostal.ToString();
         VilleLieu = lieu.Ville;
         PaysLieu = lieu.Pays;
+    }
+    
+    [RelayCommand]
+    private void ModifierPays(Pays? pays)
+    {
+        ResetMessages();
+
+        if (pays is null)
+        {
+            ErrorMessage = "Aucun pays sélectionné pour la modification.";
+            IsErrorVisible = true;
+            return;
+        }
+
+        IsPaysModificationMode = true;
+        _paysIdEnModification = pays.IDPays;
+        NomPays = pays.NomPays;
+        Continent = pays.Continent;
     }
 
     [RelayCommand]
@@ -600,6 +665,12 @@ public partial class TripManagementViewModel : ObservableObject
         CodePostalLieu = string.Empty;
         VilleLieu = string.Empty;
         PaysLieu = string.Empty;
+    }
+    
+    private void ReinitialiserFormulairePays()
+    {
+        NomPays = string.Empty;
+        Continent = string.Empty;
     }
 
     private void ReinitialiserFormulaireTransport()

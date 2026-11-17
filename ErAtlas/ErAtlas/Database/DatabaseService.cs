@@ -224,6 +224,105 @@ public class DatabaseService
     }
 
     // =========================
+    // PAYS
+    // =========================
+
+    public List<Pays> LirePays()
+    {
+        var pays = new List<Pays>();
+        string query = "PS_LirePays";
+        using var command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            pays.Add(new Pays
+            {
+                IDPays = reader["IDPays"] is DBNull ? 0 : (int)reader["IDPays"],
+                NomPays = reader["NomPays"] is DBNull ? string.Empty : (string)reader["NomPays"],
+                Continent = reader["Continent"] is DBNull ? string.Empty : (string)reader["Continent"],
+            });
+        }
+        
+        return pays;
+    }
+
+    public Pays CreationPays(string nomPays, string continent)
+    {
+        string query = "PS_CreationPays";
+        using var command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@NomPays", nomPays);
+        command.Parameters.AddWithValue("@Continent", continent);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new Pays
+            {
+                IDPays = reader["IDPays"] is DBNull ? 0 : (int)reader["IDPays"],
+                NomPays = reader["NomPays"] is DBNull ? nomPays : (string)reader["NomPays"],
+                Continent = reader["Continent"] is DBNull ? continent : (string)reader["Continent"],
+            };
+        }
+
+        return new Pays
+        {
+            IDPays = 0,
+            NomPays = nomPays,
+            Continent = continent,
+        };
+    }
+
+    public Pays ModifierPays(int idPays, string nomPays, string continent)
+    {
+        string query = "PS_ModifierPays";
+        using var command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@IDPays", idPays);
+        command.Parameters.AddWithValue("@NomPays", nomPays);
+        command.Parameters.AddWithValue("@Continent", continent);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new Pays
+            {
+                IDPays = reader["IDPays"] is DBNull ? 0 : (int)reader["IDPays"],
+                NomPays = reader["NomPays"] is DBNull ? nomPays : (string)reader["NomPays"],
+                Continent = reader["Continent"] is DBNull ? continent : (string)reader["Continent"],
+            };
+        }
+
+        return new Pays
+        {
+            IDPays = idPays,
+            NomPays = nomPays,
+            Continent = continent,
+        };
+    }
+
+    public bool SupprimerPays(int idPays)
+    {
+        string query = "PS_SupprimerPays";
+        using var command = new SqlCommand(query, _connection);
+        command.CommandType = System.Data.CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@IDPays", idPays);
+
+        try
+        {
+            int rowsAffected = command.ExecuteNonQuery();
+            return rowsAffected > 0;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+    
+    
+    // =========================
     // LIEUX
     // =========================
 

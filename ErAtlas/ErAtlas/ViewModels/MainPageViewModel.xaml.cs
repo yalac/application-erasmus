@@ -13,9 +13,13 @@ public partial class MainPageViewModel : ObservableObject
     private ObservableCollection<Trajet> _trajets = new();
     
     [ObservableProperty]
+    private ObservableCollection<Utilisateur> _utilisateurs = new();
+    
+    [ObservableProperty]
     private ObservableCollection<Trajet> _trajetsRecent = new();
 
     public int TotalTrajets => Trajets.Count;
+    public int TotalUtilisateurs => Utilisateurs.Count;
     public int TrajetsTerminesCount => Trajets.Count(t => t.Statut == "Terminé");
     public int TrajetsEnCoursCount => Trajets.Count(t => t.Statut == "A l'heure" || t.Statut == "En retard");
 
@@ -121,6 +125,7 @@ public partial class MainPageViewModel : ObservableObject
         ChargerTrajets();
         ChargerTrajetsRecents();
         OnPropertyChanged(nameof(TotalTrajets));
+        OnPropertyChanged(nameof(TotalUtilisateurs));
         OnPropertyChanged(nameof(TrajetsTerminesCount));
         OnPropertyChanged(nameof(TrajetsEnCoursCount));
     }
