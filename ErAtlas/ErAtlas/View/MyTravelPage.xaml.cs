@@ -9,4 +9,13 @@ public partial class MyTravelPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if (BindingContext is MyTravelViewModel viewModel)
+        {
+            viewModel.RefreshTravels();
+        }
+    }
 }

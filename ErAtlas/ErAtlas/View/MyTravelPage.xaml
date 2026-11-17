@@ -10,12 +10,12 @@
     <ContentPage.Content>
 
         <Grid Padding="24,18" RowDefinitions="Auto,*" BackgroundColor="#080017">
-            <Label Text="Mes Trajets"
+            <Label Text="{Binding Travels.Count, StringFormat='{}{0} Trajets'}"
                    TextColor="White"
                    FontSize="26"
                    FontAttributes="Bold"
                    Margin="0,0,0,16" />
-
+            
             <CollectionView Grid.Row="1"
                             ItemsSource="{Binding Travels}"
                             SelectionMode="None">
@@ -147,16 +147,7 @@
                                             CornerRadius="16"
                                             Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.ShowDetailsCommand}"
                                             CommandParameter="{Binding .}" />
-
-                                    <Button Grid.Column="1"
-                                            Text="Modifier"
-                                            BackgroundColor="#3A246C"
-                                            TextColor="White"
-                                            FontAttributes="Bold"
-                                            CornerRadius="16"
-                                            Padding="22,0"
-                                            Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.EditTravelCommand}"
-                                            CommandParameter="{Binding .}" />
+                                    
                                 </Grid>
                             </Grid>
                         </Border>

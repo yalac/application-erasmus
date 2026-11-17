@@ -1,12 +1,13 @@
-﻿using Microsoft.Maui.Controls;
+﻿using ErAtlas.ViewModels;
 
 namespace ErAtlas.View
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        public MainPage(MainPageViewModel viewModel)
         {
             InitializeComponent();
+            BindingContext = viewModel;
         }
     }
 }

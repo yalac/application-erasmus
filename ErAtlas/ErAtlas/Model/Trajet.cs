@@ -1,25 +1,39 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-
-namespace ErAtlas.Model;
+﻿namespace ErAtlas.Model;
 
 public class Trajet
 {
     public int IDTrajet { get; set; }
     public DateTime DateDepart { get; set; }
-    public TimeSpan HeureDepart  { get; set; }
+    public TimeSpan HeureDepart { get; set; }
     public DateTime DateArrivee { get; set; }
     public TimeSpan HeureArrivee { get; set; }
-    public string Statut { get; set; }
-    public string VilleDepart{ get; set; }
-    public string VilleArrivee { get; set; }                                
-    public string TypeTransport { get; set; }
+    public string Statut { get; set; } = string.Empty;
+    public int IDLieuArrivee { get; set; }
+    public int IDLieuDepart { get; set; }
+    public int IDTransport { get; set; }
+    public Lieu? LieuDepart { get; set; }
+    public Lieu? LieuArrivee { get; set; }
+    public Transport? Transport { get; set; }
+    public string VilleDepart { get; set; } = string.Empty;
+    public string VilleArrivee { get; set; } = string.Empty;
+    public string TypeTransport { get; set; } = string.Empty;
 
-    public string IconSource => GetIconSourceFromTransport(TypeTransport);
-    
-    public string Route => $"{VilleDepart} → {VilleArrivee}";
-    
+    //private string _iconSource = string.Empty;
+    //private string _route = string.Empty;
+
+    public string IconSource
+    {
+        get => GetIconSourceFromTransport(TypeTransport);
+    }
+
+    public string Route
+    {
+        get =>$"{VilleDepart} → {VilleArrivee}";
+        //set => _route = value ?? string.Empty;
+    }
+
     // Méthode utilitaire pour joindre les types de transport à des icônes
-    // Si c'est un bus → bus.png, si c'est un avion -> plane.png, etc.
+    // Si c'est un bus → bus.png, si c'est un avion -> avion.png, etc.
     private string GetIconSourceFromTransport(string transport)
     {
         return transport switch
@@ -28,7 +42,7 @@ public class Trajet
             "Train" => "train.png",
             "Avion" => "avion.png",
             "Bateau" => "bateau.png",
-            _ => "dotnet_bot.png"    // fallback
+            _ => "dotnet_bot.png"
         };
     }
 }
