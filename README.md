@@ -18,7 +18,7 @@ Projet réalisé dans le cadre du **BTS SIO (option SLAM)**.
 
 ### 1. Base de données
 
-Le script `ErAtlas/ErAtlas/Document/sql/ErAtlas_baseDeDonnee.sql` crée la base `ErAtlas` : 6 tables, 25 procédures stockées, un compte de démonstration et deux trajets. Il ne fixe aucun chemin de fichier et peut être relancé sans erreur.
+Le script `Document/sql/ErAtlas_baseDeDonnee.sql` crée la base `ErAtlas` : 6 tables, 25 procédures stockées, un compte de démonstration et deux trajets. Il ne fixe aucun chemin de fichier et peut être relancé sans erreur.
 
 1. Ouvrir **SSMS 22** et se connecter à `localhost\SQLEXPRESS` (authentification SQL Server, compte `sa`).
 2. `Fichier` → `Ouvrir` → `Fichier…` → choisir le script → `F5`.
