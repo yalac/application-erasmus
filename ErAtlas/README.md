@@ -121,7 +121,7 @@ La chaîne de connexion est définie dans :
 Elle est actuellement de la forme :
 
 ```csharp
-Server=localhost;Database=ErAtlas;User ID=sa;Password=Info76240#;TrustServerCertificate=True;
+Server=localhost\\SQLEXPRESS;Database=ErAtlas;User ID=sa;Password=<TON_MOT_DE_PASSE>;TrustServerCertificate=True;
 ```
 
 ### Important
