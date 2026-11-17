@@ -1,0 +1,24 @@
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userprefs
+
+# Sorties de compilation .NET
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+*.dll
+*.pdb
+*.exe
+!ErAtlas/ErAtlas/Platforms/**
+
+# Journaux et rapports de build
+build-output.txt
+*.log
+
+# Divers
+.DS_Store
+Thumbs.db
